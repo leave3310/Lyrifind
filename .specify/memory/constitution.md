@@ -2,18 +2,11 @@
 ================================================================================
 同步影響報告 (Sync Impact Report)
 ================================================================================
-版本變更: N/A → 1.0.0 (初始版本)
-修改的原則: 無 (初始建立)
+版本變更: 1.0.0 → 1.1.0 (新增原則)
+修改的原則:
+  - V. 國際化與語系規範：移除 commit 訊息相關規範（移至新原則）
 新增區段:
-  - I. 測試優先 (Test-First)
-  - II. 程式碼品質
-  - III. 使用者體驗一致性
-  - IV. 效能要求
-  - V. 國際化與語系規範
-  - VI. Feature-Based 架構
-  - 技術堆疊規範
-  - 開發工作流程
-  - 治理機制
+  - VII. Git Commit 規範 (Conventional Commits v1.0.0)
 移除區段: 無
 需要更新的範本:
   - `.specify/templates/plan-template.md` ⚠️ 需手動更新技術上下文區段
@@ -85,7 +78,6 @@
 - API 文件和技術規格 MUST 使用正體中文說明
 - 程式碼變數、函式、類別命名 MUST 使用英文
 - 程式碼註解 MUST 使用正體中文
-- Git commit 訊息 SHOULD 使用正體中文，遵循 Conventional Commits 規範
 - 錯誤訊息和使用者介面文字 MUST 使用正體中文
 
 **理由**：統一的語系規範確保文件的可讀性和團隊溝通的效率。
@@ -119,6 +111,43 @@
 - 功能模組之間的相依 SHOULD 透過明確的介面進行，避免直接耦合
 
 **理由**：Feature-Based 架構提高程式碼的模組化程度，便於功能的獨立開發、測試和維護。
+
+### VII. Git Commit 規範 (Conventional Commits v1.0.0)
+
+**規範**：
+- 所有 Git commit 訊息 MUST 遵循 [Conventional Commits v1.0.0](https://www.conventionalcommits.org/zh-hant/v1.0.0/) 規範
+- Commit 訊息格式 MUST 為：`<type>[optional scope]: <description>`
+- Commit 訊息的 description MUST 使用正體中文撰寫
+- 允許的 type 類型：
+  - `feat`：新增功能
+  - `fix`：修復錯誤
+  - `docs`：文件變更
+  - `style`：程式碼格式調整（不影響程式邏輯）
+  - `refactor`：重構程式碼（不新增功能也不修復錯誤）
+  - `perf`：效能改善
+  - `test`：新增或修改測試
+  - `build`：建構系統或外部相依套件變更
+  - `ci`：CI 設定變更
+  - `chore`：其他不影響原始碼的變更
+  - `revert`：還原先前的 commit
+- 包含破壞性變更 (BREAKING CHANGE) MUST 在 footer 中說明，或在 type 後加上 `!`
+- Scope（可選）SHOULD 使用功能模組名稱（如 `feat(search):`、`fix(lyrics):`）
+- 每個 commit SHOULD 只包含單一邏輯變更
+
+**範例**：
+```
+feat(search): 新增歌詞搜尋功能
+
+fix(lyrics): 修正歌詞同步顯示時間偏移問題
+
+docs: 更新 README 安裝說明
+
+feat!: 重新設計 API 回應格式
+
+BREAKING CHANGE: API 回應結構已變更，需更新前端對應程式碼
+```
+
+**理由**：Conventional Commits 提供一致且機器可讀的 commit 歷史，便於自動化產生 CHANGELOG、語意化版本遞增和團隊協作。
 
 ## 技術堆疊規範
 
@@ -190,4 +219,4 @@
 - 定期審查專案是否持續遵循憲章原則
 - 技術決策 MUST 參考憲章原則進行評估
 
-**Version**: 1.0.0 | **Ratified**: 2025-11-26 | **Last Amended**: 2025-11-26
+**Version**: 1.1.0 | **Ratified**: 2025-11-26 | **Last Amended**: 2025-11-26
