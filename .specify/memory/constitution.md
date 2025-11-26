@@ -1,50 +1,193 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+================================================================================
+同步影響報告 (Sync Impact Report)
+================================================================================
+版本變更: N/A → 1.0.0 (初始版本)
+修改的原則: 無 (初始建立)
+新增區段:
+  - I. 測試優先 (Test-First)
+  - II. 程式碼品質
+  - III. 使用者體驗一致性
+  - IV. 效能要求
+  - V. 國際化與語系規範
+  - VI. Feature-Based 架構
+  - 技術堆疊規範
+  - 開發工作流程
+  - 治理機制
+移除區段: 無
+需要更新的範本:
+  - `.specify/templates/plan-template.md` ⚠️ 需手動更新技術上下文區段
+  - `.specify/templates/spec-template.md` ✅ 符合規範
+  - `.specify/templates/tasks-template.md` ⚠️ 需確保測試任務在實作任務之前
+待辦事項: 無
+================================================================================
+-->
 
-## Core Principles
+# LyriFind 專案憲章
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+## 核心原則
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### I. 測試優先 (Test-First) — 不可協商
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**規範**：
+- 所有功能開發 MUST 遵循 E2E 測試 → 單元測試 → 實作 的順序
+- 在撰寫任何功能程式碼之前，MUST 先完成預期的 E2E 測試（使用 Playwright）
+- 在撰寫功能程式碼之前，MUST 先撰寫預期的單元測試（使用 Vitest）
+- 嚴格執行 Red-Green-Refactor 循環：測試撰寫 → 測試失敗 → 實作 → 測試通過 → 重構
+- 每個 Pull Request MUST 包含對應的測試程式碼
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**理由**：測試優先確保程式碼的可測試性設計，減少回歸錯誤，並作為功能的活文件。
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. 程式碼品質
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**規範**：
+- 所有程式碼 MUST 使用 TypeScript 撰寫，啟用嚴格模式 (`strict: true`)
+- MUST 使用 ES6+ 語法特性（箭頭函式、解構、模組化等）
+- 所有程式碼 MUST 通過 OxLint 檢查（零錯誤、零警告）
+- 變數和函式命名 MUST 使用英文，遵循 camelCase 命名規範
+- 元件命名 MUST 使用 PascalCase
+- 所有程式碼註解 MUST 使用正體中文撰寫
+- 單一函式 SHOULD NOT 超過 50 行；超過 MUST 提供重構理由
+- 圈複雜度 (Cyclomatic Complexity) SHOULD NOT 超過 10
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+**理由**：一致的程式碼品質標準降低維護成本，提高團隊協作效率。
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### III. 使用者體驗一致性
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**規範**：
+- 使用者介面文字 MUST 使用正體中文
+- 錯誤訊息 MUST 使用正體中文，並提供清晰的問題描述與建議操作
+- UI 元件 MUST 遵循一致的設計語言和互動模式
+- 所有互動元素 MUST 提供適當的視覺回饋（hover、active、disabled 狀態）
+- 表單驗證 MUST 即時顯示錯誤提示，並在使用者修正後即時更新
+- 載入狀態 MUST 提供適當的載入指示器
+- 響應式設計 MUST 支援桌面和行動裝置
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+**理由**：一致的使用者體驗提升使用者滿意度，減少學習成本。
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### IV. 效能要求
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**規範**：
+- 首次內容繪製 (FCP) MUST < 1.5 秒
+- 最大內容繪製 (LCP) MUST < 2.5 秒
+- 累積版面配置偏移 (CLS) MUST < 0.1
+- 首次輸入延遲 (FID) MUST < 100ms
+- 打包後的 JavaScript 主套件 SHOULD < 200KB (gzip 壓縮後)
+- 圖片 MUST 使用適當的格式（WebP 優先）並實作懶載入
+- 元件 SHOULD 使用適當的記憶化策略（computed、memo）避免不必要的重新渲染
+
+**理由**：良好的效能直接影響使用者體驗和搜尋引擎排名。
+
+### V. 國際化與語系規範
+
+**規範**：
+- 所有專案文件（README、CHANGELOG、文件）MUST 使用正體中文撰寫
+- API 文件和技術規格 MUST 使用正體中文說明
+- 程式碼變數、函式、類別命名 MUST 使用英文
+- 程式碼註解 MUST 使用正體中文
+- Git commit 訊息 SHOULD 使用正體中文，遵循 Conventional Commits 規範
+- 錯誤訊息和使用者介面文字 MUST 使用正體中文
+
+**理由**：統一的語系規範確保文件的可讀性和團隊溝通的效率。
+
+### VI. Feature-Based 架構
+
+**規範**：
+- 資料夾結構 MUST 採用 Feature-Based 組織方式
+- 每個功能模組 MUST 包含自身的元件、服務、型別定義、測試
+- 共用程式碼 MUST 放置於 `shared/` 或 `common/` 目錄
+- 資料夾結構範例：
+  ```
+  src/
+  ├── features/
+  │   ├── search/           # 搜尋功能
+  │   │   ├── components/   # 功能專屬元件
+  │   │   ├── composables/  # 功能專屬組合式函式
+  │   │   ├── services/     # 功能專屬服務
+  │   │   ├── types/        # 功能專屬型別定義
+  │   │   ├── __tests__/    # 功能單元測試
+  │   │   └── index.ts      # 功能入口
+  │   └── lyrics/           # 歌詞功能
+  │       └── ...
+  ├── shared/               # 共用程式碼
+  │   ├── components/       # 共用元件
+  │   ├── composables/      # 共用組合式函式
+  │   ├── utils/            # 工具函式
+  │   └── types/            # 共用型別定義
+  └── ...
+  ```
+- 功能模組之間的相依 SHOULD 透過明確的介面進行，避免直接耦合
+
+**理由**：Feature-Based 架構提高程式碼的模組化程度，便於功能的獨立開發、測試和維護。
+
+## 技術堆疊規範
+
+**核心技術**：
+- **框架**：Vue 3 (Composition API + `<script setup>`)
+- **語言**：TypeScript 5.9+，啟用嚴格模式
+- **建構工具**：Vite (Rolldown)
+- **套件管理**：pnpm
+- **測試框架**：
+  - E2E 測試：Playwright
+  - 單元測試：Vitest
+- **程式碼檢查**：OxLint (type-aware 模式)
+- **型別檢查**：vue-tsc
+
+**相依套件管理**：
+- 新增相依套件 MUST 經過團隊評估，考量套件大小、維護狀態、安全性
+- 生產環境相依套件 MUST 定期更新，修復已知安全漏洞
+- SHOULD 優先使用原生 Web API 和 Vue 內建功能
+
+## 開發工作流程
+
+**功能開發流程**：
+1. 建立功能分支（從 `main` 分支）
+2. 撰寫功能規格文件
+3. 撰寫 E2E 測試（Playwright）並確認測試失敗
+4. 撰寫單元測試（Vitest）並確認測試失敗
+5. 實作功能程式碼，使測試通過
+6. 執行程式碼檢查 (`pnpm run lint`)
+7. 執行所有測試 (`pnpm run test`)
+8. 提交 Pull Request 進行程式碼審查
+9. 合併至 `main` 分支
+
+**程式碼審查要點**：
+- 是否遵循測試優先原則
+- 測試覆蓋率是否足夠
+- 程式碼是否符合品質標準
+- 是否有效能問題
+- 使用者體驗是否一致
+- 文件和註解是否完整
+
+**品質閘門**：
+- 所有測試 MUST 通過
+- OxLint 檢查 MUST 通過（零錯誤）
+- TypeScript 型別檢查 MUST 通過
+- 新功能 MUST 有對應的測試
+
+## 治理機制
+
+**憲章優先原則**：
+- 本憲章優先於所有其他開發實踐和慣例
+- 任何違反憲章的程式碼 MUST NOT 合併至主分支
+- 複雜度例外 MUST 在程式碼中明確記錄並說明理由
+
+**修訂程序**：
+1. 提出修訂提案（包含修改內容、理由、影響評估）
+2. 團隊討論並達成共識
+3. 更新憲章文件並遞增版本號
+4. 更新相關範本和文件
+5. 通知所有團隊成員
+
+**版本控制**：
+- 採用語意化版本 (Semantic Versioning)
+- MAJOR：不向後相容的治理/原則變更
+- MINOR：新增原則或實質性擴充指南
+- PATCH：澄清、措辭修正、非語意調整
+
+**合規性審查**：
+- 每次 Pull Request MUST 驗證是否符合憲章規範
+- 定期審查專案是否持續遵循憲章原則
+- 技術決策 MUST 參考憲章原則進行評估
+
+**Version**: 1.0.0 | **Ratified**: 2025-11-26 | **Last Amended**: 2025-11-26
