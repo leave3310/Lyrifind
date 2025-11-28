@@ -2,16 +2,20 @@
 ================================================================================
 同步影響報告 (Sync Impact Report)
 ================================================================================
-版本變更: 1.0.0 → 1.1.0 (新增原則)
+版本變更: 1.1.0 → 1.2.0 (新增技術堆疊)
 修改的原則:
-  - V. 國際化與語系規範：移除 commit 訊息相關規範（移至新原則）
+  - 技術堆疊規範：新增 Axios、Tailwind CSS v4、VueUse 相關規範
 新增區段:
-  - VII. Git Commit 規範 (Conventional Commits v1.0.0)
+  - VIII. HTTP 請求規範 (Axios)
+  - IX. 樣式規範 (Tailwind CSS v4)
+  - X. 組合式函式規範 (VueUse)
 移除區段: 無
 需要更新的範本:
-  - `.specify/templates/plan-template.md` ⚠️ 需手動更新技術上下文區段
+  - `.specify/templates/plan-template.md` ✅ 已審查
   - `.specify/templates/spec-template.md` ✅ 符合規範
-  - `.specify/templates/tasks-template.md` ⚠️ 需確保測試任務在實作任務之前
+  - `.specify/templates/tasks-template.md` ✅ 符合規範
+需要更新的規格文件:
+  - `specs/001-lyrics-search/research.md` ⚠️ 需更新技術決策（Axios、VueUse）
 待辦事項: 無
 ================================================================================
 -->
@@ -149,6 +153,106 @@ BREAKING CHANGE: API 回應結構已變更，需更新前端對應程式碼
 
 **理由**：Conventional Commits 提供一致且機器可讀的 commit 歷史，便於自動化產生 CHANGELOG、語意化版本遞增和團隊協作。
 
+### VIII. HTTP 請求規範 (Axios)
+
+**規範**：
+- 所有 HTTP 請求 MUST 使用 Axios 函式庫
+- MUST 建立統一的 Axios instance，所有請求透過此 instance 發送
+- Axios instance MUST 設定於 `src/shared/services/http.ts`
+- 請求攔截器 MUST 統一處理：
+  - 請求標頭設定（Content-Type、Authorization 等）
+  - 請求載入狀態管理
+- 回應攔截器 MUST 統一處理：
+  - 錯誤回應轉換（轉為 `AppError` 型別）
+  - HTTP 狀態碼對應的錯誤訊息（正體中文）
+  - 401/403 未授權處理
+  - 網路錯誤處理
+- 請求逾時 MUST 設定合理的 timeout（建議 10 秒）
+- API Base URL MUST 透過環境變數設定（`VITE_API_BASE_URL`）
+
+**Axios Instance 結構**：
+```typescript
+// src/shared/services/http.ts
+import axios from 'axios'
+import type { AxiosInstance } from 'axios'
+
+const http: AxiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+
+// 請求攔截器
+http.interceptors.request.use(/* ... */)
+
+// 回應攔截器
+http.interceptors.response.use(/* ... */)
+
+export { http }
+```
+
+**理由**：統一的 HTTP 請求管理確保一致的錯誤處理、載入狀態和請求設定，降低重複程式碼。
+
+### IX. 樣式規範 (Tailwind CSS v4)
+
+**規範**：
+- 專案樣式 MUST 使用 Tailwind CSS v4
+- MUST 優先使用 Tailwind 的 utility classes，避免撰寫自訂 CSS
+- 自訂樣式 SHOULD 使用 Tailwind 的 `@apply` 指令或 CSS 變數
+- 響應式設計 MUST 使用 Tailwind 的斷點前綴（`sm:`、`md:`、`lg:`、`xl:`、`2xl:`）
+- 深色模式 SHOULD 使用 Tailwind 的 `dark:` 前綴（若有需求）
+- 元件樣式 SHOULD 使用 Tailwind 的 `@layer components` 定義可重用樣式
+- 顏色和間距 MUST 使用 Tailwind 的設計系統，避免使用任意值（arbitrary values）
+
+**Tailwind CSS v4 設定**：
+```css
+/* src/style.css */
+@import "tailwindcss";
+
+@theme {
+  /* 自訂主題變數 */
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+}
+```
+
+**最佳實踐**：
+- 使用語意化的類別組合（如 `btn-primary`、`card`）
+- 避免過長的 class 字串，適時抽取為元件
+- 使用 `clsx` 或 `tailwind-merge` 處理條件式樣式
+
+**理由**：Tailwind CSS v4 提供 utility-first 的樣式方案，加速開發效率，並確保設計一致性。
+
+### X. 組合式函式規範 (VueUse)
+
+**規範**：
+- 專案 MUST 使用 VueUse 作為組合式函式（composables）的工具函式庫
+- 常用的瀏覽器 API 封裝 SHOULD 優先使用 VueUse 提供的實作
+- 推薦使用的 VueUse 函式：
+  - `useDebounceFn` / `useThrottleFn`：防抖/節流
+  - `useLocalStorage` / `useSessionStorage`：本地儲存
+  - `useFetch`：資料請求（配合 Axios 使用時可作為替代方案）
+  - `useEventListener`：事件監聽
+  - `useMediaQuery`：響應式斷點
+  - `useClipboard`：剪貼簿操作
+  - `useIntersectionObserver`：懶載入
+  - `useTitle`：動態標題
+- 自訂 composables SHOULD 遵循 VueUse 的命名慣例（`use` 前綴）
+- VueUse 函式 MUST 按需引入，避免引入整個套件
+
+**引入方式**：
+```typescript
+// ✅ 正確：按需引入
+import { useDebounceFn, useLocalStorage } from '@vueuse/core'
+
+// ❌ 錯誤：引入整個套件
+import * as VueUse from '@vueuse/core'
+```
+
+**理由**：VueUse 提供經過測試的高品質組合式函式，減少重複造輪子，提升開發效率。
+
 ## 技術堆疊規範
 
 **核心技術**：
@@ -162,10 +266,24 @@ BREAKING CHANGE: API 回應結構已變更，需更新前端對應程式碼
 - **程式碼檢查**：OxLint (type-aware 模式)
 - **型別檢查**：vue-tsc
 
+**HTTP 請求**：
+- **HTTP 客戶端**：Axios
+- 所有 API 請求 MUST 透過統一的 Axios instance（`src/shared/services/http.ts`）
+
+**樣式框架**：
+- **CSS 框架**：Tailwind CSS v4
+- **樣式輔助**：`clsx` 或 `tailwind-merge`（條件式樣式）
+
+**工具函式庫**：
+- **組合式函式**：VueUse（@vueuse/core）
+- **路由**：Vue Router
+- **SEO**：@unhead/vue
+
 **相依套件管理**：
 - 新增相依套件 MUST 經過團隊評估，考量套件大小、維護狀態、安全性
 - 生產環境相依套件 MUST 定期更新，修復已知安全漏洞
-- SHOULD 優先使用原生 Web API 和 Vue 內建功能
+- VueUse 函式 MUST 按需引入，避免引入整個套件
+- Tailwind CSS SHOULD 啟用 PurgeCSS 移除未使用樣式
 
 ## 開發工作流程
 
@@ -219,4 +337,4 @@ BREAKING CHANGE: API 回應結構已變更，需更新前端對應程式碼
 - 定期審查專案是否持續遵循憲章原則
 - 技術決策 MUST 參考憲章原則進行評估
 
-**Version**: 1.1.0 | **Ratified**: 2025-11-26 | **Last Amended**: 2025-11-26
+**Version**: 1.2.0 | **Ratified**: 2025-11-26 | **Last Amended**: 2025-11-28
