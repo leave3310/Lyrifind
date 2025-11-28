@@ -44,7 +44,7 @@
 
 **⚠️ 重要**: 必須完成此階段後才能開始實作使用者故事
 
-- [ ] T008 建立共用型別定義於 `src/shared/types/index.ts`（Song、SearchResult、SearchQuery、SearchResponse、AppError）
+- [ ] T008 建立共用型別定義於 `src/shared/types/index.ts`（Song、SearchResult、SearchQuery、SearchResponse、PaginationInfo、AppError、MatchType、ErrorCode）
 - [ ] T009 [P] 建立 Axios 統一 instance 於 `src/shared/services/http.ts`
 - [ ] T010 [P] 建立 Google Sheets API 服務於 `src/shared/services/googleSheetsApi.ts`
 - [ ] T011 [P] 建立錯誤處理組合式函式於 `src/shared/composables/useErrorHandler.ts`
@@ -105,10 +105,12 @@
 
 - [ ] T042 [US1] 建立首頁於 `src/pages/HomePage.vue`（搜尋入口）
 - [ ] T043 [US1] 建立搜尋結果頁於 `src/pages/SearchResultsPage.vue`
-- [ ] T044 [US1] 建立歌詞詳細頁於 `src/pages/LyricsDetailPage.vue`
+- [ ] T044 [US1] 建立歌詞詳細頁於 `src/pages/LyricsDetailPage.vue`（包含返回搜尋結果/首頁導航，FR-011）
 - [ ] T045 [US1] 設定頁面 SEO Meta（使用 @unhead/vue）
 
 **Checkpoint**: User Story 1 完成，可獨立測試歌名搜尋功能
+
+> **MVP 範圍說明**：US1 MVP 版本暫不含分頁功能（FR-016），搜尋結果將顯示全部匹配項目。分頁功能將於 Phase 6 (T055-T056) 實作。
 
 ---
 
@@ -170,7 +172,7 @@
 - [ ] T059 [P] 建立 404 頁面於 `src/pages/NotFoundPage.vue`
 - [ ] T060 效能優化：程式碼分割（路由級懶載入）
 - [ ] T061 [P] 更新 README.md 使用說明（正體中文）
-- [ ] T062 執行 `quickstart.md` 驗證所有功能
+- [ ] T062 執行 `quickstart.md` 驗證所有功能（包含 Core Web Vitals 效能驗證：FCP < 1.5s、LCP < 2.5s、CLS < 0.1、搜尋回應 < 3s）
 
 ---
 
