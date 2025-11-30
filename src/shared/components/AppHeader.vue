@@ -3,7 +3,6 @@
  * 應用程式標頭元件
  * @description 網站頂部導覽列
  */
-
 import { RouterLink } from 'vue-router'
 
 interface Props {
@@ -29,7 +28,9 @@ function handleBack() {
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-800 dark:bg-gray-900/80">
+  <header
+    class="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-800 dark:bg-gray-900/80"
+  >
     <div class="mx-auto flex h-16 max-w-4xl items-center justify-between px-4">
       <!-- 左側：返回按鈕或 Logo -->
       <div class="flex items-center gap-3">
@@ -56,10 +57,7 @@ function handleBack() {
           </svg>
         </button>
 
-        <RouterLink
-          to="/"
-          class="flex items-center gap-2 text-xl font-bold text-primary"
-        >
+        <RouterLink to="/" class="flex items-center gap-2 text-xl font-bold text-primary">
           <svg
             class="h-6 w-6"
             fill="none"

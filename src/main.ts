@@ -2,10 +2,12 @@
  * 應用程式入口點
  * @description 初始化 Vue 應用程式與所有外掛
  */
-
 import { createApp } from 'vue'
+
 import { createHead } from '@unhead/vue/client'
+
 import router from '@/router'
+
 import App from './App.vue'
 import './style.css'
 

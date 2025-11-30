@@ -43,10 +43,7 @@ const textSizeClasses = {
       role="status"
       aria-label="載入中"
     />
-    <span
-      v-if="props.showText"
-      :class="[textSizeClasses[props.size], 'text-secondary']"
-    >
+    <span v-if="props.showText" :class="[textSizeClasses[props.size], 'text-secondary']">
       {{ props.text }}
     </span>
   </div>

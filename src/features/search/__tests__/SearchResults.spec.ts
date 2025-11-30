@@ -2,11 +2,13 @@
  * SearchResults 元件單元測試
  * @description 測試搜尋結果列表元件的行為
  */
-
-import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+
+import { describe, expect, it } from 'vitest'
+
+import type { MatchType, SearchResult } from '@/shared/types'
+
 import SearchResults from '../components/SearchResults.vue'
-import type { SearchResult, MatchType } from '@/shared/types'
 
 /** 建立測試用搜尋結果 */
 function createMockResult(overrides: Partial<SearchResult> = {}): SearchResult {
@@ -34,7 +36,7 @@ describe('SearchResults', () => {
         loading: false,
       },
     })
-    
+
     const container = wrapper.find('[data-testid="search-results"]')
     expect(container.exists()).toBe(true)
   })
@@ -47,7 +49,7 @@ describe('SearchResults', () => {
         keyword: '找不到的關鍵字',
       },
     })
-    
+
     const emptyMessage = wrapper.find('[data-testid="empty-state"]')
     expect(emptyMessage.exists()).toBe(true)
     expect(emptyMessage.text()).toContain('找不到')
@@ -58,14 +60,14 @@ describe('SearchResults', () => {
       createMockResult({ song: { id: '1', title: '歌曲一', artist: '歌手一', lyrics: '歌詞一' } }),
       createMockResult({ song: { id: '2', title: '歌曲二', artist: '歌手二', lyrics: '歌詞二' } }),
     ]
-    
+
     const wrapper = mount(SearchResults, {
       props: {
         results,
         loading: false,
       },
     })
-    
+
     const items = wrapper.findAll('[data-testid="search-result-item"]')
     expect(items.length).toBe(2)
   })
@@ -77,7 +79,7 @@ describe('SearchResults', () => {
         loading: true,
       },
     })
-    
+
     const spinner = wrapper.find('[data-testid="loading-state"]')
     expect(spinner.exists()).toBe(true)
   })
@@ -90,7 +92,7 @@ describe('SearchResults', () => {
         keyword: '測試',
       },
     })
-    
+
     const emptyMessage = wrapper.find('[data-testid="empty-results"]')
     expect(emptyMessage.exists()).toBe(false)
   })
@@ -103,10 +105,10 @@ describe('SearchResults', () => {
         loading: false,
       },
     })
-    
+
     const item = wrapper.find('[data-testid="search-result-item"]')
     await item.trigger('click')
-    
+
     expect(wrapper.emitted('select')).toBeTruthy()
     expect(wrapper.emitted('select')![0]).toEqual([result.song.id])
   })
@@ -119,7 +121,7 @@ describe('SearchResults', () => {
         keyword: '周杰倫',
       },
     })
-    
+
     const keywordDisplay = wrapper.find('[data-testid="search-keyword"]')
     if (keywordDisplay.exists()) {
       expect(keywordDisplay.text()).toContain('周杰倫')
@@ -132,7 +134,7 @@ describe('SearchResults', () => {
       createMockResult({ song: { id: '2', title: '歌曲二', artist: '歌手二', lyrics: '歌詞二' } }),
       createMockResult({ song: { id: '3', title: '歌曲三', artist: '歌手三', lyrics: '歌詞三' } }),
     ]
-    
+
     const wrapper = mount(SearchResults, {
       props: {
         results,
@@ -140,7 +142,7 @@ describe('SearchResults', () => {
         totalCount: 3,
       },
     })
-    
+
     const countDisplay = wrapper.find('[data-testid="results-count"]')
     if (countDisplay.exists()) {
       expect(countDisplay.text()).toContain('3')
@@ -152,14 +154,14 @@ describe('SearchResults', () => {
       song: { id: '1', title: '我的歌曲', artist: '測試歌手', lyrics: '測試歌詞' },
       highlightedTitle: '我的歌曲',
     })
-    
+
     const wrapper = mount(SearchResults, {
       props: {
         results: [result],
         loading: false,
       },
     })
-    
+
     const title = wrapper.find('[data-testid="result-title"]')
     expect(title.exists()).toBe(true)
     expect(title.text()).toContain('我的歌曲')
@@ -170,14 +172,14 @@ describe('SearchResults', () => {
       song: { id: '1', title: '測試歌曲', artist: '我的歌手', lyrics: '測試歌詞' },
       highlightedArtist: '我的歌手',
     })
-    
+
     const wrapper = mount(SearchResults, {
       props: {
         results: [result],
         loading: false,
       },
     })
-    
+
     const artist = wrapper.find('[data-testid="result-artist"]')
     expect(artist.exists()).toBe(true)
     expect(artist.text()).toContain('我的歌手')

@@ -2,8 +2,7 @@
  * E2E 測試 Fixtures
  * @description 提供測試用的資料與工具函式
  */
-
-import type { Song, SearchResult, SearchResponse, MatchType } from '../../src/shared/types'
+import type { MatchType, SearchResponse, SearchResult, Song } from '../../src/shared/types'
 
 /** 測試用歌曲資料 */
 export const mockSongs: Song[] = [

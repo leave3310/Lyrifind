@@ -2,8 +2,8 @@
  * 錯誤處理組合式函式
  * @description 提供統一的錯誤處理和重試機制
  */
+import { readonly, ref } from 'vue'
 
-import { ref, readonly } from 'vue'
 import type { AppError } from '@/shared/types'
 
 /**
@@ -33,9 +33,7 @@ export function useErrorHandler() {
    * @param fn - 非同步函式
    * @returns 執行結果或 null（若發生錯誤）
    */
-  async function executeWithErrorHandling<T>(
-    fn: () => Promise<T>
-  ): Promise<T | null> {
+  async function executeWithErrorHandling<T>(fn: () => Promise<T>): Promise<T | null> {
     try {
       clearError()
       return await fn()

@@ -3,8 +3,8 @@
  * LyricsContent 元件
  * @description 歌詞內容顯示元件
  */
-
 import { computed } from 'vue'
+
 import type { LyricsLine, ParsedLyrics } from '../types'
 
 /** Props 定義 */
@@ -91,19 +91,13 @@ function escapeRegex(text: string): string {
 </script>
 
 <template>
-  <div
-    class="lyrics-content"
-    data-testid="lyrics-content"
-  >
+  <div class="lyrics-content" data-testid="lyrics-content">
     <div
       v-if="parsedLyrics.lines.length > 0"
       class="whitespace-pre-line font-sans text-gray-800 leading-relaxed"
     >
       <template v-for="line in parsedLyrics.lines" :key="line.lineNumber">
-        <div
-          class="lyrics-line py-0.5"
-          :class="{ 'text-gray-400': line.isEmpty }"
-        >
+        <div class="lyrics-line py-0.5" :class="{ 'text-gray-400': line.isEmpty }">
           <!-- 行號 -->
           <span
             v-if="showLineNumbers"
@@ -113,10 +107,7 @@ function escapeRegex(text: string): string {
           </span>
 
           <!-- 歌詞內容 -->
-          <span
-            v-if="highlightKeyword && !line.isEmpty"
-            v-html="highlightText(line.content)"
-          />
+          <span v-if="highlightKeyword && !line.isEmpty" v-html="highlightText(line.content)" />
           <span v-else-if="line.isEmpty">&nbsp;</span>
           <span v-else>{{ line.content }}</span>
         </div>
@@ -124,12 +115,6 @@ function escapeRegex(text: string): string {
     </div>
 
     <!-- 無歌詞狀態 -->
-    <div
-      v-else
-      class="text-center py-8 text-gray-500"
-      data-testid="no-lyrics"
-    >
-      暫無歌詞內容
-    </div>
+    <div v-else class="text-center py-8 text-gray-500" data-testid="no-lyrics">暫無歌詞內容</div>
   </div>
 </template>

@@ -2,8 +2,7 @@
  * 搜尋功能型別定義
  * @description 搜尋模組專用型別
  */
-
-import type { SearchResult, SearchQuery, SearchResponse, AppError } from '@/shared/types'
+import type { AppError, SearchQuery, SearchResponse, SearchResult } from '@/shared/types'
 
 /**
  * 搜尋狀態介面

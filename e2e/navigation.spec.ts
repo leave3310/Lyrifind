@@ -2,9 +2,9 @@
  * 導航功能 E2E 測試
  * @description 測試搜尋結果點擊導航、返回功能
  */
+import { type Page, expect, test } from '@playwright/test'
 
-import { test, expect, type Page } from '@playwright/test'
-import { mockSongs, TEST_CONSTANTS } from './fixtures'
+import { TEST_CONSTANTS, mockSongs } from './fixtures'
 
 /** 模擬 Google Sheets API 回應 */
 async function mockGoogleSheetsApi(page: Page) {

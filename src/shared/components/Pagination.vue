@@ -3,7 +3,6 @@
  * Pagination 元件
  * @description 分頁導航元件
  */
-
 import { computed } from 'vue'
 
 /** Props 定義 */
@@ -149,12 +148,7 @@ function goToNext(): void {
         stroke="currentColor"
         aria-hidden="true"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M15 19l-7-7 7-7"
-        />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
     </button>
 
@@ -204,12 +198,7 @@ function goToNext(): void {
         stroke="currentColor"
         aria-hidden="true"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5l7 7-7 7"
-        />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>
     </button>
   </nav>

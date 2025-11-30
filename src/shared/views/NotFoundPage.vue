@@ -3,32 +3,19 @@
  * 頁面不存在元件
  * @description 404 錯誤頁面
  */
-
 import { RouterLink } from 'vue-router'
 </script>
 
 <template>
   <div class="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
-    <h1 class="text-6xl font-bold text-gray-300 dark:text-gray-700">
-      404
-    </h1>
-    <h2 class="mt-4 text-2xl font-semibold text-gray-900 dark:text-gray-100">
-      頁面不存在
-    </h2>
-    <p class="mt-2 text-gray-600 dark:text-gray-400">
-      您要找的頁面可能已被移除或暫時無法使用
-    </p>
+    <h1 class="text-6xl font-bold text-gray-300 dark:text-gray-700">404</h1>
+    <h2 class="mt-4 text-2xl font-semibold text-gray-900 dark:text-gray-100">頁面不存在</h2>
+    <p class="mt-2 text-gray-600 dark:text-gray-400">您要找的頁面可能已被移除或暫時無法使用</p>
     <RouterLink
       to="/"
       class="mt-6 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-primary/90"
     >
-      <svg
-        class="h-4 w-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path
           stroke-linecap="round"
           stroke-linejoin="round"

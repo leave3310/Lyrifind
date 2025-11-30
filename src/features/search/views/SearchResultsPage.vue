@@ -3,10 +3,12 @@
  * 搜尋結果頁面
  * @description 顯示搜尋結果列表
  */
+import { onMounted, watch } from 'vue'
 
-import { watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
 import { useHead } from '@unhead/vue'
+
 import { SearchBar, SearchResults, useSearch } from '@/features/search'
 import ErrorMessage from '@/shared/components/ErrorMessage.vue'
 import Pagination from '@/shared/components/Pagination.vue'
@@ -32,13 +34,12 @@ const {
 
 /** SEO Meta */
 useHead({
-  title: () => keyword.value ? `「${keyword.value}」的搜尋結果 - LyriFind` : '搜尋結果 - LyriFind',
+  title: () =>
+    keyword.value ? `「${keyword.value}」的搜尋結果 - LyriFind` : '搜尋結果 - LyriFind',
   meta: [
     {
       name: 'description',
-      content: () => keyword.value
-        ? `搜尋「${keyword.value}」的歌詞結果`
-        : '搜尋歌詞結果',
+      content: () => (keyword.value ? `搜尋「${keyword.value}」的歌詞結果` : '搜尋歌詞結果'),
     },
   ],
 })
@@ -111,19 +112,11 @@ onMounted(() => {
   <div class="search-results-page">
     <!-- 搜尋框 -->
     <div class="mb-6">
-      <SearchBar
-        v-model="keyword"
-        :loading="loading"
-        @search="handleSearch"
-      />
+      <SearchBar v-model="keyword" :loading="loading" @search="handleSearch" />
     </div>
 
     <!-- 錯誤訊息 -->
-    <ErrorMessage
-      v-if="error"
-      :error="error"
-      @retry="retry"
-    />
+    <ErrorMessage v-if="error" :error="error" @retry="retry" />
 
     <!-- 搜尋結果 -->
     <template v-else>

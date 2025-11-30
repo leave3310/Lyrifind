@@ -2,11 +2,12 @@
  * useLyrics composable 單元測試
  * @description 測試歌詞獲取與狀態管理邏輯
  */
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import type { Song } from '@/shared/types'
+
 import { useLyrics } from '../composables/useLyrics'
 import * as lyricsService from '../services/lyricsService'
-import type { Song } from '@/shared/types'
 
 // Mock lyricsService
 vi.mock('../services/lyricsService')

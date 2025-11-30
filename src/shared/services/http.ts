@@ -2,9 +2,9 @@
  * Axios 統一 instance
  * @description 依據憲章 VIII. HTTP 請求規範建立
  */
-
 import axios from 'axios'
-import type { AxiosInstance, AxiosError, InternalAxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+
 import type { AppError, ErrorCode } from '@/shared/types'
 
 /**

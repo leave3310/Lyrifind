@@ -11,17 +11,7 @@ export { default as LyricsContent } from './components/LyricsContent.vue'
 export { useLyrics } from './composables/useLyrics'
 
 // 服務
-export {
-  getLyricsById,
-  getAllSongs,
-  clearCache,
-  lyricsService,
-} from './services/lyricsService'
+export { getLyricsById, getAllSongs, clearCache, lyricsService } from './services/lyricsService'
 
 // 型別
-export type {
-  LyricsState,
-  LyricsDisplayOptions,
-  LyricsLine,
-  ParsedLyrics,
-} from './types'
+export type { LyricsState, LyricsDisplayOptions, LyricsLine, ParsedLyrics } from './types'

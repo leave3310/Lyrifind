@@ -2,22 +2,23 @@
  * SearchBar 元件單元測試
  * @description 測試搜尋輸入框元件的行為
  */
-
-import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+
+import { describe, expect, it } from 'vitest'
+
 import SearchBar from '../components/SearchBar.vue'
 
 describe('SearchBar', () => {
   it('應該渲染搜尋輸入框', () => {
     const wrapper = mount(SearchBar)
-    
+
     const input = wrapper.find('[data-testid="search-input"]')
     expect(input.exists()).toBe(true)
   })
 
   it('應該渲染搜尋按鈕', () => {
     const wrapper = mount(SearchBar)
-    
+
     const button = wrapper.find('[data-testid="search-button"]')
     expect(button.exists()).toBe(true)
   })
@@ -28,7 +29,7 @@ describe('SearchBar', () => {
         placeholder: '搜尋歌曲、歌手或歌詞...',
       },
     })
-    
+
     const input = wrapper.find('[data-testid="search-input"]')
     expect(input.attributes('placeholder')).toBe('搜尋歌曲、歌手或歌詞...')
   })
@@ -40,10 +41,10 @@ describe('SearchBar', () => {
         'onUpdate:modelValue': (e: string) => wrapper.setProps({ modelValue: e }),
       },
     })
-    
+
     const input = wrapper.find('[data-testid="search-input"]')
     await input.setValue('周杰倫')
-    
+
     expect(wrapper.props('modelValue')).toBe('周杰倫')
   })
 
@@ -53,10 +54,10 @@ describe('SearchBar', () => {
         modelValue: '測試關鍵字',
       },
     })
-    
+
     const button = wrapper.find('[data-testid="search-button"]')
     await button.trigger('click')
-    
+
     expect(wrapper.emitted('search')).toBeTruthy()
     expect(wrapper.emitted('search')![0]).toEqual(['測試關鍵字'])
   })
@@ -67,10 +68,10 @@ describe('SearchBar', () => {
         modelValue: '測試關鍵字',
       },
     })
-    
+
     const input = wrapper.find('[data-testid="search-input"]')
     await input.trigger('keydown', { key: 'Enter' })
-    
+
     expect(wrapper.emitted('search')).toBeTruthy()
   })
 
@@ -80,7 +81,7 @@ describe('SearchBar', () => {
         modelValue: '',
       },
     })
-    
+
     const button = wrapper.find('[data-testid="search-button"]')
     expect(button.attributes('disabled')).toBeDefined()
   })
@@ -91,7 +92,7 @@ describe('SearchBar', () => {
         modelValue: '   ',
       },
     })
-    
+
     const button = wrapper.find('[data-testid="search-button"]')
     expect(button.attributes('disabled')).toBeDefined()
   })
@@ -103,7 +104,7 @@ describe('SearchBar', () => {
         loading: true,
       },
     })
-    
+
     const button = wrapper.find('[data-testid="search-button"]')
     expect(button.attributes('disabled')).toBeDefined()
   })
@@ -114,7 +115,7 @@ describe('SearchBar', () => {
         modelValue: '初始關鍵字',
       },
     })
-    
+
     const input = wrapper.find('[data-testid="search-input"]')
     expect((input.element as HTMLInputElement).value).toBe('初始關鍵字')
   })
@@ -126,15 +127,15 @@ describe('SearchBar', () => {
         'onUpdate:modelValue': (e: string) => wrapper.setProps({ modelValue: e }),
       },
     })
-    
+
     // 空關鍵字時按鈕被禁用
     const button = wrapper.find('[data-testid="search-button"]')
     expect(button.attributes('disabled')).toBeDefined()
-    
+
     // 輸入有效關鍵字
     const input = wrapper.find('[data-testid="search-input"]')
     await input.setValue('有效關鍵字')
-    
+
     // 按鈕應該啟用
     expect(button.attributes('disabled')).toBeUndefined()
   })

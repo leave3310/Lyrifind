@@ -2,9 +2,9 @@
  * Google Apps Script API 服務
  * @description 透過 Apps Script Web App 取得歌詞資料
  */
+import type { AppError, Song } from '@/shared/types'
 
 import { http } from './http'
-import type { Song, AppError } from '@/shared/types'
 
 /** Apps Script Web App URL */
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
@@ -35,12 +35,7 @@ function transformAppsScriptData(data: AppsScriptResponse[]): Song[] {
   }
 
   return data
-    .filter((item) => 
-      item.id !== undefined && 
-      item.id !== '' &&
-      item.title && 
-      item.artist
-    )
+    .filter((item) => item.id !== undefined && item.id !== '' && item.title && item.artist)
     .map((item) => ({
       id: String(item.id),
       title: item.title || '',

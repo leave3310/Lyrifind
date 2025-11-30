@@ -2,8 +2,7 @@
  * 歌詞功能型別定義
  * @description 歌詞模組專用型別
  */
-
-import type { Song, AppError } from '@/shared/types'
+import type { AppError, Song } from '@/shared/types'
 
 /**
  * 歌詞狀態介面

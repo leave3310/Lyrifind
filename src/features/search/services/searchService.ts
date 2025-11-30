@@ -2,9 +2,9 @@
  * 搜尋服務
  * @description 負責搜尋邏輯、相關性排序與高亮標記
  */
-
 import { googleSheetsApi } from '@/shared/services/googleSheetsApi'
-import type { Song, SearchResult, SearchQuery, SearchResponse, MatchType } from '@/shared/types'
+import type { MatchType, SearchQuery, SearchResponse, SearchResult, Song } from '@/shared/types'
+
 import type { HighlightedText, SearchServiceConfig } from '../types'
 
 /** 預設配置 */
@@ -38,10 +38,7 @@ function generateCacheKey(query: SearchQuery): string {
  * @param keyword - 搜尋關鍵字
  * @returns 相關性分數與匹配類型
  */
-function calculateRelevance(
-  song: Song,
-  keyword: string
-): { score: number; matchType: MatchType } {
+function calculateRelevance(song: Song, keyword: string): { score: number; matchType: MatchType } {
   const lowerKeyword = keyword.toLowerCase()
   const lowerTitle = song.title.toLowerCase()
   const lowerArtist = song.artist.toLowerCase()
@@ -96,11 +93,7 @@ function calculateRelevance(
  * @param contextLength - 前後文長度
  * @returns 匹配片段
  */
-function extractMatchedLyrics(
-  lyrics: string,
-  keyword: string,
-  contextLength: number = 30
-): string {
+function extractMatchedLyrics(lyrics: string, keyword: string, contextLength: number = 30): string {
   const lowerLyrics = lyrics.toLowerCase()
   const lowerKeyword = keyword.toLowerCase()
   const index = lowerLyrics.indexOf(lowerKeyword)
@@ -260,9 +253,10 @@ export async function search(
   for (const song of songs) {
     const { score, matchType } = calculateRelevance(song, keyword)
     if (score > 0) {
-      const highlightedLyrics = matchType === 'LYRICS'
-        ? highlightText(extractMatchedLyrics(song.lyrics, keyword), keyword)
-        : undefined
+      const highlightedLyrics =
+        matchType === 'LYRICS'
+          ? highlightText(extractMatchedLyrics(song.lyrics, keyword), keyword)
+          : undefined
 
       results.push({
         song,

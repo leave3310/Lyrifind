@@ -3,10 +3,10 @@
  * LyricsDetail 元件
  * @description 歌詞詳細資訊元件
  */
-
-import type { Song, AppError } from '@/shared/types'
-import LyricsContent from './LyricsContent.vue'
 import LoadingSpinner from '@/shared/components/LoadingSpinner.vue'
+import type { AppError, Song } from '@/shared/types'
+
+import LyricsContent from './LyricsContent.vue'
 
 /** Props 定義 */
 interface Props {
@@ -62,16 +62,9 @@ function handleRetry(): void {
     </div>
 
     <!-- 錯誤狀態 -->
-    <div
-      v-else-if="error"
-      class="flex flex-col items-center justify-center py-16"
-    >
+    <div v-else-if="error" class="flex flex-col items-center justify-center py-16">
       <!-- 找不到歌曲 -->
-      <div
-        v-if="error.code === 'NOT_FOUND'"
-        class="text-center"
-        data-testid="not-found-message"
-      >
+      <div v-if="error.code === 'NOT_FOUND'" class="text-center" data-testid="not-found-message">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="mx-auto h-16 w-16 text-gray-300"
@@ -169,25 +162,16 @@ function handleRetry(): void {
 
       <!-- 歌曲資訊 -->
       <header class="border-b border-gray-200 pb-4">
-        <h1
-          class="text-2xl font-bold text-gray-900"
-          data-testid="lyrics-title"
-        >
+        <h1 class="text-2xl font-bold text-gray-900" data-testid="lyrics-title">
           {{ song.title }}
         </h1>
-        <p
-          class="mt-2 text-lg text-gray-600"
-          data-testid="lyrics-artist"
-        >
+        <p class="mt-2 text-lg text-gray-600" data-testid="lyrics-artist">
           {{ song.artist }}
         </p>
       </header>
 
       <!-- 歌詞內容 -->
-      <LyricsContent
-        :lyrics="song.lyrics"
-        :highlight-keyword="highlightKeyword"
-      />
+      <LyricsContent :lyrics="song.lyrics" :highlight-keyword="highlightKeyword" />
     </div>
   </div>
 </template>

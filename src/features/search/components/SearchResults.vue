@@ -3,8 +3,8 @@
  * SearchResults 元件
  * @description 搜尋結果列表元件
  */
-
 import type { SearchResult } from '@/shared/types'
+
 import SearchResultItem from './SearchResultItem.vue'
 
 /** Props 定義 */
@@ -42,10 +42,7 @@ function handleItemClick(songId: string): void {
 </script>
 
 <template>
-  <div
-    class="search-results"
-    data-testid="search-results"
-  >
+  <div class="search-results" data-testid="search-results">
     <!-- 載入中狀態 -->
     <div
       v-if="loading"
@@ -86,11 +83,7 @@ function handleItemClick(songId: string): void {
     <!-- 結果列表 -->
     <template v-else-if="results.length > 0">
       <!-- 結果統計 -->
-      <div
-        v-if="totalCount > 0"
-        class="mb-4 text-sm text-gray-500"
-        data-testid="results-count"
-      >
+      <div v-if="totalCount > 0" class="mb-4 text-sm text-gray-500" data-testid="results-count">
         共找到 {{ totalCount }} 首歌曲
       </div>
 
@@ -106,11 +99,7 @@ function handleItemClick(songId: string): void {
     </template>
 
     <!-- 初始狀態（尚未搜尋） -->
-    <div
-      v-else
-      class="flex flex-col items-center justify-center py-12"
-      data-testid="initial-state"
-    >
+    <div v-else class="flex flex-col items-center justify-center py-12" data-testid="initial-state">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-16 w-16 text-gray-300"
@@ -127,9 +116,7 @@ function handleItemClick(songId: string): void {
         />
       </svg>
       <p class="mt-4 text-lg font-medium text-gray-700">開始搜尋歌詞</p>
-      <p class="mt-2 text-sm text-gray-500">
-        輸入歌名、歌手或歌詞片段開始搜尋
-      </p>
+      <p class="mt-2 text-sm text-gray-500">輸入歌名、歌手或歌詞片段開始搜尋</p>
     </div>
   </div>
 </template>

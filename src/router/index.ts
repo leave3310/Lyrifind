@@ -2,8 +2,7 @@
  * Vue Router 設定
  * @description 設定應用程式路由
  */
-
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 
 /** 路由設定 */
 const routes: RouteRecordRaw[] = [

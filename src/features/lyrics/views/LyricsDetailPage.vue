@@ -3,46 +3,40 @@
  * 歌詞詳情頁面
  * @description 顯示完整歌詞內容
  */
+import { computed, onMounted, watch } from 'vue'
 
-import { watch, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
 import { useHead } from '@unhead/vue'
+
 import { LyricsDetail, useLyrics } from '@/features/lyrics'
 
 const route = useRoute()
 const router = useRouter()
 
 /** 歌詞邏輯 */
-const {
-  song,
-  loading,
-  error,
-  fetchLyrics,
-  retry,
-} = useLyrics()
+const { song, loading, error, fetchLyrics, retry } = useLyrics()
 
 /** 從 URL 取得高亮關鍵字 */
-const highlightKeyword = computed(() => route.query.q as string | undefined || '')
+const highlightKeyword = computed(() => (route.query.q as string | undefined) || '')
 
 /** SEO Meta */
 useHead({
-  title: () => song.value ? `${song.value.title} - ${song.value.artist} | LyriFind` : '歌詞詳情 - LyriFind',
+  title: () =>
+    song.value ? `${song.value.title} - ${song.value.artist} | LyriFind` : '歌詞詳情 - LyriFind',
   meta: [
     {
       name: 'description',
-      content: () => song.value
-        ? `${song.value.title} - ${song.value.artist} 的歌詞`
-        : '歌詞詳情',
+      content: () =>
+        song.value ? `${song.value.title} - ${song.value.artist} 的歌詞` : '歌詞詳情',
     },
     {
       property: 'og:title',
-      content: () => song.value ? `${song.value.title} - ${song.value.artist}` : '歌詞詳情',
+      content: () => (song.value ? `${song.value.title} - ${song.value.artist}` : '歌詞詳情'),
     },
     {
       property: 'og:description',
-      content: () => song.value
-        ? `查看 ${song.value.title} 的完整歌詞`
-        : '查看歌詞詳情',
+      content: () => (song.value ? `查看 ${song.value.title} 的完整歌詞` : '查看歌詞詳情'),
     },
   ],
 })

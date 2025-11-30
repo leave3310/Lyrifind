@@ -3,7 +3,6 @@
  * SearchBar 元件
  * @description 搜尋輸入框元件
  */
-
 import { ref, watch } from 'vue'
 
 /** Props 定義 */
@@ -87,10 +86,7 @@ function handleClear(): void {
 </script>
 
 <template>
-  <div
-    class="search-bar"
-    data-testid="search-bar"
-  >
+  <div class="search-bar" data-testid="search-bar">
     <div class="relative flex items-center">
       <!-- 搜尋圖示 -->
       <div class="absolute left-3 text-gray-400">
@@ -123,7 +119,7 @@ function handleClear(): void {
         aria-label="搜尋歌詞"
         @input="handleInput"
         @keydown="handleKeyDown"
-      >
+      />
 
       <!-- 清除按鈕 -->
       <button

@@ -2,11 +2,13 @@
  * LyricsDetail 元件單元測試
  * @description 測試歌詞詳細頁元件的行為
  */
-
-import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import LyricsDetail from '../components/LyricsDetail.vue'
+
+import { describe, expect, it } from 'vitest'
+
 import type { Song } from '@/shared/types'
+
+import LyricsDetail from '../components/LyricsDetail.vue'
 
 /** 測試用歌曲資料 */
 const mockSong: Song = {
@@ -24,7 +26,7 @@ describe('LyricsDetail', () => {
         loading: false,
       },
     })
-    
+
     const title = wrapper.find('[data-testid="lyrics-title"]')
     expect(title.exists()).toBe(true)
     expect(title.text()).toBe('測試歌曲')
@@ -37,7 +39,7 @@ describe('LyricsDetail', () => {
         loading: false,
       },
     })
-    
+
     const artist = wrapper.find('[data-testid="lyrics-artist"]')
     expect(artist.exists()).toBe(true)
     expect(artist.text()).toBe('測試歌手')
@@ -50,7 +52,7 @@ describe('LyricsDetail', () => {
         loading: false,
       },
     })
-    
+
     const content = wrapper.find('[data-testid="lyrics-content"]')
     expect(content.exists()).toBe(true)
     expect(content.text()).toContain('這是第一行歌詞')
@@ -63,7 +65,7 @@ describe('LyricsDetail', () => {
         loading: false,
       },
     })
-    
+
     const backButton = wrapper.find('[data-testid="back-button"]')
     expect(backButton.exists()).toBe(true)
   })
@@ -75,10 +77,10 @@ describe('LyricsDetail', () => {
         loading: false,
       },
     })
-    
+
     const backButton = wrapper.find('[data-testid="back-button"]')
     await backButton.trigger('click')
-    
+
     expect(wrapper.emitted('back')).toBeTruthy()
   })
 
@@ -89,7 +91,7 @@ describe('LyricsDetail', () => {
         loading: true,
       },
     })
-    
+
     const spinner = wrapper.find('[data-testid="loading-spinner"]')
     expect(spinner.exists()).toBe(true)
   })
@@ -101,7 +103,7 @@ describe('LyricsDetail', () => {
         loading: true,
       },
     })
-    
+
     const content = wrapper.find('[data-testid="lyrics-content"]')
     expect(content.exists()).toBe(false)
   })
@@ -118,7 +120,7 @@ describe('LyricsDetail', () => {
         },
       },
     })
-    
+
     const errorMessage = wrapper.find('[data-testid="not-found-message"]')
     expect(errorMessage.exists()).toBe(true)
     expect(errorMessage.text()).toContain('找不到')
@@ -131,7 +133,7 @@ describe('LyricsDetail', () => {
         loading: false,
       },
     })
-    
+
     const content = wrapper.find('[data-testid="lyrics-content"]')
     // 驗證使用 whitespace-pre-line 或 br 標籤保留換行
     expect(content.html()).toMatch(/whitespace-pre-line|<br/i)
@@ -149,7 +151,7 @@ describe('LyricsDetail', () => {
         },
       },
     })
-    
+
     const retryButton = wrapper.find('[data-testid="retry-button"]')
     expect(retryButton.exists()).toBe(true)
   })
@@ -166,10 +168,10 @@ describe('LyricsDetail', () => {
         },
       },
     })
-    
+
     const retryButton = wrapper.find('[data-testid="retry-button"]')
     await retryButton.trigger('click')
-    
+
     expect(wrapper.emitted('retry')).toBeTruthy()
   })
 })

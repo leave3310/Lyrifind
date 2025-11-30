@@ -2,9 +2,8 @@
  * 歌詞服務
  * @description 負責歌詞相關的資料操作
  */
-
 import { googleSheetsApi } from '@/shared/services/googleSheetsApi'
-import type { Song, AppError } from '@/shared/types'
+import type { AppError, Song } from '@/shared/types'
 
 /**
  * 依 ID 取得歌詞

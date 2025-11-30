@@ -3,8 +3,8 @@
  * 首頁
  * @description 搜尋入口頁面
  */
-
 import { useRouter } from 'vue-router'
+
 import { SearchBar } from '@/features/search'
 
 const router = useRouter()
@@ -27,21 +27,13 @@ function handleSearch(keyword: string): void {
   <div class="flex min-h-[60vh] flex-col items-center justify-center px-4">
     <!-- 標題區域 -->
     <div class="text-center mb-8">
-      <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl">
-        LyriFind
-      </h1>
-      <p class="mt-4 text-lg text-gray-600">
-        輸入歌曲名稱、歌手或歌詞，快速找到您想要的歌詞
-      </p>
+      <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl">LyriFind</h1>
+      <p class="mt-4 text-lg text-gray-600">輸入歌曲名稱、歌手或歌詞，快速找到您想要的歌詞</p>
     </div>
 
     <!-- 搜尋框 -->
     <div class="w-full max-w-2xl">
-      <SearchBar
-        placeholder="請輸入歌名、歌手或歌詞..."
-        autofocus
-        @search="handleSearch"
-      />
+      <SearchBar placeholder="請輸入歌名、歌手或歌詞..." autofocus @search="handleSearch" />
     </div>
 
     <!-- 使用提示 -->

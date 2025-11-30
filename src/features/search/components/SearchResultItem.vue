@@ -3,7 +3,6 @@
  * SearchResultItem 元件
  * @description 搜尋結果項目元件
  */
-
 import type { SearchResult } from '@/shared/types'
 
 /** Props 定義 */
@@ -89,20 +88,14 @@ function getMatchTypeClass(): string {
     <div class="flex items-start justify-between">
       <div class="flex-1 min-w-0">
         <!-- 歌曲名稱 -->
-        <h3
-          class="text-lg font-semibold text-gray-900 truncate"
-          data-testid="result-title"
-        >
+        <h3 class="text-lg font-semibold text-gray-900 truncate" data-testid="result-title">
           <!-- eslint-disable-next-line vue/no-v-html -->
           <span v-if="result.highlightedTitle" v-html="result.highlightedTitle" />
           <span v-else>{{ result.song.title }}</span>
         </h3>
 
         <!-- 歌手名稱 -->
-        <p
-          class="mt-1 text-sm text-gray-600"
-          data-testid="result-artist"
-        >
+        <p class="mt-1 text-sm text-gray-600" data-testid="result-artist">
           <!-- eslint-disable-next-line vue/no-v-html -->
           <span v-if="result.highlightedArtist" v-html="result.highlightedArtist" />
           <span v-else>{{ result.song.artist }}</span>
@@ -123,7 +116,7 @@ function getMatchTypeClass(): string {
       <span
         :class="[
           'ml-2 flex-shrink-0 rounded-full px-2 py-1 text-xs font-medium',
-          getMatchTypeClass()
+          getMatchTypeClass(),
         ]"
         data-testid="match-type-badge"
       >

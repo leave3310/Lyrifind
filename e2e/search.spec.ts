@@ -2,9 +2,9 @@
  * 搜尋功能 E2E 測試
  * @description 測試搜尋輸入、結果顯示、空結果處理
  */
+import { type Page, expect, test } from '@playwright/test'
 
-import { test, expect, type Page } from '@playwright/test'
-import { mockSongs, TEST_CONSTANTS } from './fixtures'
+import { TEST_CONSTANTS, mockSongs } from './fixtures'
 
 /** 模擬 Google Sheets API 回應 */
 async function mockGoogleSheetsApi(page: Page) {
@@ -380,7 +380,7 @@ test.describe('歌詞片段搜尋 (US3)', () => {
     // 驗證歌詞片段中包含高亮標記
     const lyricsSnippet = page.getByTestId('result-lyrics-snippet').first()
     await expect(lyricsSnippet).toBeVisible()
-    
+
     // 驗證高亮標記存在
     const highlightMark = lyricsSnippet.locator('mark')
     await expect(highlightMark).toBeVisible()

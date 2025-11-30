@@ -2,11 +2,13 @@
  * useSearch 組合式函式
  * @description 搜尋功能的狀態管理與邏輯封裝
  */
+import { computed, ref, watch } from 'vue'
 
-import { ref, computed, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
-import { search, clearSearchCache } from '../services/searchService'
-import type { SearchResult, SearchResponse, AppError } from '@/shared/types'
+
+import type { AppError, SearchResponse, SearchResult } from '@/shared/types'
+
+import { clearSearchCache, search } from '../services/searchService'
 import type { SearchOptions } from '../types'
 
 /** 預設選項 */
@@ -89,10 +91,7 @@ export function useSearch(options: SearchOptions = {}) {
   }
 
   // 防抖搜尋
-  const debouncedSearch = useDebounceFn(
-    () => executeSearch(),
-    mergedOptions.debounceMs
-  )
+  const debouncedSearch = useDebounceFn(() => executeSearch(), mergedOptions.debounceMs)
 
   /**
    * 更新關鍵字並觸發搜尋

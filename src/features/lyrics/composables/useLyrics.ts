@@ -2,10 +2,11 @@
  * useLyrics 組合式函式
  * @description 歌詞功能的狀態管理與邏輯封裝
  */
+import { computed, ref } from 'vue'
 
-import { ref, computed } from 'vue'
+import type { AppError, Song } from '@/shared/types'
+
 import { getLyricsById } from '../services/lyricsService'
-import type { Song, AppError } from '@/shared/types'
 
 /**
  * 歌詞組合式函式

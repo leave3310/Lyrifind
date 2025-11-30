@@ -3,7 +3,6 @@
  * 錯誤訊息元件
  * @description 顯示錯誤訊息並提供重試按鈕
  */
-
 import type { AppError } from '@/shared/types'
 
 interface Props {
@@ -55,9 +54,7 @@ function handleRetry() {
 
     <!-- 錯誤訊息 -->
     <div class="space-y-1">
-      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-        發生錯誤
-      </h3>
+      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">發生錯誤</h3>
       <p class="text-sm text-gray-600 dark:text-gray-400">
         {{ props.error.message }}
       </p>
@@ -70,13 +67,7 @@ function handleRetry() {
       class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       @click="handleRetry"
     >
-      <svg
-        class="h-4 w-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
