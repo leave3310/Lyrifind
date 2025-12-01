@@ -47,7 +47,7 @@ function handleItemClick(songId: string): void {
     <div
       v-if="loading"
       class="flex flex-col items-center justify-center py-12"
-      data-testid="loading-spinner"
+      data-testid="loading-state"
     >
       <div class="h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
       <p class="mt-4 text-gray-500">搜尋中...</p>
@@ -57,7 +57,7 @@ function handleItemClick(songId: string): void {
     <div
       v-else-if="results.length === 0 && keyword"
       class="flex flex-col items-center justify-center py-12"
-      data-testid="empty-results"
+      data-testid="empty-state"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

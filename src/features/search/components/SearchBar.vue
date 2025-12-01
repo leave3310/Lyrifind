@@ -48,6 +48,11 @@ const validationError = ref('')
 /** 是否顯示驗證錯誤 */
 const showValidationError = computed(() => validationError.value !== '')
 
+/** 按鈕是否應被禁用 */
+const isButtonDisabled = computed(() => {
+  return props.disabled || props.loading || inputValue.value.trim() === ''
+})
+
 /** 監聽外部 modelValue 變化 */
 watch(
   () => props.modelValue,
@@ -193,7 +198,7 @@ function handleClear(): void {
       <button
         type="button"
         data-testid="search-button"
-        :disabled="disabled || loading"
+        :disabled="isButtonDisabled"
         class="absolute right-2 rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 disabled:cursor-not-allowed disabled:bg-gray-300"
         aria-label="執行搜尋"
         @click="handleSubmit"
