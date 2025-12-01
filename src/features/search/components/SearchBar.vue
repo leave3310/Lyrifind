@@ -50,7 +50,7 @@ const showValidationError = computed(() => validationError.value !== '')
 
 /** 按鈕是否應被禁用 */
 const isButtonDisabled = computed(() => {
-  return props.disabled || props.loading || inputValue.value.trim() === ''
+  return props.disabled || props.loading
 })
 
 /** 監聽外部 modelValue 變化 */

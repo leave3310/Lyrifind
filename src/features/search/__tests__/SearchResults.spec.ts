@@ -50,7 +50,7 @@ describe('SearchResults', () => {
       },
     })
 
-    const emptyMessage = wrapper.find('[data-testid="empty-state"]')
+    const emptyMessage = wrapper.find('[data-testid="empty-results"]')
     expect(emptyMessage.exists()).toBe(true)
     expect(emptyMessage.text()).toContain('找不到')
   })
@@ -80,7 +80,7 @@ describe('SearchResults', () => {
       },
     })
 
-    const spinner = wrapper.find('[data-testid="loading-state"]')
+    const spinner = wrapper.find('[data-testid="loading-spinner"]')
     expect(spinner.exists()).toBe(true)
   })
 
@@ -162,7 +162,7 @@ describe('SearchResults', () => {
       },
     })
 
-    const title = wrapper.find('[data-testid="result-title"]')
+    const title = wrapper.find('[data-testid="song-title"]')
     expect(title.exists()).toBe(true)
     expect(title.text()).toContain('我的歌曲')
   })
@@ -180,7 +180,7 @@ describe('SearchResults', () => {
       },
     })
 
-    const artist = wrapper.find('[data-testid="result-artist"]')
+    const artist = wrapper.find('[data-testid="song-artist"]')
     expect(artist.exists()).toBe(true)
     expect(artist.text()).toContain('我的歌手')
   })

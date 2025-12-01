@@ -75,7 +75,7 @@ describe('SearchBar', () => {
     expect(wrapper.emitted('search')).toBeTruthy()
   })
 
-  it('空白關鍵字時搜尋按鈕應被禁用', async () => {
+  it('空白關鍵字時點擊搜尋按鈕應顯示驗證錯誤', async () => {
     const wrapper = mount(SearchBar, {
       props: {
         modelValue: '',
@@ -83,10 +83,14 @@ describe('SearchBar', () => {
     })
 
     const button = wrapper.find('[data-testid="search-button"]')
-    expect(button.attributes('disabled')).toBeDefined()
+    await button.trigger('click')
+
+    const validationError = wrapper.find('[data-testid="validation-error"]')
+    expect(validationError.exists()).toBe(true)
+    expect(validationError.text()).toContain('請輸入')
   })
 
-  it('只有空格的關鍵字時搜尋按鈕應被禁用', async () => {
+  it('只有空格的關鍵字時點擊搜尋按鈕應顯示驗證錯誤', async () => {
     const wrapper = mount(SearchBar, {
       props: {
         modelValue: '   ',
@@ -94,7 +98,11 @@ describe('SearchBar', () => {
     })
 
     const button = wrapper.find('[data-testid="search-button"]')
-    expect(button.attributes('disabled')).toBeDefined()
+    await button.trigger('click')
+
+    const validationError = wrapper.find('[data-testid="validation-error"]')
+    expect(validationError.exists()).toBe(true)
+    expect(validationError.text()).toContain('請輸入')
   })
 
   it('載入中時應禁用搜尋按鈕', () => {
@@ -120,7 +128,7 @@ describe('SearchBar', () => {
     expect((input.element as HTMLInputElement).value).toBe('初始關鍵字')
   })
 
-  it('輸入有效關鍵字後搜尋按鈕應啟用', async () => {
+  it('輸入有效關鍵字後點擊搜尋應觸發事件', async () => {
     const wrapper = mount(SearchBar, {
       props: {
         modelValue: '',
@@ -128,15 +136,16 @@ describe('SearchBar', () => {
       },
     })
 
-    // 空關鍵字時按鈕被禁用
-    const button = wrapper.find('[data-testid="search-button"]')
-    expect(button.attributes('disabled')).toBeDefined()
-
     // 輸入有效關鍵字
     const input = wrapper.find('[data-testid="search-input"]')
     await input.setValue('有效關鍵字')
 
-    // 按鈕應該啟用
-    expect(button.attributes('disabled')).toBeUndefined()
+    // 點擊搜尋按鈕
+    const button = wrapper.find('[data-testid="search-button"]')
+    await button.trigger('click')
+
+    // 應該觸發 search 事件
+    expect(wrapper.emitted('search')).toBeTruthy()
+    expect(wrapper.emitted('search')![0]).toEqual(['有效關鍵字'])
   })
 })
