@@ -6,14 +6,15 @@ import { type Page, expect, test } from '@playwright/test'
 
 import { TEST_CONSTANTS, mockSongs } from './fixtures'
 
-/** 模擬 Google Sheets API 回應 */
-async function mockGoogleSheetsApi(page: Page) {
-  await page.route('**/sheets.googleapis.com/**', async (route) => {
-    const mockResponse = {
-      range: 'Sheet1!A2:D',
-      majorDimension: 'ROWS',
-      values: mockSongs.map((song) => [song.id, song.title, song.artist, song.lyrics]),
-    }
+/** 模擬 Apps Script API 回應 */
+async function mockAppsScriptApi(page: Page) {
+  await page.route('**/exec**', async (route) => {
+    const mockResponse = mockSongs.map((song) => ({
+      id: song.id,
+      title: song.title,
+      artist: song.artist,
+      lyrics: song.lyrics,
+    }))
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -24,7 +25,11 @@ async function mockGoogleSheetsApi(page: Page) {
 
 test.describe('歌詞詳細頁', () => {
   test.beforeEach(async ({ page }) => {
-    await mockGoogleSheetsApi(page)
+    // 清除 localStorage 快取以確保使用 Mock API
+    await page.addInitScript(() => {
+      localStorage.clear()
+    })
+    await mockAppsScriptApi(page)
   })
 
   test('應該顯示歌曲名稱', async ({ page }) => {
@@ -80,13 +85,14 @@ test.describe('歌詞詳細頁', () => {
 
   test('載入過程中應顯示載入狀態', async ({ page }) => {
     // 設置延遲的 API 回應
-    await page.route('**/sheets.googleapis.com/**', async (route) => {
+    await page.route('**/exec**', async (route) => {
       await new Promise((resolve) => setTimeout(resolve, 500))
-      const mockResponse = {
-        range: 'Sheet1!A2:D',
-        majorDimension: 'ROWS',
-        values: mockSongs.map((song) => [song.id, song.title, song.artist, song.lyrics]),
-      }
+      const mockResponse = mockSongs.map((song) => ({
+        id: song.id,
+        title: song.title,
+        artist: song.artist,
+        lyrics: song.lyrics,
+      }))
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
