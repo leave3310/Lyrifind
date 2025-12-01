@@ -10,8 +10,8 @@ export const DEV_SERVER_PORT = 5173
 // https://vite.dev/config/
 export default defineConfig({
   // GitHub Pages 部署時使用 repo 名稱作為 base path
-  // 如果是部署到 username.github.io，請改為 '/'
-  base: process.env.NODE_ENV === 'production' ? '/LyriFind/' : '/',
+  // 可透過環境變數 VITE_BASE_PATH 設定，預設為 '/'
+  base: process.env.VITE_BASE_PATH || '/',
   plugins: [
     vue(),
     tailwindcss(),
