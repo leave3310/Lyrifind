@@ -11,7 +11,8 @@
     "lint:fix": "oxlint . --type-aware --fix",
     "format": "prettier --write \"src/**/*.{ts,vue,js,json,css,scss,md}\" \"e2e/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.{ts,vue,js,json,css,scss,md}\" \"e2e/**/*.ts\"",
-    "test": "vitest"
+    "test": "vitest",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@unhead/vue": "^2.0.19",
