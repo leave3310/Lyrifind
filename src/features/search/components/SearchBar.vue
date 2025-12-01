@@ -3,7 +3,10 @@
  * SearchBar 元件
  * @description 搜尋輸入框元件
  */
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+
+/** 最小搜尋字元數 */
+const MIN_SEARCH_LENGTH = 2
 
 /** Props 定義 */
 interface Props {
@@ -39,11 +42,21 @@ const emit = defineEmits<Emits>()
 /** 內部輸入值 */
 const inputValue = ref(props.modelValue)
 
+/** 驗證錯誤訊息 */
+const validationError = ref('')
+
+/** 是否顯示驗證錯誤 */
+const showValidationError = computed(() => validationError.value !== '')
+
 /** 監聽外部 modelValue 變化 */
 watch(
   () => props.modelValue,
   (newValue) => {
     inputValue.value = newValue
+    // 當輸入變化時清除錯誤
+    if (validationError.value) {
+      validationError.value = ''
+    }
   }
 )
 
@@ -55,12 +68,40 @@ function handleInput(event: Event): void {
   const target = event.target as HTMLInputElement
   inputValue.value = target.value
   emit('update:modelValue', target.value)
+  // 清除驗證錯誤
+  if (validationError.value) {
+    validationError.value = ''
+  }
+}
+
+/**
+ * 驗證輸入
+ * @returns 驗證是否通過
+ */
+function validateInput(): boolean {
+  const trimmedValue = inputValue.value.trim()
+  
+  if (trimmedValue === '') {
+    validationError.value = '請輸入搜尋關鍵字'
+    return false
+  }
+  
+  if (trimmedValue.length < MIN_SEARCH_LENGTH) {
+    validationError.value = `搜尋關鍵字至少需要 ${MIN_SEARCH_LENGTH} 個字元`
+    return false
+  }
+  
+  validationError.value = ''
+  return true
 }
 
 /**
  * 處理搜尋提交
  */
 function handleSubmit(): void {
+  if (!validateInput()) {
+    return
+  }
   const trimmedValue = inputValue.value.trim()
   emit('search', trimmedValue)
 }
@@ -80,6 +121,7 @@ function handleKeyDown(event: KeyboardEvent): void {
  */
 function handleClear(): void {
   inputValue.value = ''
+  validationError.value = ''
   emit('update:modelValue', '')
   emit('clear')
 }
@@ -151,7 +193,7 @@ function handleClear(): void {
       <button
         type="button"
         data-testid="search-button"
-        :disabled="disabled || loading || !inputValue.trim()"
+        :disabled="disabled || loading"
         class="absolute right-2 rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 disabled:cursor-not-allowed disabled:bg-gray-300"
         aria-label="執行搜尋"
         @click="handleSubmit"
@@ -182,6 +224,16 @@ function handleClear(): void {
         </span>
         <span v-else>搜尋</span>
       </button>
+    </div>
+
+    <!-- 驗證錯誤訊息 -->
+    <div
+      v-if="showValidationError"
+      class="mt-2 text-sm text-red-600"
+      data-testid="validation-error"
+      role="alert"
+    >
+      {{ validationError }}
     </div>
   </div>
 </template>

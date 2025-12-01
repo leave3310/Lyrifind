@@ -6,14 +6,15 @@ import { type Page, expect, test } from '@playwright/test'
 
 import { TEST_CONSTANTS, mockSongs } from './fixtures'
 
-/** 模擬 Google Sheets API 回應 */
-async function mockGoogleSheetsApi(page: Page) {
-  await page.route('**/sheets.googleapis.com/**', async (route) => {
-    const mockResponse = {
-      range: 'Sheet1!A2:D',
-      majorDimension: 'ROWS',
-      values: mockSongs.map((song) => [song.id, song.title, song.artist, song.lyrics]),
-    }
+/** 模擬 Apps Script API 回應 */
+async function mockAppsScriptApi(page: Page) {
+  await page.route('**/script.google.com/**', async (route) => {
+    const mockResponse = mockSongs.map((song) => ({
+      id: song.id,
+      title: song.title,
+      artist: song.artist,
+      lyrics: song.lyrics,
+    }))
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -24,7 +25,7 @@ async function mockGoogleSheetsApi(page: Page) {
 
 test.describe('導航功能', () => {
   test.beforeEach(async ({ page }) => {
-    await mockGoogleSheetsApi(page)
+    await mockAppsScriptApi(page)
   })
 
   test('點擊搜尋結果應導航至歌詞詳細頁', async ({ page }) => {

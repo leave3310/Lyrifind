@@ -57,7 +57,7 @@ function handleBack() {
           </svg>
         </button>
 
-        <RouterLink to="/" class="flex items-center gap-2 text-xl font-bold text-primary">
+        <RouterLink to="/" class="flex items-center gap-2 text-xl font-bold text-primary" data-testid="header-title">
           <svg
             class="h-6 w-6"
             fill="none"

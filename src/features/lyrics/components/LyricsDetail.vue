@@ -55,7 +55,7 @@ function handleRetry(): void {
     <div
       v-if="loading"
       class="flex flex-col items-center justify-center py-16"
-      data-testid="loading-spinner"
+      data-testid="lyrics-loading"
     >
       <LoadingSpinner size="large" />
       <p class="mt-4 text-gray-500">載入歌詞中...</p>

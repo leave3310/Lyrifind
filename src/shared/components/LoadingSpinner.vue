@@ -34,7 +34,7 @@ const textSizeClasses = {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-2">
+  <div class="flex flex-col items-center justify-center gap-2" data-testid="loading-spinner">
     <div
       :class="[
         sizeClasses[props.size],

@@ -8,7 +8,7 @@ import { TEST_CONSTANTS, mockSongs } from './fixtures'
 
 /** 模擬 Apps Script API 回應 */
 async function mockAppsScriptApi(page: Page) {
-  await page.route('**/exec**', async (route) => {
+  await page.route('**/script.google.com/**', async (route) => {
     const mockResponse = mockSongs.map((song) => ({
       id: song.id,
       title: song.title,
@@ -85,7 +85,7 @@ test.describe('歌詞詳細頁', () => {
 
   test('載入過程中應顯示載入狀態', async ({ page }) => {
     // 設置延遲的 API 回應
-    await page.route('**/exec**', async (route) => {
+    await page.route('**/script.google.com/**', async (route) => {
       await new Promise((resolve) => setTimeout(resolve, 500))
       const mockResponse = mockSongs.map((song) => ({
         id: song.id,

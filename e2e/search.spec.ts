@@ -6,14 +6,15 @@ import { type Page, expect, test } from '@playwright/test'
 
 import { TEST_CONSTANTS, mockSongs } from './fixtures'
 
-/** 模擬 Google Sheets API 回應 */
-async function mockGoogleSheetsApi(page: Page) {
-  await page.route('**/sheets.googleapis.com/**', async (route) => {
-    const mockResponse = {
-      range: 'Sheet1!A2:D',
-      majorDimension: 'ROWS',
-      values: mockSongs.map((song) => [song.id, song.title, song.artist, song.lyrics]),
-    }
+/** 模擬 Apps Script API 回應 */
+async function mockAppsScriptApi(page: Page) {
+  await page.route('**/script.google.com/**', async (route) => {
+    const mockResponse = mockSongs.map((song) => ({
+      id: song.id,
+      title: song.title,
+      artist: song.artist,
+      lyrics: song.lyrics,
+    }))
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -24,7 +25,7 @@ async function mockGoogleSheetsApi(page: Page) {
 
 test.describe('搜尋功能', () => {
   test.beforeEach(async ({ page }) => {
-    await mockGoogleSheetsApi(page)
+    await mockAppsScriptApi(page)
   })
 
   test('應該顯示搜尋輸入框', async ({ page }) => {
@@ -153,13 +154,14 @@ test.describe('搜尋功能', () => {
 
   test('搜尋過程中應顯示載入狀態', async ({ page }) => {
     // 設置延遲的 API 回應
-    await page.route('**/sheets.googleapis.com/**', async (route) => {
+    await page.route('**/script.google.com/**', async (route) => {
       await new Promise((resolve) => setTimeout(resolve, 500))
-      const mockResponse = {
-        range: 'Sheet1!A2:D',
-        majorDimension: 'ROWS',
-        values: mockSongs.map((song) => [song.id, song.title, song.artist, song.lyrics]),
-      }
+      const mockResponse = mockSongs.map((song) => ({
+        id: song.id,
+        title: song.title,
+        artist: song.artist,
+        lyrics: song.lyrics,
+      }))
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -206,7 +208,7 @@ test.describe('搜尋功能', () => {
 
 test.describe('歌手名稱搜尋 (US2)', () => {
   test.beforeEach(async ({ page }) => {
-    await mockGoogleSheetsApi(page)
+    await mockAppsScriptApi(page)
   })
 
   test('輸入歌手名稱應顯示該歌手的所有歌曲', async ({ page }) => {
@@ -242,7 +244,7 @@ test.describe('歌手名稱搜尋 (US2)', () => {
 
     // 驗證結果項目中顯示歌手名稱
     const firstResult = page.getByTestId('search-result-item').first()
-    const artistName = firstResult.getByTestId('result-artist')
+    const artistName = firstResult.getByTestId('song-artist')
     await expect(artistName).toBeVisible()
     await expect(artistName).toContainText('田馥甄')
   })
@@ -295,9 +297,9 @@ test.describe('歌手名稱搜尋 (US2)', () => {
     await page.waitForURL(/\/search\?q=/)
 
     // 驗證顯示無結果訊息
-    const emptyState = page.getByTestId('empty-state')
-    await expect(emptyState).toBeVisible()
-    await expect(emptyState).toContainText('找不到')
+    const emptyResults = page.getByTestId('empty-results')
+    await expect(emptyResults).toBeVisible()
+    await expect(emptyResults).toContainText('找不到')
   })
 
   test('歌手搜尋結果點擊應導航至歌詞詳情頁', async ({ page }) => {
@@ -326,7 +328,7 @@ test.describe('歌手名稱搜尋 (US2)', () => {
 
 test.describe('歌詞片段搜尋 (US3)', () => {
   test.beforeEach(async ({ page }) => {
-    await mockGoogleSheetsApi(page)
+    await mockAppsScriptApi(page)
   })
 
   test('輸入歌詞片段應找到對應歌曲', async ({ page }) => {
@@ -434,9 +436,9 @@ test.describe('歌詞片段搜尋 (US3)', () => {
     await page.waitForURL(/\/search\?q=/)
 
     // 驗證顯示無結果訊息
-    const emptyState = page.getByTestId('empty-state')
-    await expect(emptyState).toBeVisible()
-    await expect(emptyState).toContainText('找不到')
+    const emptyResults = page.getByTestId('empty-results')
+    await expect(emptyResults).toBeVisible()
+    await expect(emptyResults).toContainText('找不到')
   })
 
   test('歌詞搜尋結果點擊應導航至歌詞詳情頁', async ({ page }) => {
