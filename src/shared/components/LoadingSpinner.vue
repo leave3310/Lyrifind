@@ -19,7 +19,6 @@ const props = withDefaults(defineProps<Props>(), {
   text: '載入中...',
 })
 
-/** 根據大小計算 CSS 類別 */
 const sizeClasses = {
   small: 'w-4 h-4 border-2',
   medium: 'w-8 h-8 border-3',

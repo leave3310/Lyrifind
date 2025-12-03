@@ -7,7 +7,6 @@ import type { SearchResult } from '@/shared/types'
 
 import SearchResultItem from './SearchResultItem.vue'
 
-/** Props 定義 */
 interface Props {
   /** 搜尋結果列表 */
   results: SearchResult[]
@@ -25,7 +24,6 @@ withDefaults(defineProps<Props>(), {
   totalCount: 0,
 })
 
-/** Emits 定義 */
 interface Emits {
   (e: 'select', songId: string): void
 }
@@ -43,7 +41,6 @@ function handleItemClick(songId: string): void {
 
 <template>
   <div class="search-results" data-testid="search-results">
-    <!-- 載入中狀態 -->
     <div
       v-if="loading"
       class="flex flex-col items-center justify-center py-12"
@@ -53,7 +50,6 @@ function handleItemClick(songId: string): void {
       <p class="mt-4 text-gray-500">搜尋中...</p>
     </div>
 
-    <!-- 空結果狀態 -->
     <div
       v-else-if="results.length === 0 && keyword"
       class="flex flex-col items-center justify-center py-12"
@@ -80,14 +76,11 @@ function handleItemClick(songId: string): void {
       </p>
     </div>
 
-    <!-- 結果列表 -->
     <template v-else-if="results.length > 0">
-      <!-- 結果統計 -->
       <div v-if="totalCount > 0" class="mb-4 text-sm text-gray-500" data-testid="results-count">
         共找到 {{ totalCount }} 首歌曲
       </div>
 
-      <!-- 結果項目 -->
       <div class="space-y-3">
         <SearchResultItem
           v-for="result in results"
@@ -98,7 +91,6 @@ function handleItemClick(songId: string): void {
       </div>
     </template>
 
-    <!-- 初始狀態（尚未搜尋） -->
     <div v-else class="flex flex-col items-center justify-center py-12" data-testid="initial-state">
       <svg
         xmlns="http://www.w3.org/2000/svg"

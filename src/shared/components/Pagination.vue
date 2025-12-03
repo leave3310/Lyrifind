@@ -5,7 +5,6 @@
  */
 import { computed } from 'vue'
 
-/** Props 定義 */
 interface Props {
   /** 當前頁碼 */
   currentPage: number
@@ -22,7 +21,6 @@ const props = withDefaults(defineProps<Props>(), {
   visiblePages: 5,
 })
 
-/** Emits 定義 */
 interface Emits {
   (e: 'update:currentPage', page: number): void
   (e: 'change', page: number): void
@@ -131,7 +129,6 @@ function goToNext(): void {
     role="navigation"
     aria-label="分頁導航"
   >
-    <!-- 上一頁按鈕 -->
     <button
       type="button"
       data-testid="pagination-prev"
@@ -152,7 +149,6 @@ function goToNext(): void {
       </svg>
     </button>
 
-    <!-- 頁碼按鈕 -->
     <template v-for="(page, index) in visiblePageNumbers" :key="index">
       <span
         v-if="page === '...'"
@@ -181,7 +177,6 @@ function goToNext(): void {
       </button>
     </template>
 
-    <!-- 下一頁按鈕 -->
     <button
       type="button"
       data-testid="pagination-next"

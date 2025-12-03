@@ -11,12 +11,10 @@ import AppHeader from '@/shared/components/AppHeader.vue'
 
 const router = useRouter()
 
-/** 處理返回按鈕點擊 */
 function handleBack() {
   router.back()
 }
 
-/** 判斷是否需要顯示返回按鈕 */
 const showBack = computed(() => {
   return router.currentRoute.value.name !== 'Home'
 })

@@ -23,7 +23,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<Emits>()
 
-/** 處理重試點擊 */
 function handleRetry() {
   emit('retry')
 }
@@ -34,7 +33,6 @@ function handleRetry() {
     class="flex flex-col items-center justify-center gap-4 rounded-lg bg-red-50 p-6 text-center dark:bg-red-900/20"
     role="alert"
   >
-    <!-- 錯誤圖示 -->
     <div class="flex h-12 w-12 items-center justify-center rounded-full bg-error/10">
       <svg
         class="h-6 w-6 text-error"
@@ -52,7 +50,6 @@ function handleRetry() {
       </svg>
     </div>
 
-    <!-- 錯誤訊息 -->
     <div class="space-y-1">
       <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">發生錯誤</h3>
       <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -60,7 +57,6 @@ function handleRetry() {
       </p>
     </div>
 
-    <!-- 重試按鈕 -->
     <button
       v-if="props.showRetry && props.error.retryable"
       type="button"

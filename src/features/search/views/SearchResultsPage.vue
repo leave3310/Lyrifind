@@ -110,15 +110,12 @@ onMounted(() => {
 
 <template>
   <div class="search-results-page">
-    <!-- 搜尋框 -->
     <div class="mb-6">
       <SearchBar v-model="keyword" :loading="loading" @search="handleSearch" />
     </div>
 
-    <!-- 錯誤訊息 -->
     <ErrorMessage v-if="error" :error="error" @retry="retry" />
 
-    <!-- 搜尋結果 -->
     <template v-else>
       <SearchResults
         :results="results"
@@ -128,7 +125,6 @@ onMounted(() => {
         @select="handleSelect"
       />
 
-      <!-- 分頁 -->
       <div v-if="hasSearched && totalPages > 1 && !loading" class="mt-8">
         <Pagination
           :current-page="currentPage"

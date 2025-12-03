@@ -5,7 +5,6 @@
  */
 import type { SearchResult } from '@/shared/types'
 
-/** Props 定義 */
 interface Props {
   /** 搜尋結果 */
   result: SearchResult
@@ -13,16 +12,12 @@ interface Props {
 
 const props = defineProps<Props>()
 
-/** Emits 定義 */
 interface Emits {
   (e: 'click', songId: string): void
 }
 
 const emit = defineEmits<Emits>()
 
-/**
- * 處理點擊事件
- */
 function handleClick(): void {
   emit('click', props.result.song.id)
 }
@@ -87,21 +82,18 @@ function getMatchTypeClass(): string {
   >
     <div class="flex items-start justify-between">
       <div class="flex-1 min-w-0">
-        <!-- 歌曲名稱 -->
         <h3 class="text-lg font-semibold text-gray-900 truncate" data-testid="song-title">
           <!-- eslint-disable-next-line vue/no-v-html -->
           <span v-if="result.highlightedTitle" v-html="result.highlightedTitle" />
           <span v-else>{{ result.song.title }}</span>
         </h3>
 
-        <!-- 歌手名稱 -->
         <p class="mt-1 text-sm text-gray-600" data-testid="song-artist">
           <!-- eslint-disable-next-line vue/no-v-html -->
           <span v-if="result.highlightedArtist" v-html="result.highlightedArtist" />
           <span v-else>{{ result.song.artist }}</span>
         </p>
 
-        <!-- 歌詞片段（僅歌詞匹配時顯示） -->
         <p
           v-if="result.highlightedLyrics"
           class="mt-2 text-sm text-gray-500 line-clamp-2"
@@ -112,7 +104,6 @@ function getMatchTypeClass(): string {
         </p>
       </div>
 
-      <!-- 匹配類型標籤 -->
       <span
         :class="[
           'ml-2 flex-shrink-0 rounded-full px-2 py-1 text-xs font-medium',

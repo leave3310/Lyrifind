@@ -4,7 +4,6 @@
  */
 import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 
-/** 路由設定 */
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -40,7 +39,6 @@ const routes: RouteRecordRaw[] = [
   },
 ]
 
-/** 建立 Router 實例 */
 const router = createRouter({
   history: createWebHistory(),
   routes,
@@ -52,7 +50,6 @@ const router = createRouter({
   },
 })
 
-/** 路由守衛：更新頁面標題 */
 router.beforeEach((to) => {
   const title = to.meta.title as string | undefined
   if (title) {

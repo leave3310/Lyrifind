@@ -8,7 +8,6 @@ import type { AppError, Song } from '@/shared/types'
 
 import LyricsContent from './LyricsContent.vue'
 
-/** Props 定義 */
 interface Props {
   /** 歌曲資料 */
   song: Song | null
@@ -26,7 +25,6 @@ withDefaults(defineProps<Props>(), {
   highlightKeyword: '',
 })
 
-/** Emits 定義 */
 interface Emits {
   (e: 'back'): void
   (e: 'retry'): void
@@ -34,16 +32,10 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-/**
- * 處理返回
- */
 function handleBack(): void {
   emit('back')
 }
 
-/**
- * 處理重試
- */
 function handleRetry(): void {
   emit('retry')
 }
@@ -51,7 +43,6 @@ function handleRetry(): void {
 
 <template>
   <div class="lyrics-detail" data-testid="lyrics-detail">
-    <!-- 載入中狀態 -->
     <div
       v-if="loading"
       class="flex flex-col items-center justify-center py-16"
@@ -61,9 +52,7 @@ function handleRetry(): void {
       <p class="mt-4 text-gray-500">載入歌詞中...</p>
     </div>
 
-    <!-- 錯誤狀態 -->
     <div v-else-if="error" class="flex flex-col items-center justify-center py-16">
-      <!-- 找不到歌曲 -->
       <div v-if="error.code === 'NOT_FOUND'" class="text-center" data-testid="not-found-message">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +81,6 @@ function handleRetry(): void {
         </button>
       </div>
 
-      <!-- 其他錯誤 -->
       <div v-else class="text-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -133,9 +121,7 @@ function handleRetry(): void {
       </div>
     </div>
 
-    <!-- 歌曲內容 -->
     <div v-else-if="song" class="space-y-6">
-      <!-- 返回按鈕 -->
       <button
         type="button"
         class="inline-flex items-center text-sm text-gray-600 hover:text-blue-600 transition-colors"
@@ -160,7 +146,6 @@ function handleRetry(): void {
         返回搜尋結果
       </button>
 
-      <!-- 歌曲資訊 -->
       <header class="border-b border-gray-200 pb-4">
         <h1 class="text-2xl font-bold text-gray-900" data-testid="lyrics-title">
           {{ song.title }}
@@ -170,7 +155,6 @@ function handleRetry(): void {
         </p>
       </header>
 
-      <!-- 歌詞內容 -->
       <LyricsContent :lyrics="song.lyrics" :highlight-keyword="highlightKeyword" />
     </div>
   </div>

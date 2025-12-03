@@ -8,7 +8,6 @@ import { computed, ref, watch } from 'vue'
 /** 最小搜尋字元數 */
 const MIN_SEARCH_LENGTH = 2
 
-/** Props 定義 */
 interface Props {
   /** 搜尋關鍵字（v-model） */
   modelValue?: string
@@ -22,7 +21,6 @@ interface Props {
   disabled?: boolean
 }
 
-/** Emits 定義 */
 interface Emits {
   (e: 'update:modelValue', value: string): void
   (e: 'search', value: string): void
@@ -135,7 +133,6 @@ function handleClear(): void {
 <template>
   <div class="search-bar" data-testid="search-bar">
     <div class="relative flex items-center">
-      <!-- 搜尋圖示 -->
       <div class="absolute left-3 text-gray-400">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -154,7 +151,6 @@ function handleClear(): void {
         </svg>
       </div>
 
-      <!-- 輸入框 -->
       <input
         :value="inputValue"
         type="text"
@@ -168,7 +164,6 @@ function handleClear(): void {
         @keydown="handleKeyDown"
       />
 
-      <!-- 清除按鈕 -->
       <button
         v-if="inputValue && !loading"
         type="button"
@@ -194,7 +189,6 @@ function handleClear(): void {
         </svg>
       </button>
 
-      <!-- 搜尋按鈕 -->
       <button
         type="button"
         data-testid="search-button"
@@ -231,7 +225,6 @@ function handleClear(): void {
       </button>
     </div>
 
-    <!-- 驗證錯誤訊息 -->
     <div
       v-if="showValidationError"
       class="mt-2 text-sm text-red-600"

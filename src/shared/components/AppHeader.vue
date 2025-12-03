@@ -21,7 +21,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<Emits>()
 
-/** 處理返回點擊 */
 function handleBack() {
   emit('back')
 }
@@ -32,7 +31,6 @@ function handleBack() {
     class="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-800 dark:bg-gray-900/80"
   >
     <div class="mx-auto flex h-16 max-w-4xl items-center justify-between px-4">
-      <!-- 左側：返回按鈕或 Logo -->
       <div class="flex items-center gap-3">
         <button
           v-if="props.showBack"
@@ -76,7 +74,6 @@ function handleBack() {
         </RouterLink>
       </div>
 
-      <!-- 右側：導覽連結 -->
       <nav class="flex items-center gap-2">
         <RouterLink
           to="/"

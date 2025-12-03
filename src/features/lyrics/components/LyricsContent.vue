@@ -7,7 +7,6 @@ import { computed } from 'vue'
 
 import type { LyricsLine, ParsedLyrics } from '../types'
 
-/** Props 定義 */
 interface Props {
   /** 歌詞內容 */
   lyrics: string
@@ -98,7 +97,6 @@ function escapeRegex(text: string): string {
     >
       <template v-for="line in parsedLyrics.lines" :key="line.lineNumber">
         <div class="lyrics-line py-0.5" :class="{ 'text-gray-400': line.isEmpty }">
-          <!-- 行號 -->
           <span
             v-if="showLineNumbers"
             class="inline-block w-8 text-right text-xs text-gray-400 mr-4 select-none"
@@ -106,7 +104,6 @@ function escapeRegex(text: string): string {
             {{ line.lineNumber }}
           </span>
 
-          <!-- 歌詞內容 -->
           <span v-if="highlightKeyword && !line.isEmpty" v-html="highlightText(line.content)" />
           <span v-else-if="line.isEmpty">&nbsp;</span>
           <span v-else>{{ line.content }}</span>
@@ -114,7 +111,6 @@ function escapeRegex(text: string): string {
       </template>
     </div>
 
-    <!-- 無歌詞狀態 -->
     <div v-else class="text-center py-8 text-gray-500" data-testid="no-lyrics">暫無歌詞內容</div>
   </div>
 </template>
