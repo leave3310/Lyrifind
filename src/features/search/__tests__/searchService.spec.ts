@@ -79,7 +79,7 @@ describe('searchService', () => {
       const response = await searchService.search({ keyword: '小幸運' })
 
       for (let i = 0; i < response.results.length - 1; i++) {
-        expect(response.results[i].score).toBeGreaterThanOrEqual(response.results[i + 1].score)
+        expect(response.results[i]!.score).toBeGreaterThanOrEqual(response.results[i + 1]!.score)
       }
     })
 
@@ -125,7 +125,7 @@ describe('searchService', () => {
         pageSize: 1,
       })
 
-      expect(page1.results[0].song.id).not.toBe(page2.results[0].song.id)
+      expect(page1.results[0]!.song.id).not.toBe(page2.results[0]!.song.id)
     })
 
     it('預設每頁 20 筆', async () => {
@@ -139,7 +139,7 @@ describe('searchService', () => {
     it('應該在標題中高亮關鍵字', async () => {
       const response = await searchService.search({ keyword: '小幸運' })
 
-      const result = response.results[0]
+      const result = response.results[0]!
       expect(result.highlightedTitle).toContain('<mark')
       expect(result.highlightedTitle).toContain('小幸運')
     })
@@ -264,7 +264,7 @@ describe('searchService', () => {
       const response = await searchService.search({ keyword: '王心凌' })
 
       expect(response.results.length).toBeGreaterThan(0)
-      expect(response.results[0].matchType).toBe('ARTIST')
+      expect(response.results[0]!.matchType).toBe('ARTIST')
     })
 
     it('搜尋不存在的歌手應回傳空結果', async () => {
@@ -290,7 +290,7 @@ describe('searchService', () => {
 
       // 結果應按分數降序排列
       for (let i = 0; i < response.results.length - 1; i++) {
-        expect(response.results[i].score).toBeGreaterThanOrEqual(response.results[i + 1].score)
+        expect(response.results[i]!.score).toBeGreaterThanOrEqual(response.results[i + 1]!.score)
       }
     })
   })
@@ -409,7 +409,7 @@ describe('searchService', () => {
 
       // 結果應按分數降序排列
       for (let i = 0; i < response.results.length - 1; i++) {
-        expect(response.results[i].score).toBeGreaterThanOrEqual(response.results[i + 1].score)
+        expect(response.results[i]!.score).toBeGreaterThanOrEqual(response.results[i + 1]!.score)
       }
     })
   })

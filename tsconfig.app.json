@@ -5,9 +5,8 @@
     "types": ["vite/client"],
 
     /* 路徑別名 */
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
 
     /* Linting */
@@ -17,5 +16,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "exclude": ["src/**/__tests__/**", "src/**/*.spec.ts"]
+  
 }

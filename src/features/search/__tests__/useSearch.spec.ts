@@ -56,7 +56,7 @@ describe('useSearch', () => {
     await search()
 
     expect(results.value.length).toBeGreaterThan(0)
-    expect(results.value[0].song.title).toBe('小幸運')
+    expect(results.value[0]!.song.title).toBe('小幸運')
   })
 
   it('應該根據歌手名稱搜尋', async () => {
@@ -78,7 +78,7 @@ describe('useSearch', () => {
     await search()
 
     expect(results.value.length).toBeGreaterThan(0)
-    expect(results.value[0].song.lyrics).toContain('雨滴')
+    expect(results.value[0]!.song.lyrics).toContain('雨滴')
   })
 
   it('搜尋不分大小寫', async () => {
@@ -109,7 +109,7 @@ describe('useSearch', () => {
 
     // 結果應該按 score 降序排列
     for (let i = 0; i < results.value.length - 1; i++) {
-      expect(results.value[i].score).toBeGreaterThanOrEqual(results.value[i + 1].score)
+      expect(results.value[i]!.score).toBeGreaterThanOrEqual(results.value[i + 1]!.score)
     }
   })
 
@@ -174,7 +174,7 @@ describe('useSearch', () => {
     await search()
 
     // 完全匹配應該排在第一位
-    expect(results.value[0].matchType).toBe('TITLE_EXACT')
-    expect(results.value[0].score).toBe(100)
+    expect(results.value[0]!.matchType).toBe('TITLE_EXACT')
+    expect(results.value[0]!.score).toBe(100)
   })
 })
