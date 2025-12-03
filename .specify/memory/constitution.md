@@ -2,20 +2,16 @@
 ================================================================================
 同步影響報告 (Sync Impact Report)
 ================================================================================
-版本變更: 1.1.0 → 1.2.0 (新增技術堆疊)
+版本變更: 1.2.0 → 1.3.0 (新增註解規範)
 修改的原則:
-  - 技術堆疊規範：新增 Axios、Tailwind CSS v4、VueUse 相關規範
+  - II. 程式碼品質：新增「程式碼註解規範」子章節
 新增區段:
-  - VIII. HTTP 請求規範 (Axios)
-  - IX. 樣式規範 (Tailwind CSS v4)
-  - X. 組合式函式規範 (VueUse)
+  - 程式碼註解規範（於 II. 程式碼品質 區段內）
 移除區段: 無
 需要更新的範本:
-  - `.specify/templates/plan-template.md` ✅ 已審查
-  - `.specify/templates/spec-template.md` ✅ 符合規範
-  - `.specify/templates/tasks-template.md` ✅ 符合規範
-需要更新的規格文件:
-  - `specs/001-lyrics-search/research.md` ⚠️ 需更新技術決策（Axios、VueUse）
+  - `.specify/templates/plan-template.md` ✅ 已審查（無需更新）
+  - `.specify/templates/spec-template.md` ✅ 符合規範（無需更新）
+  - `.specify/templates/tasks-template.md` ✅ 符合規範（無需更新）
 待辦事項: 無
 ================================================================================
 -->
@@ -46,6 +42,22 @@
 - 所有程式碼註解 MUST 使用正體中文撰寫
 - 單一函式 SHOULD NOT 超過 50 行；超過 MUST 提供重構理由
 - 圈複雜度 (Cyclomatic Complexity) SHOULD NOT 超過 10
+
+**程式碼註解規範**：
+- 註解 SHOULD 解釋「為什麼」(Why) 而非「是什麼」(What)
+- 以下情況 MUST NOT 撰寫註解（視為冗餘註解）：
+  - 型別定義標籤（如 `/** Props 定義 */`、`/** Emits 定義 */`）：`interface Props` 本身已表達用途
+  - 自解釋函式的 JSDoc（如 `/** 處理返回 */` 配 `handleBack()`）：函式名稱已清楚表達功能
+  - 與 `v-if`/`v-else` 條件重複的 HTML 註解（如 `<!-- 載入中狀態 -->` 配 `v-if="loading"`）
+  - 與語意化標籤重複的註解（如 `<!-- 歌曲資訊 -->` 配 `<header>`）
+  - 與元件名稱重複的註解（如 `<!-- 歌詞內容 -->` 配 `<LyricsContent>`）
+  - 與按鈕文字重複的註解（如 `<!-- 返回按鈕 -->` 配按鈕文字「返回搜尋結果」）
+- 以下情況 SHOULD 撰寫註解：
+  - 複雜的業務邏輯或演算法
+  - 非直觀的技術決策及其理由
+  - 公開 API 的 JSDoc（含參數說明、回傳值、範例）
+  - 效能考量或權衡取捨
+  - TODO/FIXME 標記（需包含原因和預期處理時間）
 
 **理由**：一致的程式碼品質標準降低維護成本，提高團隊協作效率。
 
@@ -337,4 +349,4 @@ import * as VueUse from '@vueuse/core'
 - 定期審查專案是否持續遵循憲章原則
 - 技術決策 MUST 參考憲章原則進行評估
 
-**Version**: 1.2.0 | **Ratified**: 2025-11-26 | **Last Amended**: 2025-11-28
+**Version**: 1.3.0 | **Ratified**: 2025-11-26 | **Last Amended**: 2025-12-03
