@@ -2,16 +2,18 @@
 ================================================================================
 同步影響報告 (Sync Impact Report)
 ================================================================================
-版本變更: 1.0.0 → 1.1.0 (新增原則)
+版本變更: 1.4.0 → 1.5.0 (新增快取策略與 API Contract 規範)
 修改的原則:
-  - V. 國際化與語系規範：移除 commit 訊息相關規範（移至新原則）
+  - II. 程式碼品質：新增「程式碼註解規範」子章節（維持）
 新增區段:
-  - VII. Git Commit 規範 (Conventional Commits v1.0.0)
+  - XI. 快取策略規範 (TanStack Query)
+  - XII. API Contract 規範 (ts-rest + Zod)
+  - 技術堆疊規範：新增「資料快取」與「API Contract」區段
 移除區段: 無
 需要更新的範本:
-  - `.specify/templates/plan-template.md` ⚠️ 需手動更新技術上下文區段
-  - `.specify/templates/spec-template.md` ✅ 符合規範
-  - `.specify/templates/tasks-template.md` ⚠️ 需確保測試任務在實作任務之前
+  - `.specify/templates/plan-template.md` ✅ 已審查（無需更新）
+  - `.specify/templates/spec-template.md` ✅ 符合規範（無需更新）
+  - `.specify/templates/tasks-template.md` ✅ 符合規範（無需更新）
 待辦事項: 無
 ================================================================================
 -->
@@ -42,6 +44,22 @@
 - 所有程式碼註解 MUST 使用正體中文撰寫
 - 單一函式 SHOULD NOT 超過 50 行；超過 MUST 提供重構理由
 - 圈複雜度 (Cyclomatic Complexity) SHOULD NOT 超過 10
+
+**程式碼註解規範**：
+- 註解 SHOULD 解釋「為什麼」(Why) 而非「是什麼」(What)
+- 以下情況 MUST NOT 撰寫註解（視為冗餘註解）：
+  - 型別定義標籤（如 `/** Props 定義 */`、`/** Emits 定義 */`）：`interface Props` 本身已表達用途
+  - 自解釋函式的 JSDoc（如 `/** 處理返回 */` 配 `handleBack()`）：函式名稱已清楚表達功能
+  - 與 `v-if`/`v-else` 條件重複的 HTML 註解（如 `<!-- 載入中狀態 -->` 配 `v-if="loading"`）
+  - 與語意化標籤重複的註解（如 `<!-- 歌曲資訊 -->` 配 `<header>`）
+  - 與元件名稱重複的註解（如 `<!-- 歌詞內容 -->` 配 `<LyricsContent>`）
+  - 與按鈕文字重複的註解（如 `<!-- 返回按鈕 -->` 配按鈕文字「返回搜尋結果」）
+- 以下情況 SHOULD 撰寫註解：
+  - 複雜的業務邏輯或演算法
+  - 非直觀的技術決策及其理由
+  - 公開 API 的 JSDoc（含參數說明、回傳值、範例）
+  - 效能考量或權衡取捨
+  - TODO/FIXME 標記（需包含原因和預期處理時間）
 
 **理由**：一致的程式碼品質標準降低維護成本，提高團隊協作效率。
 
@@ -149,6 +167,261 @@ BREAKING CHANGE: API 回應結構已變更，需更新前端對應程式碼
 
 **理由**：Conventional Commits 提供一致且機器可讀的 commit 歷史，便於自動化產生 CHANGELOG、語意化版本遞增和團隊協作。
 
+### VIII. HTTP 請求規範 (Axios)
+
+**規範**：
+- 所有 HTTP 請求 MUST 使用 Axios 函式庫
+- MUST 建立統一的 Axios instance，所有請求透過此 instance 發送
+- Axios instance MUST 設定於 `src/shared/services/http.ts`
+- 請求攔截器 MUST 統一處理：
+  - 請求標頭設定（Content-Type、Authorization 等）
+  - 請求載入狀態管理
+- 回應攔截器 MUST 統一處理：
+  - 錯誤回應轉換（轉為 `AppError` 型別）
+  - HTTP 狀態碼對應的錯誤訊息（正體中文）
+  - 401/403 未授權處理
+  - 網路錯誤處理
+- 請求逾時 MUST 設定合理的 timeout（建議 10 秒）
+- API Base URL MUST 透過環境變數設定（`VITE_API_BASE_URL`）
+
+**Axios Instance 結構**：
+```typescript
+// src/shared/services/http.ts
+import axios from 'axios'
+import type { AxiosInstance } from 'axios'
+
+const http: AxiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+
+// 請求攔截器
+http.interceptors.request.use(/* ... */)
+
+// 回應攔截器
+http.interceptors.response.use(/* ... */)
+
+export { http }
+```
+
+**理由**：統一的 HTTP 請求管理確保一致的錯誤處理、載入狀態和請求設定，降低重複程式碼。
+
+### IX. 樣式規範 (Tailwind CSS v4)
+
+**規範**：
+- 專案樣式 MUST 使用 Tailwind CSS v4
+- MUST 優先使用 Tailwind 的 utility classes，避免撰寫自訂 CSS
+- 自訂樣式 SHOULD 使用 Tailwind 的 `@apply` 指令或 CSS 變數
+- 響應式設計 MUST 使用 Tailwind 的斷點前綴（`sm:`、`md:`、`lg:`、`xl:`、`2xl:`）
+- 深色模式 SHOULD 使用 Tailwind 的 `dark:` 前綴（若有需求）
+- 元件樣式 SHOULD 使用 Tailwind 的 `@layer components` 定義可重用樣式
+- 顏色和間距 MUST 使用 Tailwind 的設計系統，避免使用任意值（arbitrary values）
+
+**Tailwind CSS v4 設定**：
+```css
+/* src/style.css */
+@import "tailwindcss";
+
+@theme {
+  /* 自訂主題變數 */
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+}
+```
+
+**最佳實踐**：
+- 使用語意化的類別組合（如 `btn-primary`、`card`）
+- 避免過長的 class 字串，適時抽取為元件
+- 使用 `clsx` 或 `tailwind-merge` 處理條件式樣式
+
+**理由**：Tailwind CSS v4 提供 utility-first 的樣式方案，加速開發效率，並確保設計一致性。
+
+### X. 組合式函式規範 (VueUse)
+
+**規範**：
+- 專案 MUST 使用 VueUse 作為組合式函式（composables）的工具函式庫
+- 常用的瀏覽器 API 封裝 SHOULD 優先使用 VueUse 提供的實作
+- 推薦使用的 VueUse 函式：
+  - `useDebounceFn` / `useThrottleFn`：防抖/節流
+  - `useLocalStorage` / `useSessionStorage`：本地儲存
+  - `useFetch`：資料請求（配合 Axios 使用時可作為替代方案）
+  - `useEventListener`：事件監聽
+  - `useMediaQuery`：響應式斷點
+  - `useClipboard`：剪貼簿操作
+  - `useIntersectionObserver`：懶載入
+  - `useTitle`：動態標題
+- 自訂 composables SHOULD 遵循 VueUse 的命名慣例（`use` 前綴）
+- VueUse 函式 MUST 按需引入，避免引入整個套件
+
+**引入方式**：
+```typescript
+// ✅ 正確：按需引入
+import { useDebounceFn, useLocalStorage } from '@vueuse/core'
+
+// ❌ 錯誤：引入整個套件
+import * as VueUse from '@vueuse/core'
+```
+
+**理由**：VueUse 提供經過測試的高品質組合式函式，減少重複造輪子，提升開發效率。
+
+### XI. 快取策略規範 (TanStack Query)
+
+**規範**：
+- 所有 API 資料請求 MUST 使用 TanStack Query（@tanstack/vue-query）進行快取管理
+- Query Key MUST 使用結構化陣列格式，確保快取的可預測性
+- MUST 設定適當的 `staleTime` 和 `gcTime`（舊稱 `cacheTime`）
+- 變更操作（POST、PUT、DELETE）MUST 使用 `useMutation` 並搭配 `invalidateQueries`
+- Query Client MUST 於應用程式根層級設定（`src/main.ts`）
+- SHOULD 使用 Query Key Factory 模式集中管理 query keys
+
+**Query Key 設計規範**：
+```typescript
+// src/shared/services/queryKeys.ts
+export const queryKeys = {
+  lyrics: {
+    all: ['lyrics'] as const,
+    lists: () => [...queryKeys.lyrics.all, 'list'] as const,
+    list: (filters: LyricsFilters) => [...queryKeys.lyrics.lists(), filters] as const,
+    details: () => [...queryKeys.lyrics.all, 'detail'] as const,
+    detail: (id: string) => [...queryKeys.lyrics.details(), id] as const,
+  },
+  search: {
+    all: ['search'] as const,
+    results: (query: string) => [...queryKeys.search.all, query] as const,
+  },
+}
+```
+
+**快取策略建議**：
+- 搜尋結果：`staleTime: 5 * 60 * 1000`（5 分鐘）
+- 歌詞詳情：`staleTime: 30 * 60 * 1000`（30 分鐘）
+- 使用者偏好：`staleTime: Infinity`（手動 invalidate）
+- 頻繁變動資料：`staleTime: 0`（每次重新取得）
+
+**使用範例**：
+```typescript
+// 查詢
+const { data, isLoading, error } = useQuery({
+  queryKey: queryKeys.lyrics.detail(lyricsId),
+  queryFn: () => lyricsApi.getById(lyricsId),
+  staleTime: 30 * 60 * 1000,
+})
+
+// 變更
+const mutation = useMutation({
+  mutationFn: lyricsApi.update,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.lyrics.all })
+  },
+})
+```
+
+**理由**：TanStack Query 提供強大的伺服器狀態管理，自動處理快取、重試、背景更新，減少重複請求並提升使用者體驗。
+
+### XII. API Contract 規範 (ts-rest + Zod)
+
+**規範**：
+- 所有 API 端點 MUST 使用 ts-rest 定義 contract
+- 請求與回應的資料結構 MUST 使用 Zod schema 驗證
+- Contract 定義 MUST 放置於 `src/shared/contracts/` 目錄
+- 每個功能模組 SHOULD 有獨立的 contract 檔案
+- API Client MUST 透過 ts-rest 的 `initClient` 產生，確保型別安全
+- Zod Schema MUST 與 TypeScript 型別保持同步（使用 `z.infer<typeof schema>`）
+
+**Contract 結構**：
+```typescript
+// src/shared/contracts/lyrics.contract.ts
+import { initContract } from '@ts-rest/core'
+import { z } from 'zod'
+
+const c = initContract()
+
+// Zod Schemas
+export const LyricsSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  artist: z.string(),
+  content: z.string(),
+  createdAt: z.string().datetime(),
+})
+
+export const SearchQuerySchema = z.object({
+  query: z.string().min(1),
+  page: z.number().optional().default(1),
+  limit: z.number().optional().default(20),
+})
+
+// Contract 定義
+export const lyricsContract = c.router({
+  search: {
+    method: 'GET',
+    path: '/api/lyrics/search',
+    query: SearchQuerySchema,
+    responses: {
+      200: z.object({
+        data: z.array(LyricsSchema),
+        total: z.number(),
+      }),
+      400: z.object({ message: z.string() }),
+    },
+  },
+  getById: {
+    method: 'GET',
+    path: '/api/lyrics/:id',
+    pathParams: z.object({ id: z.string() }),
+    responses: {
+      200: LyricsSchema,
+      404: z.object({ message: z.string() }),
+    },
+  },
+})
+
+// 匯出推斷型別
+export type Lyrics = z.infer<typeof LyricsSchema>
+export type SearchQuery = z.infer<typeof SearchQuerySchema>
+```
+
+**API Client 設定**：
+```typescript
+// src/shared/services/apiClient.ts
+import { initClient } from '@ts-rest/core'
+import { lyricsContract } from '../contracts/lyrics.contract'
+
+export const apiClient = initClient(lyricsContract, {
+  baseUrl: import.meta.env.VITE_API_BASE_URL,
+  baseHeaders: {
+    'Content-Type': 'application/json',
+  },
+})
+```
+
+**與 TanStack Query 整合**：
+```typescript
+// src/features/search/composables/useSearchLyrics.ts
+import { useQuery } from '@tanstack/vue-query'
+import { apiClient } from '@/shared/services/apiClient'
+import { queryKeys } from '@/shared/services/queryKeys'
+
+export function useSearchLyrics(query: string) {
+  return useQuery({
+    queryKey: queryKeys.search.results(query),
+    queryFn: async () => {
+      const response = await apiClient.search({ query: { query } })
+      if (response.status !== 200) {
+        throw new Error(response.body.message)
+      }
+      return response.body
+    },
+    enabled: query.length > 0,
+  })
+}
+```
+
+**理由**：ts-rest + Zod 提供端到端的型別安全，確保前後端 API 契約一致，減少執行階段錯誤並提升開發體驗。
+
 ## 技術堆疊規範
 
 **核心技術**：
@@ -162,10 +435,33 @@ BREAKING CHANGE: API 回應結構已變更，需更新前端對應程式碼
 - **程式碼檢查**：OxLint (type-aware 模式)
 - **型別檢查**：vue-tsc
 
+**HTTP 請求**：
+- **HTTP 客戶端**：Axios
+- 所有 API 請求 MUST 透過統一的 Axios instance（`src/shared/services/http.ts`）
+
+**樣式框架**：
+- **CSS 框架**：Tailwind CSS v4
+- **樣式輔助**：`clsx` 或 `tailwind-merge`（條件式樣式）
+
+**工具函式庫**：
+- **組合式函式**：VueUse（@vueuse/core）
+- **路由**：Vue Router
+- **SEO**：@unhead/vue
+
+**資料快取**：
+- **伺服器狀態管理**：TanStack Query（@tanstack/vue-query）
+- Query Key MUST 使用 Factory 模式集中管理（`src/shared/services/queryKeys.ts`）
+
+**API Contract**：
+- **Contract 定義**：ts-rest（@ts-rest/core）
+- **Schema 驗證**：Zod
+- Contract 檔案 MUST 放置於 `src/shared/contracts/` 目錄
+
 **相依套件管理**：
 - 新增相依套件 MUST 經過團隊評估，考量套件大小、維護狀態、安全性
 - 生產環境相依套件 MUST 定期更新，修復已知安全漏洞
-- SHOULD 優先使用原生 Web API 和 Vue 內建功能
+- VueUse 函式 MUST 按需引入，避免引入整個套件
+- Tailwind CSS SHOULD 啟用 PurgeCSS 移除未使用樣式
 
 ## 開發工作流程
 
@@ -219,4 +515,4 @@ BREAKING CHANGE: API 回應結構已變更，需更新前端對應程式碼
 - 定期審查專案是否持續遵循憲章原則
 - 技術決策 MUST 參考憲章原則進行評估
 
-**Version**: 1.1.0 | **Ratified**: 2025-11-26 | **Last Amended**: 2025-11-26
+**Version**: 1.5.0 | **Ratified**: 2025-11-26 | **Last Amended**: 2025-12-04
