@@ -1,11 +1,11 @@
 <template>
-  <div class="space-y-8">
-    <div class="bg-white rounded-lg shadow p-6">
-      <h1 class="text-3xl font-bold text-gray-900 mb-4">歌詞搜尋</h1>
+  <div class="space-y-4 sm:space-y-6 lg:space-y-8">
+    <div class="bg-white rounded-lg shadow p-4 sm:p-6">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">歌詞搜尋</h1>
       <SearchInput @search="handleSearch" />
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="bg-white rounded-lg shadow p-4 sm:p-6">
       <SearchResults
         :results="results"
         :is-loading="isLoading"
