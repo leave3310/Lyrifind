@@ -73,7 +73,7 @@
 ### Implementation for User Story 1
 
 - [x] T015 [P] [US1] 建立搜尋功能型別定義於 src/features/search/types/index.ts
-- [ ] T016 [US1] 實作 useSearch composable 於 src/features/search/composables/useSearch.ts
+- [x] T016 [US1] 實作 useSearch composable 於 src/features/search/composables/useSearch.ts
   - 使用 TanStack Query 進行 API 請求與快取
   - 使用 VueUse useDebounceFn 實作搜尋防抖（300ms）
   - 處理載入狀態與錯誤狀態
@@ -117,7 +117,7 @@
 ### Implementation for User Story 2
 
 - [x] T023 [P] [US2] 建立歌詞功能型別定義於 src/features/lyrics/types/index.ts
-- [ ] T024 [US2] 實作 useLyrics composable 於 src/features/lyrics/composables/useLyrics.ts
+- [x] T024 [US2] 實作 useLyrics composable 於 src/features/lyrics/composables/useLyrics.ts
   - 使用 TanStack Query 進行 API 請求與快取
   - staleTime 設定為 30 分鐘
   - 處理載入狀態與錯誤狀態
@@ -153,7 +153,7 @@
 - [x] T030 [US3] 在 LyricsPage 新增返回按鈕功能於 src/features/lyrics/pages/LyricsPage.vue
   - 使用 router.back() 或導向 /search?q=keyword
   - 確保搜尋狀態透過 URL query parameter 保留
-- [ ] T031 [US3] 在 SearchPage 處理從詳情頁返回的情境於 src/features/search/pages/SearchPage.vue
+- [x] T031 [US3] 在 SearchPage 處理從詳情頁返回的情境於 src/features/search/pages/SearchPage.vue
   - 從 URL query parameter 讀取搜尋關鍵字
   - TanStack Query 快取自動保留搜尋結果
 

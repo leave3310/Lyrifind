@@ -6,22 +6,43 @@
     </div>
 
     <div class="bg-white rounded-lg shadow p-6">
-      <SearchResults :results="results" :is-loading="isLoading" :error="error" />
+      <SearchResults
+        :results="results"
+        :is-loading="isLoading"
+        :error="error"
+        :has-next-page="hasNextPage"
+        :current-page="currentPage"
+        :total="total"
+        @next-page="goToNextPage"
+        @prev-page="goToPreviousPage"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { onMounted } from 'vue'
 import SearchInput from '../components/SearchInput.vue'
 import SearchResults from '../components/SearchResults.vue'
+import { useSearch } from '../composables/useSearch'
 
-const results = ref([])
-const isLoading = ref(false)
-const error = ref<string | null>(null)
+const route = useRoute()
+const router = useRouter()
+const { searchQuery, results, isLoading, error, currentPage, total, hasNextPage, search, goToNextPage, goToPreviousPage } = useSearch()
 
 function handleSearch(query: string) {
-  console.log('搜尋:', query)
-  // TODO: 實作搜尋邏輯
+  search(query)
+  // 更新 URL query parameter
+  router.push({ name: 'search', query: { q: query, page: '1' } })
 }
+
+// 從 URL query parameter 讀取搜尋關鍵字
+onMounted(() => {
+  const q = route.query.q as string
+  if (q) {
+    searchQuery.value = q
+  }
+})
 </script>
+

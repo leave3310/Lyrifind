@@ -12,21 +12,30 @@
       <LyricsContent :song="song" :is-loading="isLoading" />
     </div>
 
-    <ErrorMessage v-if="error" :message="error" />
+    <ErrorMessage
+      v-if="error"
+      :message="error?.message || '載入歌詞失敗'"
+      :on-retry="refetch"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import SongHeader from '../components/SongHeader.vue'
 import LyricsContent from '../components/LyricsContent.vue'
 import ErrorMessage from '@/shared/components/ErrorMessage.vue'
+import { useLyrics } from '../composables/useLyrics'
 
 const router = useRouter()
-const song = ref(null)
-const isLoading = ref(false)
-const error = ref<string | null>(null)
+
+interface Props {
+  id: string
+}
+
+const props = defineProps<Props>()
+
+const { song, isLoading, error, refetch } = useLyrics(props.id)
 
 function goBack() {
   router.back()
