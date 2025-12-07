@@ -167,12 +167,12 @@
 
 - [x] T032 [P] 更新 App.vue 設定全域樣式與路由容器
 - [x] T033 [P] 建立 404 NotFound 頁面於 src/pages/NotFoundPage.vue
-- [ ] T034 響應式設計調整：確保所有元件在桌面與行動裝置正常顯示
+- [x] T034 響應式設計調整：確保所有元件在桌面與行動裝置正常顯示
   - 驗收標準：320px（行動）、768px（平板）、1920px（桌面）三個斷點測試
   - 確認 SearchInput、SearchResults、LyricsPage 在所有斷點正常排版
   - 使用 Tailwind 響應式前綴（sm:、md:、lg:）調整佈局
-- [ ] T035 [P] 更新 README.md 說明專案啟動方式
-- [ ] T036 執行 quickstart.md 驗證清單確認所有功能正常運作
+- [x] T035 [P] 更新 README.md 說明專案啟動方式
+- [x] T036 執行 quickstart.md 驗證清單確認所有功能正常運作
 
 ---
 
