@@ -1,7 +1,10 @@
-@import "tailwindcss";
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/preflight" layer(base);
+@import "tailwindcss/utilities" layer(utilities);
 
-@theme {
-  /* 自訂主題變數 */
-  --color-primary: #3b82f6;
-  --color-secondary: #64748b;
+@layer theme {
+  :root {
+    --color-primary: #3b82f6;
+    --color-secondary: #64748b;
+  }
 }
