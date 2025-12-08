@@ -19,10 +19,10 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 安裝專案相依套件：vue-router, @tanstack/vue-query, @ts-rest/core, zod, axios, @vueuse/core, tailwindcss
-- [ ] T002 [P] 設定 Tailwind CSS v4 於 src/style.css
-- [ ] T003 [P] 建立環境變數設定檔 .env.example 含 VITE_API_BASE_URL
-- [ ] T004 [P] 設定 TanStack Query Client 於 src/main.ts
+- [X] T001 安裝專案相依套件：vue-router, @tanstack/vue-query, @ts-rest/core, zod, axios, @vueuse/core, tailwindcss
+- [X] T002 [P] 設定 Tailwind CSS v4 於 src/style.css
+- [X] T003 [P] 建立環境變數設定檔 .env.example 含 VITE_API_BASE_URL
+- [X] T004 [P] 設定 TanStack Query Client 於 src/main.ts
 
 ---
 
@@ -32,14 +32,14 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 建立 API Contract 定義於 src/shared/contracts/lyrics.contract.ts
-- [ ] T006 [P] 建立 Axios instance 於 src/shared/services/http.ts
-- [ ] T007 [P] 建立 ts-rest API Client 於 src/shared/services/apiClient.ts
-- [ ] T008 [P] 建立 Query Key Factory 於 src/shared/services/queryKeys.ts
-- [ ] T009 [P] 建立共用型別定義於 src/shared/types/index.ts
-- [ ] T010 [P] 建立 LoadingSpinner 元件於 src/shared/components/LoadingSpinner.vue
-- [ ] T011 [P] 建立 ErrorMessage 元件於 src/shared/components/ErrorMessage.vue
-- [ ] T012 設定 Vue Router 於 src/router/index.ts（含 /search 和 /lyrics/:id 路由）
+- [X] T005 建立 API Contract 定義於 src/shared/contracts/lyrics.contract.ts
+- [X] T006 [P] 建立 Axios instance 於 src/shared/services/http.ts
+- [X] T007 [P] 建立 ts-rest API Client 於 src/shared/services/apiClient.ts
+- [X] T008 [P] 建立 Query Key Factory 於 src/shared/services/queryKeys.ts
+- [X] T009 [P] 建立共用型別定義於 src/shared/types/index.ts
+- [X] T010 [P] 建立 LoadingSpinner 元件於 src/shared/components/LoadingSpinner.vue
+- [X] T011 [P] 建立 ErrorMessage 元件於 src/shared/components/ErrorMessage.vue
+- [X] T012 設定 Vue Router 於 src/router/index.ts（含 /search 和 /lyrics/:id 路由）
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -55,7 +55,7 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T013 [US1] 撰寫搜尋功能 E2E 測試於 e2e/search.spec.ts
+- [X] T013 [US1] 撰寫搜尋功能 E2E 測試於 e2e/search.spec.ts
   - 測試：輸入歌曲名稱並送出搜尋，顯示包含該歌名的歌曲列表
   - 測試：輸入歌手名稱並送出搜尋，顯示該歌手的所有歌曲列表
   - 測試：輸入一段歌詞片段並送出搜尋,顯示包含該歌詞的歌曲列表
@@ -68,26 +68,26 @@
 
 ### Unit Tests for User Story 1 ⚠️
 
-- [ ] T014 [P] [US1] 撰寫 useSearch composable 單元測試於 src/features/search/__tests__/useSearch.spec.ts
+- [X] T014 [P] [US1] 撰寫 useSearch composable 單元測試於 src/features/search/__tests__/useSearch.spec.ts
 
 ### Implementation for User Story 1
 
-- [ ] T015 [P] [US1] 建立搜尋功能型別定義於 src/features/search/types/index.ts
-- [ ] T016 [US1] 實作 useSearch composable 於 src/features/search/composables/useSearch.ts
+- [X] T015 [P] [US1] 建立搜尋功能型別定義於 src/features/search/types/index.ts
+- [X] T016 [US1] 實作 useSearch composable 於 src/features/search/composables/useSearch.ts
   - 使用 TanStack Query 進行 API 請求與快取
   - 使用 VueUse useDebounceFn 實作搜尋防抖（300ms）
   - 處理載入狀態與錯誤狀態
-- [ ] T017 [P] [US1] 建立 SearchInput 元件於 src/features/search/components/SearchInput.vue
+- [X] T017 [P] [US1] 建立 SearchInput 元件於 src/features/search/components/SearchInput.vue
   - 搜尋輸入框，支援 Enter 送出
   - 使用 Tailwind CSS 樣式
-- [ ] T018 [P] [US1] 建立 SearchResults 元件於 src/features/search/components/SearchResults.vue
+- [X] T018 [P] [US1] 建立 SearchResults 元件於 src/features/search/components/SearchResults.vue
   - 顯示搜尋結果列表（歌名、歌手）
   - 支援點擊導向詳情頁
   - 處理空結果與載入狀態
-- [ ] T019 [US1] 建立 SearchPage 頁面於 src/features/search/pages/SearchPage.vue
+- [X] T019 [US1] 建立 SearchPage 頁面於 src/features/search/pages/SearchPage.vue
   - 整合 SearchInput 與 SearchResults
   - 使用 URL query parameter 保存搜尋狀態
-- [ ] T020 [US1] 建立搜尋功能入口於 src/features/search/index.ts
+- [X] T020 [US1] 建立搜尋功能入口於 src/features/search/index.ts
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -103,7 +103,7 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T021 [US2] 撰寫歌詞詳情 E2E 測試於 e2e/lyrics.spec.ts
+- [X] T021 [US2] 撰寫歌詞詳情 E2E 測試於 e2e/lyrics.spec.ts
   - 測試：從搜尋結果點擊歌曲，導向詳情頁面
   - 測試：詳情頁面顯示完整歌詞內容
   - 測試：詳情頁面顯示歌曲名稱與歌手名稱
@@ -112,25 +112,25 @@
 
 ### Unit Tests for User Story 2 ⚠️
 
-- [ ] T022 [P] [US2] 撰寫 useLyrics composable 單元測試於 src/features/lyrics/__tests__/useLyrics.spec.ts
+- [X] T022 [P] [US2] 撰寫 useLyrics composable 單元測試於 src/features/lyrics/__tests__/useLyrics.spec.ts
 
 ### Implementation for User Story 2
 
-- [ ] T023 [P] [US2] 建立歌詞功能型別定義於 src/features/lyrics/types/index.ts
-- [ ] T024 [US2] 實作 useLyrics composable 於 src/features/lyrics/composables/useLyrics.ts
+- [X] T023 [P] [US2] 建立歌詞功能型別定義於 src/features/lyrics/types/index.ts
+- [X] T024 [US2] 實作 useLyrics composable 於 src/features/lyrics/composables/useLyrics.ts
   - 使用 TanStack Query 進行 API 請求與快取
   - staleTime 設定為 30 分鐘
   - 處理載入狀態與錯誤狀態
-- [ ] T025 [P] [US2] 建立 SongHeader 元件於 src/features/lyrics/components/SongHeader.vue
+- [X] T025 [P] [US2] 建立 SongHeader 元件於 src/features/lyrics/components/SongHeader.vue
   - 顯示歌曲名稱與歌手名稱
   - 使用 Tailwind CSS 樣式
-- [ ] T026 [P] [US2] 建立 LyricsContent 元件於 src/features/lyrics/components/LyricsContent.vue
+- [X] T026 [P] [US2] 建立 LyricsContent 元件於 src/features/lyrics/components/LyricsContent.vue
   - 顯示完整歌詞內容
   - 使用適當的排版樣式
-- [ ] T027 [US2] 建立 LyricsPage 頁面於 src/features/lyrics/pages/LyricsPage.vue
+- [X] T027 [US2] 建立 LyricsPage 頁面於 src/features/lyrics/pages/LyricsPage.vue
   - 整合 SongHeader 與 LyricsContent
   - 處理載入與錯誤狀態
-- [ ] T028 [US2] 建立歌詞功能入口於 src/features/lyrics/index.ts
+- [X] T028 [US2] 建立歌詞功能入口於 src/features/lyrics/index.ts
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -144,16 +144,16 @@
 
 ### E2E Tests for User Story 3 ⚠️
 
-- [ ] T029 [US3] 擴充 e2e/lyrics.spec.ts 增加返回功能測試
+- [X] T029 [US3] 擴充 e2e/lyrics.spec.ts 增加返回功能測試
   - 測試：點擊返回按鈕返回搜尋結果頁
   - 測試：返回後保留先前的搜尋結果
 
 ### Implementation for User Story 3
 
-- [ ] T030 [US3] 在 LyricsPage 新增返回按鈕功能於 src/features/lyrics/pages/LyricsPage.vue
+- [X] T030 [US3] 在 LyricsPage 新增返回按鈕功能於 src/features/lyrics/pages/LyricsPage.vue
   - 使用 router.back() 或導向 /search?q=keyword
   - 確保搜尋狀態透過 URL query parameter 保留
-- [ ] T031 [US3] 在 SearchPage 處理從詳情頁返回的情境於 src/features/search/pages/SearchPage.vue
+- [X] T031 [US3] 在 SearchPage 處理從詳情頁返回的情境於 src/features/search/pages/SearchPage.vue
   - 從 URL query parameter 讀取搜尋關鍵字
   - TanStack Query 快取自動保留搜尋結果
 
@@ -165,14 +165,14 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T032 [P] 更新 App.vue 設定全域樣式與路由容器
-- [ ] T033 [P] 建立 404 NotFound 頁面於 src/pages/NotFoundPage.vue
-- [ ] T034 響應式設計調整：確保所有元件在桌面與行動裝置正常顯示
+- [X] T032 [P] 更新 App.vue 設定全域樣式與路由容器
+- [X] T033 [P] 建立 404 NotFound 頁面於 src/pages/NotFoundPage.vue
+- [X] T034 響應式設計調整：確保所有元件在桌面與行動裝置正常顯示
   - 驗收標準：320px（行動）、768px（平板）、1920px（桌面）三個斷點測試
   - 確認 SearchInput、SearchResults、LyricsPage 在所有斷點正常排版
   - 使用 Tailwind 響應式前綴（sm:、md:、lg:）調整佈局
-- [ ] T035 [P] 更新 README.md 說明專案啟動方式
-- [ ] T036 執行 quickstart.md 驗證清單確認所有功能正常運作
+- [X] T035 [P] 更新 README.md 說明專案啟動方式
+- [X] T036 執行 quickstart.md 驗證清單確認所有功能正常運作
 
 ---
 

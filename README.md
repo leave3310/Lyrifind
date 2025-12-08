@@ -1,5 +1,131 @@
-# Vue 3 + TypeScript + Vite
+# LyriFind - 歌詞搜尋網站
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+使用 Vue 3 + TypeScript 建立的歌詞搜尋網站，支援搜尋歌曲、歌手和歌詞內容。
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 功能特色
+
+- 🔍 **智慧搜尋**：支援搜尋歌曲名稱、歌手名稱或歌詞片段
+- 📱 **響應式設計**：在桌面與行動裝置上都能完美顯示
+- ⚡ **快速載入**：使用 TanStack Query 進行智慧快取
+- 🎨 **現代化 UI**：採用 Tailwind CSS v4 打造的美觀介面
+- 🔒 **型別安全**：使用 TypeScript 與 ts-rest 確保端到端型別安全
+
+## 技術堆疊
+
+- **框架**：Vue 3 (Composition API)
+- **語言**：TypeScript 5.9+
+- **路由**：Vue Router 4
+- **狀態管理**：TanStack Query (Vue Query)
+- **API 客戶端**：ts-rest + Zod + Axios
+- **樣式**：Tailwind CSS v4
+- **工具函式庫**：VueUse
+- **建構工具**：Vite 7 (Rolldown)
+- **測試**：Vitest + Playwright
+
+## 快速開始
+
+### 環境需求
+
+- Node.js 18+
+- pnpm 8+
+
+### 安裝相依套件
+
+```bash
+pnpm install
+```
+
+### 設定環境變數
+
+建立 `.env` 檔案（參考 `.env.example`）：
+
+```bash
+VITE_API_BASE_URL=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
+```
+
+### 啟動開發伺服器
+
+```bash
+pnpm dev
+```
+
+開啟瀏覽器訪問 http://localhost:5173
+
+### 執行測試
+
+```bash
+# 單元測試
+pnpm test
+
+# E2E 測試
+pnpm test:e2e
+
+# 測試覆蓋率
+pnpm test:coverage
+```
+
+### 建構生產版本
+
+```bash
+pnpm build
+pnpm preview  # 預覽生產版本
+```
+
+## 專案結構
+
+```
+src/
+├── features/          # 功能模組
+│   ├── search/       # 搜尋功能
+│   └── lyrics/       # 歌詞詳情功能
+├── shared/           # 共用資源
+│   ├── components/   # 共用元件
+│   ├── contracts/    # API Contract
+│   ├── services/     # HTTP 服務
+│   └── types/        # 共用型別
+├── router/           # 路由設定
+├── pages/            # 全域頁面
+├── App.vue           # 根元件
+└── main.ts           # 應用程式入口
+```
+
+## 主要路由
+
+| 路徑 | 頁面 | 說明 |
+|------|------|------|
+| `/` | 首頁 | 重導向至搜尋頁 |
+| `/search` | 搜尋頁 | 搜尋歌曲 |
+| `/search?q=關鍵字` | 搜尋結果 | 顯示搜尋結果 |
+| `/lyrics/:id` | 歌詞詳情 | 顯示完整歌詞 |
+
+## 開發指南
+
+### 程式碼風格
+
+專案使用 OxLint 進行程式碼檢查：
+
+```bash
+pnpm lint
+```
+
+### Git Commit 規範
+
+遵循 Conventional Commits 規範：
+
+- `feat`: 新功能
+- `fix`: 錯誤修復
+- `docs`: 文件更新
+- `style`: 程式碼格式調整
+- `refactor`: 程式碼重構
+- `test`: 測試相關
+- `chore`: 建構流程或輔助工具變動
+
+範例：
+
+```bash
+git commit -m "feat(search): 新增搜尋防抖功能"
+```
+
+## 授權
+
+MIT License
