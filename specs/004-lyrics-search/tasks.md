@@ -68,31 +68,31 @@
 
 ### E2E 測試（紅燈階段）
 
-- [ ] T015 [P] [US1] E2E 測試：搜尋歌名並驗證結果 in `e2e/search.spec.ts`
-- [ ] T016 [P] [US1] E2E 測試：搜尋歌手並驗證結果 in `e2e/search.spec.ts`
-- [ ] T017 [P] [US1] E2E 測試：搜尋不存在關鍵字顯示空結果 in `e2e/search.spec.ts`
-- [ ] T018 [P] [US1] E2E 測試：修改搜尋條件更新結果 in `e2e/search.spec.ts`
-- [ ] T019 [P] [US1] E2E 測試：超過 20 筆結果顯示分頁 in `e2e/search.spec.ts`
+- [X] T015 [P] [US1] E2E 測試：搜尋歌名並驗證結果 in `e2e/search.spec.ts`
+- [X] T016 [P] [US1] E2E 測試：搜尋歌手並驗證結果 in `e2e/search.spec.ts`
+- [X] T017 [P] [US1] E2E 測試：搜尋不存在關鍵字顯示空結果 in `e2e/search.spec.ts`
+- [X] T018 [P] [US1] E2E 測試：修改搜尋條件更新結果 in `e2e/search.spec.ts`
+- [X] T019 [P] [US1] E2E 測試：超過 20 筆結果顯示分頁 in `e2e/search.spec.ts`
 
 ### 單元測試（紅燈階段）
 
-- [ ] T020 [P] [US1] 單元測試：驗證 searchService.search 基本功能 in `src/features/search/__tests__/searchService.test.ts`
-- [ ] T021 [P] [US1] 單元測試：驗證輸入驗證邏輯 in `src/shared/utils/__tests__/validation.test.ts`
-- [ ] T022 [P] [US1] 單元測試：驗證防抖機制 in `src/features/search/__tests__/useSearch.test.ts`
+- [X] T020 [P] [US1] 單元測試：驗證 searchService.search 基本功能 in `src/features/search/__tests__/searchService.test.ts`
+- [X] T021 [P] [US1] 單元測試：驗證輸入驗證邏輯 in `src/shared/utils/__tests__/validation.test.ts`
+- [X] T022 [P] [US1] 單元測試：驗證防抖機制 in `src/features/search/__tests__/useSearch.test.ts`
 
 ### 實作（綠燈階段）
 
-- [ ] T023 [P] [US1] 建立搜尋輸入框元件 `src/features/search/components/SearchBar.vue`（包含輸入框、搜尋按鈕、Enter 觸發）
-- [ ] T024 [P] [US1] 建立載入指示器元件 `src/features/search/components/LoadingSpinner.vue`
-- [ ] T025 [P] [US1] 建立空狀態元件 `src/shared/components/EmptyState.vue`（顯示「查無結果」訊息）
-- [ ] T026 [US1] 建立搜尋組合式函式 `src/features/search/composables/useSearch.ts`（包含 searchQuery, searchResults, isLoading, error, performSearch, 防抖邏輯 400ms）
-- [ ] T027 [US1] 建立搜尋結果項目元件 `src/features/search/components/SearchResultItem.vue`（顯示歌名、歌手，無歌詞片段）
-- [ ] T028 [US1] 建立搜尋結果列表元件 `src/features/search/components/SearchResults.vue`（渲染 SearchResultItem 陣列，處理空結果）
-- [ ] T029 [US1] 建立分頁元件 `src/features/search/components/Pagination.vue`（每頁 20 筆，頁碼按鈕，上一頁/下一頁）
-- [ ] T030 [US1] 建立搜尋主頁面 `src/features/search/views/SearchPage.vue`（整合 SearchBar, SearchResults, Pagination, LoadingSpinner）
-- [ ] T031 [US1] 設定路由 `/` 指向 SearchPage in `src/router/index.ts`
-- [ ] T032 [US1] 更新 App.vue 使用 router-view
-- [ ] T033 [US1] 新增錯誤處理（網路錯誤、超時、空白輸入驗證）
+- [X] T023 [P] [US1] 建立搜尋輸入框元件 `src/features/search/components/SearchBar.vue`（包含輸入框、搜尋按鈕、Enter 觸發）
+- [X] T024 [P] [US1] 建立載入指示器元件 `src/features/search/components/LoadingSpinner.vue`
+- [X] T025 [P] [US1] 建立空狀態元件 `src/shared/components/EmptyState.vue`（顯示「查無結果」訊息）
+- [X] T026 [US1] 建立搜尋組合式函式 `src/features/search/composables/useSearch.ts`（包含 searchQuery, searchResults, isLoading, error, performSearch, 防抖邏輯 400ms）
+- [X] T027 [US1] 建立搜尋結果項目元件 `src/features/search/components/SearchResultItem.vue`（顯示歌名、歌手，無歌詞片段）
+- [X] T028 [US1] 建立搜尋結果列表元件 `src/features/search/components/SearchResults.vue`（渲染 SearchResultItem 陣列，處理空結果）
+- [X] T029 [US1] 建立分頁元件 `src/features/search/components/Pagination.vue`（每頁 20 筆，頁碼按鈕，上一頁/下一頁）
+- [X] T030 [US1] 建立搜尋主頁面 `src/features/search/views/SearchPage.vue`（整合 SearchBar, SearchResults, Pagination, LoadingSpinner）
+- [X] T031 [US1] 設定路由 `/` 指向 SearchPage in `src/router/index.ts`
+- [X] T032 [US1] 更新 App.vue 使用 router-view
+- [X] T033 [US1] 新增錯誤處理（網路錯誤、超時、空白輸入驗證）
 
 ### 驗證（確保綠燈）
 
