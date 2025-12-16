@@ -4,7 +4,7 @@
     data-testid="search-results"
   >
     <div v-if="results.length > 0" class="results-list">
-      <SearchResultItem
+      <ResultItem
         v-for="item in results"
         :key="item.song.id"
         :item="item"
@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import type { SearchResultItem } from '../types'
-import SearchResultItem from './SearchResultItem.vue'
+import ResultItem from './SearchResultItem.vue'
 import EmptyState from '@/shared/components/EmptyState.vue'
 
 defineProps<{

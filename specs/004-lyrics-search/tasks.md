@@ -39,11 +39,11 @@
 
 ### Google Apps Script API 設定
 
-- [ ] T005 在 Google Sheets 建立 Songs 工作表（欄位：id, artist, title, lyrics）
-- [ ] T006 填入至少 10 筆測試歌曲資料（包含中文歌詞）
-- [ ] T007 建立 Google Apps Script 專案並實作 API 邏輯（參考 contracts/search.contract.md）
-- [ ] T008 部署 Google Apps Script 為 Web App 並取得 URL
-- [ ] T009 測試 API 端點（search 和 getSong）確保回傳正確 JSON 格式
+- [X] T005 在 Google Sheets 建立 Songs 工作表（欄位：id, artist, title, lyrics）
+- [X] T006 填入至少 10 筆測試歌曲資料（包含中文歌詞）
+- [X] T007 建立 Google Apps Script 專案並實作 API 邏輯（參考 contracts/search.contract.md）
+- [X] T008 部署 Google Apps Script 為 Web App 並取得 URL
+- [X] T009 測試 API 端點（search 和 getSong）確保回傳正確 JSON 格式
 
 ### 型別定義與工具函式
 
@@ -97,7 +97,7 @@
 ### 驗證（確保綠燈）
 
 - [ ] T034 [US1] 執行所有 E2E 測試確保通過（`pnpm run test:e2e`）
-- [ ] T035 [US1] 執行所有單元測試確保通過（`pnpm run test`）
+- [X] T035 [US1] 執行所有單元測試確保通過（`pnpm run test`）
 - [ ] T036 [US1] 手動測試所有 Acceptance Scenarios（spec.md User Story 1）
 
 **Checkpoint**: User Story 1 完全功能且可獨立測試 ✅ MVP 可展示
