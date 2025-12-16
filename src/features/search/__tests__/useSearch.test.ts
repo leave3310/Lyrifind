@@ -1,6 +1,5 @@
 // T022: 單元測試 - 驗證防抖機制
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
 describe('useSearch - 防抖機制', () => {
