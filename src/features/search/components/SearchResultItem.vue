@@ -1,6 +1,7 @@
 <template>
-  <div 
-    class="search-result-item p-4 border-b border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer"
+  <router-link
+    :to="{ name: 'song-detail', params: { id: item.song.id } }"
+    class="search-result-item block p-4 border-b border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer"
     data-testid="search-result-item"
   >
     <div class="flex flex-col gap-2">
@@ -35,7 +36,7 @@
         />
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script setup lang="ts">

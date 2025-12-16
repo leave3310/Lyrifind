@@ -183,3 +183,86 @@ test.describe('歌詞搜尋功能 - User Story 2: 歌詞片段搜尋與高亮', 
     }
   })
 })
+
+// User Story 3: 點擊進入歌曲詳細頁面
+test.describe('歌詞搜尋功能 - User Story 3: 點擊進入歌曲詳細頁面', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/')
+  })
+
+  // T053: 點擊歌曲導航到詳細頁面
+  test('應能點擊歌曲進入詳細頁面', async ({ page }) => {
+    // 先執行搜尋
+    await page.fill('[data-testid="search-input"]', '青花瓷')
+    await page.click('[data-testid="search-button"]')
+    await page.waitForSelector('[data-testid="search-results"]')
+    
+    // 點擊第一個搜尋結果
+    const firstResult = page.locator('[data-testid="search-result-item"]').first()
+    await firstResult.click()
+    
+    // 驗證導航到詳細頁面
+    await page.waitForURL(/\/songs\//)
+    expect(page.url()).toContain('/songs/')
+    
+    // 驗證詳細頁面顯示歌曲資訊
+    await expect(page.locator('[data-testid="song-detail-title"]')).toBeVisible()
+    await expect(page.locator('[data-testid="song-detail-artist"]')).toBeVisible()
+    await expect(page.locator('[data-testid="song-detail-lyrics"]')).toBeVisible()
+  })
+
+  // T054: 詳細頁面返回搜尋結果保持狀態
+  test('應能從詳細頁面返回搜尋結果並保持狀態', async ({ page }) => {
+    // 執行搜尋
+    await page.fill('[data-testid="search-input"]', '周杰倫')
+    await page.click('[data-testid="search-button"]')
+    await page.waitForSelector('[data-testid="search-results"]')
+    
+    // 記錄搜尋關鍵字
+    const searchInput = page.locator('[data-testid="search-input"]')
+    const originalQuery = await searchInput.inputValue()
+    
+    // 點擊進入詳細頁面
+    await page.locator('[data-testid="search-result-item"]').first().click()
+    await page.waitForURL(/\/songs\//)
+    
+    // 點擊返回按鈕
+    const backButton = page.locator('[data-testid="back-button"]')
+    await expect(backButton).toBeVisible()
+    await backButton.click()
+    
+    // 驗證返回搜尋頁面
+    await page.waitForURL('/')
+    
+    // 驗證搜尋狀態保持（搜尋框仍有原本的查詢字串）
+    const currentQuery = await searchInput.inputValue()
+    expect(currentQuery).toBe(originalQuery)
+    
+    // 驗證搜尋結果仍然存在
+    await expect(page.locator('[data-testid="search-results"]')).toBeVisible()
+  })
+
+  // T055: 滑鼠 hover 顯示可點擊效果
+  test('應在滑鼠 hover 時顯示可點擊效果', async ({ page }) => {
+    // 執行搜尋
+    await page.fill('[data-testid="search-input"]', '青花瓷')
+    await page.click('[data-testid="search-button"]')
+    await page.waitForSelector('[data-testid="search-results"]')
+    
+    // 取得第一個搜尋結果
+    const firstResult = page.locator('[data-testid="search-result-item"]').first()
+    
+    // 驗證初始狀態
+    await expect(firstResult).toBeVisible()
+    
+    // Hover 到元素上
+    await firstResult.hover()
+    
+    // 驗證 cursor 變成 pointer（通過檢查 CSS class）
+    const className = await firstResult.getAttribute('class')
+    expect(className).toContain('cursor-pointer')
+    
+    // 驗證有 hover 效果（bg-gray-50）
+    expect(className).toContain('hover:bg-gray-50')
+  })
+})

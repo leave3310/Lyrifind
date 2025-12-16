@@ -150,28 +150,28 @@
 
 ### E2E 測試（紅燈階段）
 
-- [ ] T053 [P] [US3] E2E 測試：點擊歌曲導航到詳細頁面 in `e2e/search.spec.ts`
-- [ ] T054 [P] [US3] E2E 測試：詳細頁面返回搜尋結果保持狀態 in `e2e/search.spec.ts`
-- [ ] T055 [P] [US3] E2E 測試：滑鼠 hover 顯示可點擊效果 in `e2e/search.spec.ts`
+- [X] T053 [P] [US3] E2E 測試：點擊歌曲導航到詳細頁面 in `e2e/search.spec.ts`
+- [X] T054 [P] [US3] E2E 測試：詳細頁面返回搜尋結果保持狀態 in `e2e/search.spec.ts`
+- [X] T055 [P] [US3] E2E 測試：滑鼠 hover 顯示可點擊效果 in `e2e/search.spec.ts`
 
 ### 單元測試（紅燈階段）
 
-- [ ] T056 [P] [US3] 單元測試：getSongById 正確取得歌曲 in `src/features/search/__tests__/searchService.test.ts`
-- [ ] T057 [P] [US3] 單元測試：getSongById 處理 404 錯誤 in `src/features/search/__tests__/searchService.test.ts`
+- [X] T056 [P] [US3] 單元測試：getSongById 正確取得歌曲 in `src/features/search/__tests__/searchService.test.ts`
+- [X] T057 [P] [US3] 單元測試：getSongById 處理 404 錯誤 in `src/features/search/__tests__/searchService.test.ts`
 
 ### 實作（綠燈階段）
 
-- [ ] T058 [P] [US3] 建立歌曲詳細頁面 `src/features/search/views/SongDetailPage.vue`（顯示完整歌詞、歌名、歌手、返回按鈕）
-- [ ] T059 [US3] 設定路由 `/songs/:id` 指向 SongDetailPage in `src/router/index.ts`
-- [ ] T060 [US3] 更新 SearchResultItem.vue 為可點擊（使用 router-link 或 @click 導航）
-- [ ] T061 [US3] 新增 hover 樣式到 SearchResultItem.vue（Tailwind CSS hover: 效果）
-- [ ] T062 [US3] 實作返回按鈕保持搜尋狀態（使用 router.back() 或 history state）
-- [ ] T063 [US3] 處理歌曲不存在的錯誤（404 顯示友善訊息）
+- [X] T058 [P] [US3] 建立歌曲詳細頁面 `src/features/search/views/SongDetailPage.vue`（顯示完整歌詞、歌名、歌手、返回按鈕）
+- [X] T059 [US3] 設定路由 `/songs/:id` 指向 SongDetailPage in `src/router/index.ts`
+- [X] T060 [US3] 更新 SearchResultItem.vue 為可點擊（使用 router-link 或 @click 導航）
+- [X] T061 [US3] 新增 hover 樣式到 SearchResultItem.vue（Tailwind CSS hover: 效果）
+- [X] T062 [US3] 實作返回按鈕保持搜尋狀態（使用 router.back() 或 history state）
+- [X] T063 [US3] 處理歌曲不存在的錯誤（404 顯示友善訊息）
 
 ### 驗證（確保綠燈）
 
 - [ ] T064 [US3] 執行所有 E2E 測試確保通過（`pnpm run test:e2e`）
-- [ ] T065 [US3] 執行所有單元測試確保通過（`pnpm run test`）
+- [X] T065 [US3] 執行所有單元測試確保通過（`pnpm run test`）- 39/39 測試通過 ✅
 - [ ] T066 [US3] 手動測試所有 Acceptance Scenarios（spec.md User Story 3）
 
 **Checkpoint**: 所有使用者故事都獨立運作 ✅
