@@ -22,10 +22,10 @@
 
 **目的**: 建立專案基礎結構和開發環境
 
-- [ ] T001 驗證開發環境符合 quickstart.md 要求（Node.js v20+, pnpm v9+, Git v2+）
-- [ ] T002 [P] 建立 Feature-Based 目錄結構 `src/features/search/` 及子目錄
-- [ ] T003 [P] 建立共用目錄結構 `src/shared/` 及子目錄
-- [ ] T004 [P] 設定 Vue Router 在 `src/router/index.ts`
+- [X] T001 驗證開發環境符合 quickstart.md 要求（Node.js v20+, pnpm v9+, Git v2+）
+- [X] T002 [P] 建立 Feature-Based 目錄結構 `src/features/search/` 及子目錄
+- [X] T003 [P] 建立共用目錄結構 `src/shared/` 及子目錄
+- [X] T004 [P] 設定 Vue Router 在 `src/router/index.ts`
 
 **Checkpoint**: 專案結構就緒，可開始開發
 
@@ -47,14 +47,14 @@
 
 ### 型別定義與工具函式
 
-- [ ] T010 [P] 建立型別定義 `src/features/search/types/search.types.ts`（Song, SearchResultItem, SearchQuery, SearchResponse, SearchState）
-- [ ] T011 [P] 建立型別匯出 `src/features/search/types/index.ts`
-- [ ] T012 [P] 建立輸入驗證工具 `src/shared/utils/validation.ts`（validateSearchQuery, validatePage）
-- [ ] T013 [P] 建立環境變數檔案 `.env.local` 並設定 `VITE_APPS_SCRIPT_URL`
+- [X] T010 [P] 建立型別定義 `src/features/search/types/search.types.ts`（Song, SearchResultItem, SearchQuery, SearchResponse, SearchState）
+- [X] T011 [P] 建立型別匯出 `src/features/search/types/index.ts`
+- [X] T012 [P] 建立輸入驗證工具 `src/shared/utils/validation.ts`（validateSearchQuery, validatePage）
+- [X] T013 [P] 建立環境變數檔案 `.env.local` 並設定 `VITE_APPS_SCRIPT_URL`
 
 ### API 服務層
 
-- [ ] T014 建立搜尋服務 `src/features/search/services/searchService.ts`（SearchService class，包含 search 和 getSongById 方法）
+- [X] T014 建立搜尋服務 `src/features/search/services/searchService.ts`（SearchService class，包含 search 和 getSongById 方法）
 
 **Checkpoint**: 基礎建設完成 - 使用者故事可開始平行實作
 
