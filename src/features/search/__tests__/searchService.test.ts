@@ -34,10 +34,10 @@ describe('SearchService', () => {
       }
 
       // Mock fetch
-      global.fetch = vi.fn().mockResolvedValue({
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
         ok: true,
         json: async () => mockResponse
-      } as Response)
+      } as Response))
 
       const query: SearchQuery = {
         query: '青花瓷',
@@ -48,15 +48,15 @@ describe('SearchService', () => {
       const result = await searchService.search(query)
 
       expect(result).toEqual(mockResponse)
-      expect(global.fetch).toHaveBeenCalledTimes(1)
+      expect(vi.mocked(fetch)).toHaveBeenCalledTimes(1)
     })
 
     it('應在 API 回應錯誤時拋出例外', async () => {
       // Mock fetch 回傳錯誤
-      global.fetch = vi.fn().mockResolvedValue({
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
         ok: false,
         json: async () => ({ error: { message: '搜尋失敗' } })
-      } as Response)
+      } as Response))
 
       const query: SearchQuery = {
         query: '測試',
@@ -75,10 +75,12 @@ describe('SearchService', () => {
         totalPages: 0
       }
 
-      global.fetch = vi.fn().mockResolvedValue({
+      const mockFetch = vi.fn().mockResolvedValue({
         ok: true,
         json: async () => mockResponse
       } as Response)
+      
+      vi.stubGlobal('fetch', mockFetch)
 
       const query: SearchQuery = {
         query: '測試'
@@ -88,7 +90,8 @@ describe('SearchService', () => {
       await searchService.search(query)
 
       // 驗證呼叫時使用了預設值
-      const fetchCall = (global.fetch as any).mock.calls[0][0]
+      expect(mockFetch).toHaveBeenCalled()
+      const fetchCall = mockFetch.mock.calls[0]?.[0]
       expect(fetchCall).toContain('page=1')
       expect(fetchCall).toContain('pageSize=20')
     })
@@ -103,11 +106,11 @@ describe('SearchService', () => {
         lyrics: '素胚勾勒出青花筆鋒濃轉淡'
       }
 
-      global.fetch = vi.fn().mockResolvedValue({
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
         ok: true,
         status: 200,
         json: async () => mockSong
-      } as Response)
+      } as Response))
 
       const result = await searchService.getSongById('song-001')
 
@@ -115,10 +118,10 @@ describe('SearchService', () => {
     })
 
     it('應在歌曲不存在時返回 null', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
         ok: false,
         status: 404
-      } as Response)
+      } as Response))
 
       const result = await searchService.getSongById('non-existent')
 
@@ -126,10 +129,10 @@ describe('SearchService', () => {
     })
 
     it('應在其他錯誤時拋出例外', async () => {
-      global.fetch = vi.fn().mockResolvedValue({
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
         ok: false,
         status: 500
-      } as Response)
+      } as Response))
 
       await expect(searchService.getSongById('song-001')).rejects.toThrow('取得歌曲失敗')
     })

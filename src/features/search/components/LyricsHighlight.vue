@@ -20,9 +20,3 @@ const highlightedHtml = computed(() => {
   return highlightText(props.text, props.query)
 })
 </script>
-
-<style scoped>
-.lyrics-highlight :deep(mark) {
-  @apply bg-yellow-200 font-bold;
-}
-</style>

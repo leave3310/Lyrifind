@@ -17,7 +17,7 @@
     <div class="flex gap-1">
       <template v-for="page in displayPages" :key="page">
         <button
-          v-if="page !== '...'"
+          v-if="typeof page === 'number'"
           :class="[
             'px-3 py-2 border rounded-lg transition-colors',
             page === currentPage
@@ -28,7 +28,7 @@
         >
           {{ page }}
         </button>
-        <span v-else class="px-3 py-2">...</span>
+        <span v-else class="px-3 py-2">{{ page }}</span>
       </template>
     </div>
 
