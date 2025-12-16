@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, provide, watch } from 'vue'
 import SearchBar from '../components/SearchBar.vue'
 import SearchResults from '../components/SearchResults.vue'
 import Pagination from '../components/Pagination.vue'
@@ -71,6 +71,14 @@ const {
 
 // 用於雙向綁定的本地查詢字串
 const searchQuery = ref('')
+
+// 提供 searchQuery 給子元件（用於歌詞高亮）
+provide('searchQuery', searchQuery)
+
+// 同步內部查詢字串
+watch(internalQuery, (newValue) => {
+  searchQuery.value = newValue
+})
 
 // 處理搜尋
 const handleSearch = (query: string) => {

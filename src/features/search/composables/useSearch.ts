@@ -57,6 +57,8 @@ export function useSearch() {
         pageSize: DEFAULT_PAGE_SIZE
       })
 
+      // API 已處理歌詞片段擷取和高亮（由 Google Apps Script 完成）
+      // response.items 包含 lyricsSnippet 和 highlightedSnippet
       searchResults.value = response.items
       total.value = response.total
       currentPage.value = response.page

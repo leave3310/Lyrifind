@@ -19,28 +19,34 @@
         </span>
       </div>
       
-      <!-- 歌詞片段（如果有匹配歌詞） -->
+      <!-- 歌詞片段（使用高亮元件） -->
       <div 
         v-if="item.lyricsSnippet"
-        class="text-sm text-gray-700 bg-gray-50 p-3 rounded"
+        class="lyrics-snippet-container bg-gray-50 p-3 rounded"
         data-testid="lyrics-snippet"
       >
-        <div 
+        <LyricsHighlight
           v-for="(line, index) in item.lyricsSnippet.lines"
           :key="index"
+          :text="line"
+          :query="searchQuery"
           :class="{ 'font-medium': index === item.lyricsSnippet.matchIndex }"
-        >
-          {{ line }}
-        </div>
+          class="block"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { inject } from 'vue'
 import type { SearchResultItem } from '../types'
+import LyricsHighlight from './LyricsHighlight.vue'
 
 defineProps<{
   item: SearchResultItem
 }>()
+
+// 從 useSearch 注入搜尋查詢（用於高亮）
+const searchQuery = inject<string>('searchQuery', '')
 </script>
