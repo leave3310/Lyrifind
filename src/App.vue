@@ -7,7 +7,3 @@
     <router-view />
   </div>
 </template>
-
-<style>
-/* 全域樣式由 style.css 提供 */
-</style>
