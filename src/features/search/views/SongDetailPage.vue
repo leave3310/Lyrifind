@@ -1,6 +1,5 @@
 <template>
   <main class="song-detail-page max-w-4xl mx-auto px-4 py-8">
-    <!-- 返回按鈕 -->
     <button
       data-testid="back-button"
       class="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
@@ -11,10 +10,8 @@
       <span>返回搜尋結果</span>
     </button>
 
-    <!-- 載入指示器 -->
     <LoadingSpinner v-if="isLoading" />
 
-    <!-- 錯誤訊息 -->
     <div 
       v-else-if="error"
       class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded"
@@ -31,9 +28,7 @@
       </button>
     </div>
 
-    <!-- 歌曲詳細資訊 -->
     <article v-else-if="song" class="song-detail">
-      <!-- 歌曲標題和歌手 -->
       <header class="mb-6">
         <h1 
           class="text-3xl font-bold text-gray-900 mb-2"
@@ -49,7 +44,6 @@
         </p>
       </header>
 
-      <!-- 完整歌詞 -->
       <section
         class="lyrics-container bg-gray-50 rounded-lg p-6"
         data-testid="song-detail-lyrics"
@@ -62,7 +56,6 @@
       </section>
     </article>
 
-    <!-- 找不到歌曲 -->
     <div
       v-else
       class="text-center py-12"

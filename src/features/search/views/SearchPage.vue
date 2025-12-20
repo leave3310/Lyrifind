@@ -2,14 +2,12 @@
   <div class="search-page max-w-4xl mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold text-center mb-8">LyriFind 歌詞搜尋</h1>
 
-    <!-- 搜尋框 -->
     <SearchBar
       v-model="searchQuery"
       @search="handleSearch"
       class="mb-6"
     />
 
-    <!-- 錯誤訊息 -->
     <div 
       v-if="error"
       class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4"
@@ -24,10 +22,8 @@
       </button>
     </div>
 
-    <!-- 載入指示器 -->
     <LoadingSpinner v-if="isLoading" />
 
-    <!-- 搜尋結果 -->
     <template v-else-if="!error">
       <div v-if="searchResults.length > 0" class="mb-4">
         <p class="text-sm text-gray-600">
@@ -37,7 +33,6 @@
 
       <SearchResults :results="searchResults" />
 
-      <!-- 分頁 -->
       <Pagination
         v-if="totalPages > 1"
         :current-page="currentPage"

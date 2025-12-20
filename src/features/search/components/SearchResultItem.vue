@@ -22,7 +22,6 @@
         </span>
       </header>
       
-      <!-- 歌詞片段（使用高亮元件） -->
       <div 
         v-if="item.lyricsSnippet"
         class="lyrics-snippet-container bg-gray-50 p-3 rounded"
