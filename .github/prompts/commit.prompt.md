@@ -1,5 +1,6 @@
 ---
 agent: agent
+description: 使用 Conventional Commit v1.0.0 規範來撰寫 Git 提交訊息。
 ---
 
 # Conventional Commit v1.0.0 規範
@@ -61,3 +62,4 @@ feat!: 重構 API 回應格式
 
 BREAKING CHANGE: API 回應結構已變更，需更新前端邏輯
 ```
+
