@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide, watch } from 'vue'
+import { ref, provide, onMounted, watch } from 'vue'
 import SearchBar from '../components/SearchBar.vue'
 import SearchResults from '../components/SearchResults.vue'
 import Pagination from '../components/Pagination.vue'
@@ -52,7 +52,7 @@ import LoadingSpinner from '../components/LoadingSpinner.vue'
 import { useSearch } from '../composables/useSearch'
 
 const {
-  searchQuery: internalQuery,
+  searchQuery,
   searchResults,
   total,
   currentPage,
@@ -64,15 +64,14 @@ const {
   retry
 } = useSearch()
 
-// 用於雙向綁定的本地查詢字串
-const searchQuery = ref('')
-
 // 提供 searchQuery 給子元件（用於歌詞高亮）
 provide('searchQuery', searchQuery)
 
-// 同步內部查詢字串
-watch(internalQuery, (newValue) => {
-  searchQuery.value = newValue
+// 當掛載時，如果 URL 有查詢參數，執行搜尋
+onMounted(() => {
+  if (searchQuery.value && searchResults.value.length === 0) {
+    performSearch(searchQuery.value, 1)
+  }
 })
 
 // 處理搜尋
@@ -88,4 +87,5 @@ const handlePageChange = (page: number) => {
   // 滾動到頂部
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
+
 </script>

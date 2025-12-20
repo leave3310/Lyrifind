@@ -1,5 +1,6 @@
 // 搜尋組合式函式
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useDebounceFn } from '@vueuse/core'
 import { searchService } from '../services/searchService'
 import { validateSearchQuery } from '@/shared/utils/validation'
@@ -7,6 +8,9 @@ import type { SearchResultItem, SearchState, SearchStatus } from '../types'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../types'
 
 export function useSearch() {
+  const router = useRouter()
+  const route = useRoute()
+
   // 狀態管理
   const searchQuery = ref('')
   const searchResults = ref<SearchResultItem[]>([])
@@ -14,6 +18,28 @@ export function useSearch() {
   const currentPage = ref(DEFAULT_PAGE)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
+
+  // 從 URL 初始化狀態
+  const initializeFromUrl = () => {
+    const q = route.query.q as string
+    const page = parseInt(route.query.page as string) || DEFAULT_PAGE
+    
+    if (q) {
+      searchQuery.value = q
+      currentPage.value = page
+    }
+  }
+
+  // 更新 URL
+  const updateUrl = (query: string, page: number = DEFAULT_PAGE) => {
+    router.push({
+      name: 'search',
+      query: {
+        q: query,
+        page: page > 1 ? page : undefined
+      }
+    }).catch(() => {})
+  }
 
   // 計算屬性
   const status = computed<SearchStatus>(() => {
@@ -63,6 +89,9 @@ export function useSearch() {
       total.value = response.total
       currentPage.value = response.page
       searchQuery.value = query
+
+      // 更新 URL
+      updateUrl(query, page)
     } catch (err) {
       error.value = err instanceof Error ? err.message : '搜尋失敗，請稍後再試'
       searchResults.value = []
@@ -91,6 +120,14 @@ export function useSearch() {
     }
   }
 
+  // 監聽 URL 變化
+  watch(() => route.query, () => {
+    initializeFromUrl()
+  })
+
+  // 初始化
+  initializeFromUrl()
+
   return {
     // 狀態
     searchQuery,
@@ -110,3 +147,4 @@ export function useSearch() {
     retry
   }
 }
+
