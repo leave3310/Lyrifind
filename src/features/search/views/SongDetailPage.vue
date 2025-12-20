@@ -1,12 +1,13 @@
 <template>
-  <div class="song-detail-page max-w-4xl mx-auto px-4 py-8">
+  <main class="song-detail-page max-w-4xl mx-auto px-4 py-8">
     <!-- 返回按鈕 -->
     <button
       data-testid="back-button"
       class="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+      aria-label="返回搜尋結果頁面"
       @click="handleBack"
     >
-      <span class="text-xl">←</span>
+      <span class="text-xl" aria-hidden="true">←</span>
       <span>返回搜尋結果</span>
     </button>
 
@@ -18,10 +19,12 @@
       v-else-if="error"
       class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded"
       role="alert"
+      aria-live="assertive"
     >
       <p>{{ error }}</p>
       <button
         class="mt-2 text-sm underline hover:no-underline"
+        aria-label="重新載入歌曲資訊"
         @click="loadSong"
       >
         重試
@@ -29,9 +32,9 @@
     </div>
 
     <!-- 歌曲詳細資訊 -->
-    <div v-else-if="song" class="song-detail">
+    <article v-else-if="song" class="song-detail">
       <!-- 歌曲標題和歌手 -->
-      <div class="mb-6">
+      <header class="mb-6">
         <h1 
           class="text-3xl font-bold text-gray-900 mb-2"
           data-testid="song-detail-title"
@@ -42,37 +45,41 @@
           class="text-xl text-gray-600"
           data-testid="song-detail-artist"
         >
-          {{ song.artist }}
+          歌手：{{ song.artist }}
         </p>
-      </div>
+      </header>
 
       <!-- 完整歌詞 -->
-      <div 
+      <section
         class="lyrics-container bg-gray-50 rounded-lg p-6"
         data-testid="song-detail-lyrics"
+        aria-labelledby="lyrics-heading"
       >
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">歌詞</h2>
+        <h2 id="lyrics-heading" class="text-lg font-semibold text-gray-900 mb-4">歌詞</h2>
         <div class="whitespace-pre-wrap text-gray-700 leading-relaxed">
           {{ song.lyrics }}
         </div>
-      </div>
-    </div>
+      </section>
+    </article>
 
     <!-- 找不到歌曲 -->
     <div
       v-else
       class="text-center py-12"
       data-testid="song-not-found"
+      role="status"
+      aria-live="polite"
     >
       <p class="text-gray-500 text-lg">找不到此歌曲</p>
       <button
         class="mt-4 text-blue-500 hover:text-blue-700 underline"
+        aria-label="返回搜尋結果頁面"
         @click="handleBack"
       >
         返回搜尋結果
       </button>
     </div>
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">

@@ -1,20 +1,23 @@
 <template>
-  <div 
+  <nav 
     class="pagination flex items-center justify-center gap-2 py-4"
     data-testid="pagination"
+    role="navigation"
+    aria-label="搜尋結果分頁導航"
   >
     <!-- 上一頁 -->
     <button
       :disabled="currentPage === 1"
       class="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
       data-testid="prev-page"
+      aria-label="上一頁"
       @click="$emit('page-change', currentPage - 1)"
     >
       上一頁
     </button>
 
     <!-- 頁碼按鈕 -->
-    <div class="flex gap-1">
+    <div class="flex gap-1" role="group" aria-label="頁碼選擇">
       <template v-for="page in displayPages" :key="page">
         <button
           v-if="typeof page === 'number'"
@@ -24,11 +27,13 @@
               ? 'bg-blue-500 text-white border-blue-500'
               : 'hover:bg-gray-100'
           ]"
+          :aria-label="`第 ${page} 頁`"
+          :aria-current="page === currentPage ? 'page' : undefined"
           @click="$emit('page-change', page)"
         >
           {{ page }}
         </button>
-        <span v-else class="px-3 py-2">{{ page }}</span>
+        <span v-else class="px-3 py-2" aria-hidden="true">{{ page }}</span>
       </template>
     </div>
 
@@ -37,11 +42,15 @@
       :disabled="currentPage === totalPages"
       class="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
       data-testid="next-page"
+      aria-label="下一頁"
       @click="$emit('page-change', currentPage + 1)"
     >
       下一頁
     </button>
-  </div>
+
+    <!-- 頁面資訊（螢幕閱讀器） -->
+    <span class="sr-only">目前在第 {{ currentPage }} 頁，共 {{ totalPages }} 頁</span>
+  </nav>
 </template>
 
 <script setup lang="ts">
