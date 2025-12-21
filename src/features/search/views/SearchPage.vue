@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide, onMounted, watch } from 'vue'
+import { provide, onMounted } from 'vue'
 import SearchBar from '../components/SearchBar.vue'
 import SearchResults from '../components/SearchResults.vue'
 import Pagination from '../components/Pagination.vue'
@@ -74,14 +74,12 @@ onMounted(() => {
   }
 })
 
-// 處理搜尋
 const handleSearch = (query: string) => {
   if (query.trim()) {
     performSearch(query)
   }
 }
 
-// 處理換頁
 const handlePageChange = (page: number) => {
   goToPage(page)
   // 滾動到頂部

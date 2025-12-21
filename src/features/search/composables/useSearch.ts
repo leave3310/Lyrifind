@@ -62,12 +62,9 @@ export function useSearch() {
     error: error.value
   }))
 
-  // 執行搜尋
   const performSearch = async (query: string, page: number = DEFAULT_PAGE) => {
-    // 重置錯誤
     error.value = null
 
-    // 驗證輸入
     const validation = validateSearchQuery(query)
     if (!validation.valid) {
       error.value = validation.error
@@ -125,7 +122,6 @@ export function useSearch() {
     initializeFromUrl()
   })
 
-  // 初始化
   initializeFromUrl()
 
   return {
