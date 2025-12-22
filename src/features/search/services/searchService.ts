@@ -49,19 +49,22 @@ export class SearchService {
         return null
       }
       
-      if (response.ok) {
-        const data = await response.json()
-        if (data && data.id) {
-          return data
-        }
+      if (!response.ok) {
+        throw new Error('取得歌曲失敗')
       }
       
-      console.warn(`getSong API returned non-ok response: ${response.status}`)
+      const data = await response.json()
+      if (data && data.id) {
+        return data
+      }
+      
+      throw new Error('取得歌曲失敗')
     } catch (error) {
-      console.warn('getSong API failed, trying fallback', error)
+      if (error instanceof Error && error.message === '取得歌曲失敗') {
+        throw error
+      }
+      throw new Error('取得歌曲失敗')
     }
-    
-
   }
 }
 
