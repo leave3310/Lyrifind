@@ -35,33 +35,28 @@ export class SearchService {
    * @returns 歌曲資訊，若不存在則返回 null
    */
   async getSongById(id: string): Promise<Song | null> {
-    try {
-      // 嘗試使用 getSong API
-      const params = new URLSearchParams({
-        action: 'getSong',
-        id: id
-      })
-      
-      const response = await fetch(`${APPS_SCRIPT_URL}?${params}`)
-      
-      if (response.status === 404) {
-        console.warn(`Song ID ${id} not found (404)`)
-        return null
-      }
-      
-      if (response.ok) {
-        const data = await response.json()
-        if (data && data.id) {
-          return data
-        }
-      }
-      
-      console.warn(`getSong API returned non-ok response: ${response.status}`)
-    } catch (error) {
-      console.warn('getSong API failed, trying fallback', error)
+    const params = new URLSearchParams({
+      action: 'getSong',
+      id: id
+    })
+    
+    const response = await fetch(`${APPS_SCRIPT_URL}?${params}`)
+    
+    if (response.status === 404) {
+      console.warn(`Song ID ${id} not found (404)`)
+      return null
     }
     
-
+    if (!response.ok) {
+      throw new Error('取得歌曲失敗')
+    }
+    
+    const data = await response.json()
+    if (data && data.id) {
+      return data
+    }
+    
+    throw new Error('取得歌曲失敗')
   }
 }
 
