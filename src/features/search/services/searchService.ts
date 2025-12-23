@@ -1,22 +1,21 @@
-// 搜尋服務：與 Google Apps Script API 互動
-
 import type { SearchQuery, SearchResponse, Song } from '../types'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../types'
 
 const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL
 
+if (!APPS_SCRIPT_URL) {
+  throw new Error('VITE_APPS_SCRIPT_URL is not defined in environment variables')
+}
+
 export class SearchService {
-  /**
-   * 搜尋歌曲
-   * @param request 搜尋請求參數
-   * @returns 搜尋結果
-   */
   async search(request: SearchQuery): Promise<SearchResponse> {
+    const { query, page = DEFAULT_PAGE, pageSize = DEFAULT_PAGE_SIZE } = request
+
     const params = new URLSearchParams({
       action: 'search',
-      q: request.query,
-      page: String(request.page ?? DEFAULT_PAGE),
-      pageSize: String(request.pageSize ?? DEFAULT_PAGE_SIZE)
+      q: query,
+      page: String(page),
+      pageSize: String(pageSize)
     })
     
     const response = await fetch(`${APPS_SCRIPT_URL}?${params}`)
@@ -28,42 +27,26 @@ export class SearchService {
     
     return response.json()
   }
-  
-  /**
-   * 根據 ID 取得歌曲
-   * @param id 歌曲 ID
-   * @returns 歌曲資訊，若不存在則返回 null
-   */
+
   async getSongById(id: string): Promise<Song | null> {
-    try {
-      // 嘗試使用 getSong API
-      const params = new URLSearchParams({
-        action: 'getSong',
-        id: id
-      })
-      
-      const response = await fetch(`${APPS_SCRIPT_URL}?${params}`)
-      
-      if (response.status === 404) {
-        console.warn(`Song ID ${id} not found (404)`)
-        return null
-      }
-      
-      if (response.ok) {
-        const data = await response.json()
-        if (data && data.id) {
-          return data
-        }
-      }
-      
-      console.warn(`getSong API returned non-ok response: ${response.status}`)
-    } catch (error) {
-      console.warn('getSong API failed, trying fallback', error)
+    const params = new URLSearchParams({
+      action: 'getSong',
+      id: id
+    })
+    
+    const response = await fetch(`${APPS_SCRIPT_URL}?${params}`)
+    
+    if (response.status === 404) {
+      return null
     }
     
-
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.error?.message || '取得歌曲失敗')
+    }
+    
+    return response.json()
   }
 }
 
-// 匯出單例
 export const searchService = new SearchService()
