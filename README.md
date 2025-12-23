@@ -106,20 +106,6 @@ src/
 
 詳細設定步驟請參考 \`specs/004-lyrics-search/quickstart.md\`。
 
-### 為什麼不使用 ts-rest？
-
-本專案選擇使用原生 Fetch API 而非 ts-rest，主要原因如下：
-
-1. **第三方 API 限制**：Google Apps Script 是外部託管的第三方服務，我們無法控制其後端實作或型別定義
-2. **API 格式固定**：Google Apps Script 的回應格式已經由 Google 定義，無法自訂 contract
-3. **簡化依賴**：對於單一外部 API 端點，使用原生 Fetch API 更加直接且減少不必要的依賴
-4. **型別定義足夠**：透過 TypeScript 的 interface 已經能提供完整的型別安全
-
-ts-rest 更適合用於：
-- 前後端都由團隊掌控的專案
-- 需要共享 contract 定義的 monorepo 架構
-- 有多個內部 API 端點需要統一管理的場景
-
 ## 開發指南
 
 - **Feature-Based 架構**：功能模組化，易於維護和擴展
