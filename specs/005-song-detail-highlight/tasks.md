@@ -59,25 +59,25 @@
 
 > **NOTE: 先寫測試，確認失敗後再實作**
 
-- [ ] T012 [P] [US1] E2E 測試：導航到詳細頁並顯示歌曲資訊 `e2e/song-detail.spec.ts`
-- [ ] T013 [P] [US1] E2E 測試：返回搜尋結果並保持狀態 `e2e/song-detail.spec.ts`
-- [ ] T014 [P] [US1] E2E 測試：處理無效歌曲 ID（404 錯誤）`e2e/song-detail.spec.ts`
+- [X] T012 [P] [US1] E2E 測試：導航到詳細頁並顯示歌曲資訊 `e2e/song-detail.spec.ts`
+- [X] T013 [P] [US1] E2E 測試：返回搜尋結果並保持狀態 `e2e/song-detail.spec.ts`
+- [X] T014 [P] [US1] E2E 測試：處理無效歌曲 ID（404 錯誤）`e2e/song-detail.spec.ts`
 
 ### 單元測試 User Story 1 ✅
 
-- [ ] T015 [P] [US1] 單元測試：SongService.getSongById() `src/features/song-detail/__tests__/song.service.spec.ts`
-- [ ] T016 [P] [US1] 單元測試：useSongDetail composable `src/features/song-detail/__tests__/useSongDetail.spec.ts`
+- [X] T015 [P] [US1] 單元測試：SongService.getSongById() `src/features/song-detail/__tests__/song.service.spec.ts`
+- [X] T016 [P] [US1] 單元測試：useSongDetail composable `src/features/song-detail/__tests__/useSongDetail.spec.ts`
 
 ### 實作 User Story 1
 
-- [ ] T017 [P] [US1] 實作 `useSongDetail` composable `src/features/song-detail/composables/useSongDetail.ts`（依賴 T007, T008）
-- [ ] T018 [P] [US1] 建立 SongHeader 元件 `src/features/song-detail/components/SongHeader.vue`
-- [ ] T019 [P] [US1] 建立 LyricsContent 元件 `src/features/song-detail/components/LyricsContent.vue`（基礎版本，無高亮）
-- [ ] T020 [P] [US1] 建立 BackButton 元件 `src/features/song-detail/components/BackButton.vue`
-- [ ] T021 [US1] 整合所有元件到 SongDetailPage `src/features/song-detail/SongDetailPage.vue`（依賴 T017-T020）
-- [ ] T022 [US1] 更新搜尋結果頁的點擊事件，導航到詳細頁 `src/features/search/components/SearchResultItem.vue`
-- [ ] T023 [US1] 實作 404 錯誤頁面（歌曲不存在時導向標準 404 錯誤視圖）`src/features/song-detail/SongDetailPage.vue`
-- [ ] T023b [US1] 建立載入狀態元件 `src/features/song-detail/components/LoadingState.vue`（Constitution III：載入中 MUST 提供載入指示器）
+- [X] T017 [P] [US1] 實作 `useSongDetail` composable `src/features/song-detail/composables/useSongDetail.ts`（依賴 T007, T008）
+- [X] T018 [P] [US1] 建立 SongHeader 元件 `src/features/song-detail/components/SongHeader.vue`
+- [X] T019 [P] [US1] 建立 LyricsContent 元件 `src/features/song-detail/components/LyricsContent.vue`（基礎版本，無高亮）
+- [X] T020 [P] [US1] 建立 BackButton 元件 `src/features/song-detail/components/BackButton.vue`
+- [X] T021 [US1] 整合所有元件到 SongDetailPage `src/features/song-detail/SongDetailPage.vue`（依賴 T017-T020）
+- [X] T022 [US1] 更新搜尋結果頁的點擊事件，導航到詳細頁 `src/features/search/components/SearchResultItem.vue`
+- [X] T023 [US1] 實作 404 錯誤頁面（歌曲不存在時導向標準 404 錯誤視圖）`src/features/song-detail/SongDetailPage.vue`
+- [X] T023b [US1] 建立載入狀態元件 `src/features/song-detail/components/LoadingState.vue`（Constitution III：載入中 MUST 提供載入指示器）
 - [ ] T024 [US1] 確認所有 E2E 和單元測試通過 ✅
 
 **Checkpoint**: User Story 1 完全功能性且可獨立測試
