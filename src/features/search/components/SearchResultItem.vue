@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue'
+import { computed, inject, ref, type Ref } from 'vue'
 import type { SearchResultItem } from '../types'
 import LyricsHighlight from './LyricsHighlight.vue'
 
@@ -51,14 +51,15 @@ const props = defineProps<{
   item: SearchResultItem
 }>()
 
-// 從 useSearch 注入搜尋查詢（用於高亮）
-const searchQuery = inject<string>('searchQuery', '')
+// 從 useSearch 注入搜尋查詢 Ref（用於高亮）
+const searchQuery = inject<Ref<string>>('searchQuery', ref(''))
 
 // 若搜尋結果包含歌詞片段，傳遞 highlight 參數至詳細頁
 const songDetailRoute = computed(() => {
   const base = { name: 'song-detail', params: { id: props.item.song.id } }
-  if (props.item.lyricsSnippet && searchQuery) {
-    return { ...base, query: { highlight: searchQuery } }
+  const keyword = searchQuery.value
+  if (props.item.lyricsSnippet && keyword) {
+    return { ...base, query: { highlight: keyword } }
   }
   return base
 })
