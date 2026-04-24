@@ -5,41 +5,22 @@
     <!-- 載入中 -->
     <LoadingState v-if="isLoading" />
 
-    <!-- 錯誤狀態 -->
-    <div
-      v-else-if="error && song"
-      class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded"
-      role="alert"
-      aria-live="assertive"
-      data-testid="song-detail-error"
-    >
-      <p>{{ error }}</p>
-      <button
-        class="mt-2 text-sm underline hover:no-underline"
-        aria-label="重新載入歌曲資訊"
-        @click="loadSong"
-      >
-        重試
-      </button>
-    </div>
-
     <!-- 歌曲不存在 -->
-    <div
+    <ErrorState
       v-else-if="error && !song"
-      class="text-center py-12"
+      type="not-found"
       data-testid="song-not-found"
-      role="status"
-      aria-live="polite"
-    >
-      <p class="text-gray-500 text-lg">找不到此歌曲</p>
-      <button
-        class="mt-4 text-blue-500 hover:text-blue-700 underline"
-        aria-label="返回搜尋結果頁面"
-        @click="goBack"
-      >
-        返回搜尋結果
-      </button>
-    </div>
+      @back="goBack"
+    />
+
+    <!-- 其他錯誤 -->
+    <ErrorState
+      v-else-if="error && song"
+      type="error"
+      :message="error"
+      data-testid="song-detail-error"
+      @retry="loadSong"
+    />
 
     <!-- 歌曲詳細內容 -->
     <article v-else-if="song" class="song-detail">
@@ -57,6 +38,7 @@ import { useLyricsHighlight } from './composables/useLyricsHighlight'
 import { useAutoScroll } from './composables/useAutoScroll'
 import BackButton from './components/BackButton.vue'
 import LoadingState from './components/LoadingState.vue'
+import ErrorState from './components/ErrorState.vue'
 import SongHeader from './components/SongHeader.vue'
 import LyricsContent from './components/LyricsContent.vue'
 

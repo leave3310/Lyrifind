@@ -78,7 +78,7 @@
 - [X] T022 [US1] 更新搜尋結果頁的點擊事件，導航到詳細頁 `src/features/search/components/SearchResultItem.vue`
 - [X] T023 [US1] 實作 404 錯誤頁面（歌曲不存在時導向標準 404 錯誤視圖）`src/features/song-detail/SongDetailPage.vue`
 - [X] T023b [US1] 建立載入狀態元件 `src/features/song-detail/components/LoadingState.vue`（Constitution III：載入中 MUST 提供載入指示器）
-- [ ] T024 [US1] 確認所有 E2E 和單元測試通過 ✅
+- [X] T024 [US1] 確認所有 E2E 和單元測試通過 ✅
 
 **Checkpoint**: User Story 1 完全功能性且可獨立測試
 
@@ -112,7 +112,7 @@
 - [X] T035 [US2] 更新 SongDetailPage 整合高亮邏輯 `src/features/song-detail/SongDetailPage.vue`（依賴 T033, T034）
 - [X] T036 [US2] 新增 Tailwind CSS 高亮樣式類別 `bg-yellow-200 font-bold`（如果尚未定義）
 - [X] T037 [US2] 更新搜尋結果頁的導航，傳遞 highlight query 參數 `src/features/search/components/SearchResultItem.vue`
-- [ ] T038 [US2] 確認所有 E2E 和單元測試通過 ✅
+- [X] T038 [US2] 確認所有 E2E 和單元測試通過 ✅
 
 **Checkpoint**: User Stories 1 和 2 都可獨立運作
 
@@ -140,7 +140,7 @@
 
 - [X] T045 [US3] 實作 `useAutoScroll` composable `src/features/song-detail/composables/useAutoScroll.ts`
 - [X] T046 [US3] 整合 useAutoScroll 到 SongDetailPage `src/features/song-detail/SongDetailPage.vue`（依賴 T045）
-- [ ] T047 [US3] 確認所有 E2E 和單元測試通過 ✅
+- [X] T047 [US3] 確認所有 E2E 和單元測試通過 ✅
 
 **Checkpoint**: 所有使用者故事現在都可獨立運作
 
@@ -150,16 +150,16 @@
 
 **目的**：影響多個使用者故事的改進
 
-- [ ] T048 [P] UI 優化：完善 LoadingState 骨架屏樣式 `src/features/song-detail/components/LoadingState.vue`（基礎功能已在 T023b 實作）
-- [ ] T049 [P] 優化錯誤訊息顯示 UI `src/features/song-detail/components/ErrorState.vue`
-- [ ] T050 [P] 效能測試：100+ 關鍵字匹配的高亮顯示（確認 < 3 秒載入）
-- [ ] T050b [P] 效能驗證：以 Lighthouse 或 Web Vitals 確認 CLS < 0.1、FID < 100ms、JS Bundle < 200KB（Constitution IV）
-- [ ] T051 [P] 無障礙優化（ARIA labels, keyboard navigation）
-- [ ] T052 [P] 響應式設計調整（手機、平板、桌面）
-- [ ] T053 程式碼重構與清理（移除 console.log, 統一命名規則）
-- [ ] T054 更新專案 README.md 說明新功能
-- [ ] T055 執行完整的 E2E 測試套件確認所有功能正常
-- [ ] T056 執行 quickstart.md 驗證流程
+- [X] T048 [P] UI 優化：完善 LoadingState 骨架屏樣式 `src/features/song-detail/components/LoadingState.vue`（基礎功能已在 T023b 實作）
+- [X] T049 [P] 優化錯誤訊息顯示 UI `src/features/song-detail/components/ErrorState.vue`
+- [X] T050 [P] 效能測試：100+ 關鍵字匹配的高亮顯示（確認 < 3 秒載入）
+- [X] T050b [P] 效能驗證：以 Lighthouse 或 Web Vitals 確認 CLS < 0.1、FID < 100ms、JS Bundle < 200KB（Constitution IV）
+- [X] T051 [P] 無障礙優化（ARIA labels, keyboard navigation）
+- [X] T052 [P] 響應式設計調整（手機、平板、桌面）
+- [X] T053 程式碼重構與清理（移除 console.log, 統一命名規則）
+- [X] T054 更新專案 README.md 說明新功能
+- [X] T055 執行完整的 E2E 測試套件確認所有功能正常
+- [X] T056 執行 quickstart.md 驗證流程
 
 ---
 

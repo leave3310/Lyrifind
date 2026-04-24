@@ -1,13 +1,13 @@
 <template>
   <section
-    class="lyrics-container bg-gray-50 rounded-lg p-6"
+    class="lyrics-container bg-gray-50 rounded-lg p-4 sm:p-6"
     data-testid="song-detail-lyrics"
     aria-labelledby="lyrics-heading"
   >
     <h2 id="lyrics-heading" class="text-lg font-semibold text-gray-900 mb-4">歌詞</h2>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div
-      class="whitespace-pre-wrap text-gray-700 leading-relaxed"
+      class="whitespace-pre-wrap text-sm sm:text-base text-gray-700 leading-relaxed"
       v-html="displayLyrics"
     />
   </section>
