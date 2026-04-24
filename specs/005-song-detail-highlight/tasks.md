@@ -22,11 +22,11 @@
 
 **目的**：建立專案結構與基礎設定
 
-- [ ] T001 建立歌曲詳細頁功能目錄結構 `src/features/song-detail/`
-- [ ] T002 [P] 建立共用型別目錄 `src/shared/types/common.types.ts`
-- [ ] T003 [P] 建立 E2E 測試檔案 `e2e/song-detail.spec.ts`
-- [ ] T004 [P] 驗證環境變數 `VITE_APPS_SCRIPT_URL` 已設定（在 `.env.local`）
-- [ ] T005 測試 Google Apps Script getSong API 連線正常
+- [X] T001 建立歌曲詳細頁功能目錄結構 `src/features/song-detail/`
+- [X] T002 [P] 建立共用型別目錄 `src/shared/types/common.types.ts`
+- [X] T003 [P] 建立 E2E 測試檔案 `e2e/song-detail.spec.ts`
+- [X] T004 [P] 驗證環境變數 `VITE_APPS_SCRIPT_URL` 已設定（在 `.env.local`）
+- [X] T005 測試 Google Apps Script getSong API 連線正常
 
 **Checkpoint**: 目錄結構就緒，環境變數已設定，API 連線正常
 
