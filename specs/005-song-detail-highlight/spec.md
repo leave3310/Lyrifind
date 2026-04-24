@@ -112,7 +112,7 @@
 - 假設歌曲資料已經存在於系統中（可能來自 API 或本地資料源）
 - 假設搜尋結果頁面已經實作完成（根據 workspace 中的 004-lyrics-search）
 - 假設系統使用 Vue Router 進行頁面導航
-- 假設搜尋關鍵字可以透過 URL query parameter 傳遞（例如 `?keyword=愛`）
+- 假設搜尋關鍵字可以透過 URL query parameter 傳遞（例如 `?highlight=愛`）
 - 假設歌詞文字是純文字格式，不包含複雜的 HTML 結構
 - 假設高亮顯示使用 CSS 樣式實作（黃色背景配合粗體，例如 `background-color: #ffeb3b; font-weight: bold`）
 - 假設使用者使用現代瀏覽器，支援 JavaScript 和 CSS3

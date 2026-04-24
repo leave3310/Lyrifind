@@ -42,7 +42,7 @@
 - [ ] T007 [P] 建立 SongService 類別 `src/features/song-detail/services/song.service.ts`（整合 Google Apps Script API）
 - [ ] T008 [P] 建立本地型別定義 `src/features/song-detail/types/song-detail.types.ts`（HighlightParams, SongDetailView, SongDetailError）
 - [ ] T009 [P] 建立工具函式 `escapeRegex` 在 `src/features/song-detail/utils/escape-regex.ts`
-- [ ] T010 [P] 建立工具函式 `highlightText` 在 `src/features/song-detail/utils/highlight-text.ts`（依賴 T009）
+- [ ] T010 建立工具函式 `highlightText` 在 `src/features/song-detail/utils/highlight-text.ts`（依賴 T009 完成後開始）
 - [ ] T011 [P] 新增 Vue Router 路由定義 `/song/:id` 在 `src/router/index.ts`
 
 **Checkpoint**: 基礎建設完成 - 使用者故事實作現在可以並行開始
@@ -76,7 +76,8 @@
 - [ ] T020 [P] [US1] 建立 BackButton 元件 `src/features/song-detail/components/BackButton.vue`
 - [ ] T021 [US1] 整合所有元件到 SongDetailPage `src/features/song-detail/SongDetailPage.vue`（依賴 T017-T020）
 - [ ] T022 [US1] 更新搜尋結果頁的點擊事件，導航到詳細頁 `src/features/search/components/SearchResultItem.vue`
-- [ ] T023 [US1] 實作 404 錯誤處理（歌曲不存在時顯示錯誤訊息）`src/features/song-detail/SongDetailPage.vue`
+- [ ] T023 [US1] 實作 404 錯誤頁面（歌曲不存在時導向標準 404 錯誤視圖）`src/features/song-detail/SongDetailPage.vue`
+- [ ] T023b [US1] 建立載入狀態元件 `src/features/song-detail/components/LoadingState.vue`（Constitution III：載入中 MUST 提供載入指示器）
 - [ ] T024 [US1] 確認所有 E2E 和單元測試通過 ✅
 
 **Checkpoint**: User Story 1 完全功能性且可獨立測試
@@ -94,6 +95,7 @@
 - [ ] T025 [P] [US2] E2E 測試：歌詞關鍵字搜尋後進入詳細頁顯示高亮 `e2e/song-detail.spec.ts`
 - [ ] T026 [P] [US2] E2E 測試：非歌詞搜尋進入詳細頁無高亮效果 `e2e/song-detail.spec.ts`
 - [ ] T027 [P] [US2] E2E 測試：直接透過 URL 訪問帶 highlight 參數顯示高亮 `e2e/song-detail.spec.ts`
+- [ ] T027b [P] [US2] E2E 測試：URL highlight 參數格式錯誤時的容錯處理（如 `?highlight=` 空值、多重參數）`e2e/song-detail.spec.ts`
 - [ ] T028 [P] [US2] E2E 測試：多處匹配時所有位置都高亮 `e2e/song-detail.spec.ts`
 
 ### 單元測試 User Story 2 ✅
@@ -148,9 +150,10 @@
 
 **目的**：影響多個使用者故事的改進
 
-- [ ] T048 [P] 新增載入狀態 spinner/skeleton `src/features/song-detail/components/LoadingState.vue`
+- [ ] T048 [P] UI 優化：完善 LoadingState 骨架屏樣式 `src/features/song-detail/components/LoadingState.vue`（基礎功能已在 T023b 實作）
 - [ ] T049 [P] 優化錯誤訊息顯示 UI `src/features/song-detail/components/ErrorState.vue`
 - [ ] T050 [P] 效能測試：100+ 關鍵字匹配的高亮顯示（確認 < 3 秒載入）
+- [ ] T050b [P] 效能驗證：以 Lighthouse 或 Web Vitals 確認 CLS < 0.1、FID < 100ms、JS Bundle < 200KB（Constitution IV）
 - [ ] T051 [P] 無障礙優化（ARIA labels, keyboard navigation）
 - [ ] T052 [P] 響應式設計調整（手機、平板、桌面）
 - [ ] T053 程式碼重構與清理（移除 console.log, 統一命名規則）
