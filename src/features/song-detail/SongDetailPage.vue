@@ -54,6 +54,7 @@ import { computed } from 'vue'
 import { useTitle } from '@vueuse/core'
 import { useSongDetail } from './composables/useSongDetail'
 import { useLyricsHighlight } from './composables/useLyricsHighlight'
+import { useAutoScroll } from './composables/useAutoScroll'
 import BackButton from './components/BackButton.vue'
 import LoadingState from './components/LoadingState.vue'
 import SongHeader from './components/SongHeader.vue'
@@ -65,7 +66,10 @@ const { song, isLoading, error, highlightKeyword, goBack, loadSong } = useSongDe
 const lyricsText = computed(() => song.value?.lyrics ?? '')
 
 // 高亮邏輯
-const { highlightedLyrics } = useLyricsHighlight(lyricsText, highlightKeyword)
+const { hasHighlight, highlightedLyrics } = useLyricsHighlight(lyricsText, highlightKeyword)
+
+// 自動捲動到第一個高亮位置（依賴高亮完成後觸發）
+useAutoScroll(hasHighlight, isLoading)
 
 // 動態設定頁面標題
 useTitle(computed(() =>

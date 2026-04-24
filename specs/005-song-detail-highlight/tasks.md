@@ -126,20 +126,20 @@
 
 ### E2E 測試 User Story 3 ✅
 
-- [ ] T039 [P] [US3] E2E 測試：有高亮關鍵字時自動捲動到第一個匹配位置 `e2e/song-detail.spec.ts`
-- [ ] T040 [P] [US3] E2E 測試：匹配位置在歌詞中間或底部時正確捲動 `e2e/song-detail.spec.ts`
-- [ ] T041 [P] [US3] E2E 測試：無高亮關鍵字時頁面顯示在頂部 `e2e/song-detail.spec.ts`
-- [ ] T042 [P] [US3] E2E 測試：捲動後匹配位置在可視區域內 `e2e/song-detail.spec.ts`
+- [X] T039 [P] [US3] E2E 測試：有高亮關鍵字時自動捲動到第一個匹配位置 `e2e/song-detail.spec.ts`
+- [X] T040 [P] [US3] E2E 測試：匹配位置在歌詞中間或底部時正確捲動 `e2e/song-detail.spec.ts`
+- [X] T041 [P] [US3] E2E 測試：無高亮關鍵字時頁面顯示在頂部 `e2e/song-detail.spec.ts`
+- [X] T042 [P] [US3] E2E 測試：捲動後匹配位置在可視區域內 `e2e/song-detail.spec.ts`
 
 ### 單元測試 User Story 3 ✅
 
-- [ ] T043 [P] [US3] 單元測試：useAutoScroll composable `src/features/song-detail/__tests__/useAutoScroll.spec.ts`
-- [ ] T044 [P] [US3] 單元測試：找不到 mark 元素時不執行捲動 `src/features/song-detail/__tests__/useAutoScroll.spec.ts`
+- [X] T043 [P] [US3] 單元測試：useAutoScroll composable `src/features/song-detail/__tests__/useAutoScroll.spec.ts`
+- [X] T044 [P] [US3] 單元測試：找不到 mark 元素時不執行捲動 `src/features/song-detail/__tests__/useAutoScroll.spec.ts`
 
 ### 實作 User Story 3
 
-- [ ] T045 [US3] 實作 `useAutoScroll` composable `src/features/song-detail/composables/useAutoScroll.ts`
-- [ ] T046 [US3] 整合 useAutoScroll 到 SongDetailPage `src/features/song-detail/SongDetailPage.vue`（依賴 T045）
+- [X] T045 [US3] 實作 `useAutoScroll` composable `src/features/song-detail/composables/useAutoScroll.ts`
+- [X] T046 [US3] 整合 useAutoScroll 到 SongDetailPage `src/features/song-detail/SongDetailPage.vue`（依賴 T045）
 - [ ] T047 [US3] 確認所有 E2E 和單元測試通過 ✅
 
 **Checkpoint**: 所有使用者故事現在都可獨立運作
