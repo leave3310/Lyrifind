@@ -1,13 +1,8 @@
 // 歌詞搜尋功能型別定義
 // 對應 Google Sheets 欄位：id, artist, title, lyrics
 
-// 核心實體
-export interface Song {
-  id: string
-  artist: string
-  title: string
-  lyrics: string
-}
+// 核心實體（從 shared 重新匯出）
+export type { Song } from '@/shared/types/common.types'
 
 // 歌詞片段
 export interface LyricsSnippet {

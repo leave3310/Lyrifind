@@ -38,12 +38,12 @@
 
 **⚠️ CRITICAL**: 此階段必須完成後才能開始任何使用者故事的實作
 
-- [ ] T006 將 `Song` 型別從 `src/features/search/types/search.types.ts` 遷移到 `src/shared/types/common.types.ts`
-- [ ] T007 [P] 建立 SongService 類別 `src/features/song-detail/services/song.service.ts`（整合 Google Apps Script API）
-- [ ] T008 [P] 建立本地型別定義 `src/features/song-detail/types/song-detail.types.ts`（HighlightParams, SongDetailView, SongDetailError）
-- [ ] T009 [P] 建立工具函式 `escapeRegex` 在 `src/features/song-detail/utils/escape-regex.ts`
-- [ ] T010 建立工具函式 `highlightText` 在 `src/features/song-detail/utils/highlight-text.ts`（依賴 T009 完成後開始）
-- [ ] T011 [P] 新增 Vue Router 路由定義 `/song/:id` 在 `src/router/index.ts`
+- [X] T006 將 `Song` 型別從 `src/features/search/types/search.types.ts` 遷移到 `src/shared/types/common.types.ts`
+- [X] T007 [P] 建立 SongService 類別 `src/features/song-detail/services/song.service.ts`（整合 Google Apps Script API）
+- [X] T008 [P] 建立本地型別定義 `src/features/song-detail/types/song-detail.types.ts`（HighlightParams, SongDetailView, SongDetailError）
+- [X] T009 [P] 建立工具函式 `escapeRegex` 在 `src/features/song-detail/utils/escape-regex.ts`
+- [X] T010 建立工具函式 `highlightText` 在 `src/features/song-detail/utils/highlight-text.ts`（依賴 T009 完成後開始）
+- [X] T011 [P] 新增 Vue Router 路由定義 `/song/:id` 在 `src/router/index.ts`
 
 **Checkpoint**: 基礎建設完成 - 使用者故事實作現在可以並行開始
 
