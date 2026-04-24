@@ -53,7 +53,7 @@
 import { computed } from 'vue'
 import { useTitle } from '@vueuse/core'
 import { useSongDetail } from './composables/useSongDetail'
-import { highlightText } from './utils/highlight-text'
+import { useLyricsHighlight } from './composables/useLyricsHighlight'
 import BackButton from './components/BackButton.vue'
 import LoadingState from './components/LoadingState.vue'
 import SongHeader from './components/SongHeader.vue'
@@ -61,12 +61,11 @@ import LyricsContent from './components/LyricsContent.vue'
 
 const { song, isLoading, error, highlightKeyword, goBack, loadSong } = useSongDetail()
 
-// 套用高亮後的歌詞 HTML
-const highlightedLyrics = computed<string>(() => {
-  if (!song.value) return ''
-  if (!highlightKeyword.value) return ''
-  return highlightText(song.value.lyrics, highlightKeyword.value)
-})
+// 歌詞文字 ref（供 useLyricsHighlight 使用）
+const lyricsText = computed(() => song.value?.lyrics ?? '')
+
+// 高亮邏輯
+const { highlightedLyrics } = useLyricsHighlight(lyricsText, highlightKeyword)
 
 // 動態設定頁面標題
 useTitle(computed(() =>

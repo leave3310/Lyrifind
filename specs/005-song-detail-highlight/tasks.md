@@ -92,26 +92,26 @@
 
 ### E2E 測試 User Story 2 ✅
 
-- [ ] T025 [P] [US2] E2E 測試：歌詞關鍵字搜尋後進入詳細頁顯示高亮 `e2e/song-detail.spec.ts`
-- [ ] T026 [P] [US2] E2E 測試：非歌詞搜尋進入詳細頁無高亮效果 `e2e/song-detail.spec.ts`
-- [ ] T027 [P] [US2] E2E 測試：直接透過 URL 訪問帶 highlight 參數顯示高亮 `e2e/song-detail.spec.ts`
-- [ ] T027b [P] [US2] E2E 測試：URL highlight 參數格式錯誤時的容錯處理（如 `?highlight=` 空值、多重參數）`e2e/song-detail.spec.ts`
-- [ ] T028 [P] [US2] E2E 測試：多處匹配時所有位置都高亮 `e2e/song-detail.spec.ts`
+- [X] T025 [P] [US2] E2E 測試：歌詞關鍵字搜尋後進入詳細頁顯示高亮 `e2e/song-detail.spec.ts`
+- [X] T026 [P] [US2] E2E 測試：非歌詞搜尋進入詳細頁無高亮效果 `e2e/song-detail.spec.ts`
+- [X] T027 [P] [US2] E2E 測試：直接透過 URL 訪問帶 highlight 參數顯示高亮 `e2e/song-detail.spec.ts`
+- [X] T027b [P] [US2] E2E 測試：URL highlight 參數格式錯誤時的容錯處理（如 `?highlight=` 空值、多重參數）`e2e/song-detail.spec.ts`
+- [X] T028 [P] [US2] E2E 測試：多處匹配時所有位置都高亮 `e2e/song-detail.spec.ts`
 
 ### 單元測試 User Story 2 ✅
 
-- [ ] T029 [P] [US2] 單元測試：highlightText() 基本功能 `src/features/song-detail/__tests__/highlight-text.spec.ts`
-- [ ] T030 [P] [US2] 單元測試：highlightText() 處理特殊字元 `src/features/song-detail/__tests__/highlight-text.spec.ts`
-- [ ] T031 [P] [US2] 單元測試：escapeRegex() 函式 `src/features/song-detail/__tests__/escape-regex.spec.ts`
-- [ ] T032 [P] [US2] 單元測試：useLyricsHighlight composable `src/features/song-detail/__tests__/useLyricsHighlight.spec.ts`
+- [X] T029 [P] [US2] 單元測試：highlightText() 基本功能 `src/features/song-detail/__tests__/highlight-text.spec.ts`
+- [X] T030 [P] [US2] 單元測試：highlightText() 處理特殊字元 `src/features/song-detail/__tests__/highlight-text.spec.ts`
+- [X] T031 [P] [US2] 單元測試：escapeRegex() 函式 `src/features/song-detail/__tests__/escape-regex.spec.ts`
+- [X] T032 [P] [US2] 單元測試：useLyricsHighlight composable `src/features/song-detail/__tests__/useLyricsHighlight.spec.ts`
 
 ### 實作 User Story 2
 
-- [ ] T033 [P] [US2] 實作 `useLyricsHighlight` composable `src/features/song-detail/composables/useLyricsHighlight.ts`（依賴 T010）
-- [ ] T034 [US2] 更新 LyricsContent 元件支援高亮顯示 `src/features/song-detail/components/LyricsContent.vue`（依賴 T033）
-- [ ] T035 [US2] 更新 SongDetailPage 整合高亮邏輯 `src/features/song-detail/SongDetailPage.vue`（依賴 T033, T034）
-- [ ] T036 [US2] 新增 Tailwind CSS 高亮樣式類別 `bg-yellow-200 font-bold`（如果尚未定義）
-- [ ] T037 [US2] 更新搜尋結果頁的導航，傳遞 highlight query 參數 `src/features/search/components/SearchResultItem.vue`
+- [X] T033 [P] [US2] 實作 `useLyricsHighlight` composable `src/features/song-detail/composables/useLyricsHighlight.ts`（依賴 T010）
+- [X] T034 [US2] 更新 LyricsContent 元件支援高亮顯示 `src/features/song-detail/components/LyricsContent.vue`（依賴 T033）
+- [X] T035 [US2] 更新 SongDetailPage 整合高亮邏輯 `src/features/song-detail/SongDetailPage.vue`（依賴 T033, T034）
+- [X] T036 [US2] 新增 Tailwind CSS 高亮樣式類別 `bg-yellow-200 font-bold`（如果尚未定義）
+- [X] T037 [US2] 更新搜尋結果頁的導航，傳遞 highlight query 參數 `src/features/search/components/SearchResultItem.vue`
 - [ ] T038 [US2] 確認所有 E2E 和單元測試通過 ✅
 
 **Checkpoint**: User Stories 1 和 2 都可獨立運作

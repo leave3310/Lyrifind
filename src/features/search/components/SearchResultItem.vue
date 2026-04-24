@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'song-detail', params: { id: item.song.id } }"
+    :to="songDetailRoute"
     class="search-result-item block p-4 border-b border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer"
     data-testid="search-result-item"
     :aria-label="`${item.song.title} - ${item.song.artist}，點擊查看詳細資訊`"
@@ -43,14 +43,23 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
+import { computed, inject } from 'vue'
 import type { SearchResultItem } from '../types'
 import LyricsHighlight from './LyricsHighlight.vue'
 
-defineProps<{
+const props = defineProps<{
   item: SearchResultItem
 }>()
 
 // 從 useSearch 注入搜尋查詢（用於高亮）
 const searchQuery = inject<string>('searchQuery', '')
+
+// 若搜尋結果包含歌詞片段，傳遞 highlight 參數至詳細頁
+const songDetailRoute = computed(() => {
+  const base = { name: 'song-detail', params: { id: props.item.song.id } }
+  if (props.item.lyricsSnippet && searchQuery) {
+    return { ...base, query: { highlight: searchQuery } }
+  }
+  return base
+})
 </script>
