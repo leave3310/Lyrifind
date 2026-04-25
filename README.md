@@ -4,12 +4,19 @@ LyriFind 是一個基於 Vue 3 + TypeScript 的歌詞搜尋應用程式，讓使
 
 ## 功能特色
 
-### 🎵 核心功能
+### 🎵 歌詞搜尋（Feature 004）
 - **基本關鍵字搜尋**：搜尋歌名或歌手名稱
-- **歌詞片段搜尋**：搜尋歌詞內容並顯示匹配片段
-- **歌詞高亮顯示**：自動高亮匹配的關鍵字
-- **歌曲詳細頁面**：點擊搜尋結果查看完整歌詞
+- **歌詞片段搜尋**：搜尋歌詞內容並顯示包含上下文的 3 行匹配片段
+- **歌詞高亮顯示**：自動高亮匹配的關鍵字（黃色背景 + 粗體）
 - **分頁功能**：每頁顯示 20 筆結果
+
+### 🎶 歌曲詳細頁（Feature 005）
+- **完整歌詞顯示**：點擊搜尋結果進入歌曲詳細頁，查看完整歌名、歌手及歌詞
+- **歌詞關鍵字高亮**：透過歌詞關鍵字搜尋進入時，自動高亮所有匹配片段
+- **自動捲動定位**：頁面自動捲動到第一個匹配的歌詞位置（置中顯示）
+- **返回導航**：一鍵返回搜尋結果並保持搜尋狀態
+- **載入狀態**：骨架屏動畫提供良好的載入體驗
+- **錯誤處理**：歌曲不存在（404）和一般錯誤的友善提示
 
 ### 🛠️ 技術棧
 - **前端框架**：Vue 3.5.24
@@ -84,18 +91,25 @@ pnpm exec vue-tsc --noEmit
 \`\`\`
 src/
 ├── features/
-│   └── search/              # 搜尋功能模組
-│       ├── components/      # Vue 元件
-│       ├── composables/     # Vue Composables
-│       ├── services/        # API 服務
+│   ├── search/              # 搜尋功能模組
+│   │   ├── components/      # Vue 元件（SearchBar、SearchResultItem 等）
+│   │   ├── composables/     # Vue Composables（useSearch、useLyricsHighlight）
+│   │   ├── services/        # API 服務（searchService）
+│   │   ├── types/           # TypeScript 型別
+│   │   ├── utils/           # 工具函式（extractSnippet）
+│   │   ├── views/           # 頁面元件（SearchPage）
+│   │   └── __tests__/       # 單元測試
+│   └── song-detail/         # 歌曲詳細頁功能模組
+│       ├── components/      # Vue 元件（SongHeader、LyricsContent、BackButton 等）
+│       ├── composables/     # Vue Composables（useSongDetail、useLyricsHighlight、useAutoScroll）
+│       ├── services/        # API 服務（songService）
 │       ├── types/           # TypeScript 型別
-│       ├── utils/           # 工具函式
-│       ├── views/           # 頁面元件
+│       ├── utils/           # 工具函式（escapeRegex、highlightText）
+│       ├── SongDetailPage.vue # 歌曲詳細頁主頁面
 │       └── __tests__/       # 單元測試
-├── shared/                  # 共用模組
-│   ├── components/          # 共用元件
-│   └── utils/               # 共用工具
-├── router/                  # 路由配置
+├── shared/                  # 跨功能共用模組
+│   └── types/               # 共用型別定義（Song 介面等）
+├── router/                  # 路由配置（/search、/songs/:id）
 ├── App.vue                  # 根元件
 └── main.ts                  # 應用程式入口
 \`\`\`
@@ -115,8 +129,8 @@ src/
 
 ## 測試覆蓋率
 
-- ✅ **單元測試**：39/39 通過 (100%)
-- ⏳ **E2E 測試**：配置完成
+- ✅ **單元測試**：85/85 通過 (100%)
+- ✅ **E2E 測試**：配置完成（Playwright）
 
 ## 授權
 

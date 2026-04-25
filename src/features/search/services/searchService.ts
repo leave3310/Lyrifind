@@ -41,8 +41,14 @@ export class SearchService {
     }
     
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}))
-      throw new Error(errorData.error?.message || '取得歌曲失敗')
+      let errorMessage = '取得歌曲失敗'
+      try {
+        const errorData = await response.json()
+        errorMessage = errorData.error?.message || errorMessage
+      } catch (err) {
+        console.warn('[searchService] JSON parse failed', { status: response.status, err })
+      }
+      throw new Error(errorMessage)
     }
     
     return response.json()
