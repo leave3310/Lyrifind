@@ -9,7 +9,7 @@
     <p
       class="text-lg sm:text-xl text-gray-600"
       data-testid="song-detail-artist"
-      aria-label="`歌手：${artist}`"
+      :aria-label="`歌手：${artist}`"
     >
       歌手：{{ artist }}
     </p>

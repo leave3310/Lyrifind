@@ -57,7 +57,7 @@ const searchQuery = inject<Ref<string>>('searchQuery', ref(''))
 // 若搜尋結果包含歌詞片段，傳遞 highlight 參數至詳細頁
 const songDetailRoute = computed(() => {
   const base = { name: 'song-detail', params: { id: props.item.song.id } }
-  const keyword = searchQuery.value
+  const keyword = searchQuery.value.trim().slice(0, 100)
   if (props.item.lyricsSnippet && keyword) {
     return { ...base, query: { highlight: keyword } }
   }
