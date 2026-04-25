@@ -2,7 +2,8 @@
 // 對應 Google Sheets 欄位：id, artist, title, lyrics
 
 // 核心實體（從 shared 重新匯出）
-export type { Song } from '@/shared/types/common.types'
+import type { Song } from '@/shared/types/common.types'
+export type { Song }
 
 // 歌詞片段
 export interface LyricsSnippet {
