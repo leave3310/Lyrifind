@@ -5,10 +5,6 @@ import type { Song } from '@/shared/types/common.types'
 
 const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL as string
 
-if (!APPS_SCRIPT_URL) {
-  throw new Error('VITE_APPS_SCRIPT_URL 未設定於環境變數中')
-}
-
 export class SongService {
   /**
    * 依 ID 取得歌曲詳情
@@ -17,6 +13,10 @@ export class SongService {
    * @throws 網路或伺服器錯誤時拋出例外
    */
   async getSongById(id: string): Promise<Song | null> {
+    if (!APPS_SCRIPT_URL) {
+      throw new Error('VITE_APPS_SCRIPT_URL 未設定於環境變數中')
+    }
+
     const params = new URLSearchParams({
       action: 'getSong',
       id
@@ -29,7 +29,10 @@ export class SongService {
     }
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({})) as { error?: { message?: string } }
+      const errorData = await response.json().catch((err) => {
+        console.warn('[song.service] failed to parse error JSON', { status: response.status, err })
+        return {}
+      }) as { error?: { message?: string } }
       throw new Error(errorData.error?.message ?? '取得歌曲失敗，請稍後再試')
     }
 
