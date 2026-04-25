@@ -3,29 +3,25 @@
     <BackButton @click="goBack" />
 
     <!-- 載入中 -->
-    <LoadingState v-if="isLoading" />
+    <LoadingState v-if="state.status === 'loading'" />
 
-    <!-- 歌曲不存在 -->
+    <!-- 錯誤狀態 -->
     <ErrorState
-      v-else-if="error && !song"
-      type="not-found"
-      data-testid="song-not-found"
+      v-else-if="state.status === 'error'"
+      type="error"
+      :message="state.message"
+      data-testid="song-detail-error"
+      @retry="loadSong"
       @back="goBack"
     />
 
-    <!-- 其他錯誤 -->
-    <ErrorState
-      v-else-if="error && song"
-      type="error"
-      :message="error"
-      data-testid="song-detail-error"
-      @retry="loadSong"
-    />
-
     <!-- 歌曲詳細內容 -->
-    <article v-else-if="song" class="song-detail">
-      <SongHeader :title="song.title" :artist="song.artist" />
-      <LyricsContent :lyrics="song.lyrics" :highlighted-lyrics="highlightedLyrics" />
+    <article v-else class="song-detail">
+      <SongHeader :title="state.song.title" :artist="state.song.artist" />
+      <LyricsContent
+        :lyrics="state.song.lyrics"
+        :highlighted-lyrics="state.highlightedLyrics"
+      />
     </article>
   </main>
 </template>
@@ -34,7 +30,6 @@
 import { computed } from 'vue'
 import { useTitle } from '@vueuse/core'
 import { useSongDetail } from './composables/useSongDetail'
-import { useLyricsHighlight } from './composables/useLyricsHighlight'
 import { useAutoScroll } from './composables/useAutoScroll'
 import BackButton from './components/BackButton.vue'
 import LoadingState from './components/LoadingState.vue'
@@ -42,19 +37,22 @@ import ErrorState from './components/ErrorState.vue'
 import SongHeader from './components/SongHeader.vue'
 import LyricsContent from './components/LyricsContent.vue'
 
-const { song, isLoading, error, highlightKeyword, goBack, loadSong } = useSongDetail()
+const { state, goBack, loadSong } = useSongDetail()
 
-// 歌詞文字 ref（供 useLyricsHighlight 使用）
-const lyricsText = computed(() => song.value?.lyrics ?? '')
-
-// 高亮邏輯
-const { hasHighlight, highlightedLyrics } = useLyricsHighlight(lyricsText, highlightKeyword)
-
-// 自動捲動到第一個高亮位置（依賴高亮完成後觸發）
+// 衍生 refs 以相容當前 useAutoScroll 簽名；
+// 另一個 agent 將更新 useAutoScroll 直接消費 state shape。
+const hasHighlight = computed(
+  () => state.value.status === 'loaded' && !!state.value.highlightKeyword
+)
+const isLoading = computed(() => state.value.status === 'loading')
 useAutoScroll(hasHighlight, isLoading)
 
 // 動態設定頁面標題
-useTitle(computed(() =>
-  song.value ? `${song.value.title} - ${song.value.artist} | LyriFind` : 'LyriFind'
-))
+useTitle(
+  computed(() =>
+    state.value.status === 'loaded'
+      ? `${state.value.song.title} - ${state.value.song.artist} | LyriFind`
+      : 'LyriFind'
+  )
+)
 </script>

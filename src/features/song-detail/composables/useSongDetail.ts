@@ -1,55 +1,65 @@
 // useSongDetail composable
 // 負責載入歌曲資料、管理頁面狀態、讀取高亮關鍵字
 
-import { ref, computed, onMounted } from 'vue'
+import { ref, readonly, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { songService } from '../services/song.service'
-import type { Song } from '@/shared/types/common.types'
+import { highlightText } from '../utils/highlight-text'
+import type { SongDetailView } from '../types/song-detail.types'
 
 export function useSongDetail() {
   const route = useRoute()
   const router = useRouter()
 
-  const song = ref<Song | null>(null)
-  const isLoading = ref(true)
-  const error = ref<string | null>(null)
-
-  // 從 URL query parameter 讀取高亮關鍵字
-  const highlightKeyword = computed<string | null>(() => {
-    const raw = route.query.highlight
-    if (typeof raw !== 'string' || raw.trim() === '') return null
-    return raw
-  })
+  const state = ref<SongDetailView>({ status: 'loading' })
 
   const loadSong = async () => {
-    const songId = route.params.id as string
+    const rawId = route.params.id
 
-    if (!songId) {
-      error.value = '無效的歌曲 ID'
-      isLoading.value = false
+    // 驗證 route.params.id：需為非空字串
+    if (!rawId || typeof rawId !== 'string') {
+      state.value = { status: 'error', message: '無效的歌曲 ID' }
       return
     }
 
+    // 讀取 highlight query：僅在為字串且非空時使用
+    const rawHighlight = route.query.highlight
+    const highlightKeyword =
+      typeof rawHighlight === 'string' && rawHighlight.trim() !== '' ? rawHighlight : null
+
+    state.value = { status: 'loading' }
+
     try {
-      isLoading.value = true
-      error.value = null
+      const result = await songService.getSongById(rawId)
 
-      const result = await songService.getSongById(songId)
+      if (!result) {
+        state.value = { status: 'error', message: '找不到此歌曲' }
+        return
+      }
 
-      if (result) {
-        song.value = result
-      } else {
-        error.value = '找不到此歌曲'
+      const highlightedLyrics = highlightKeyword
+        ? highlightText(result.lyrics, highlightKeyword)
+        : result.lyrics
+
+      state.value = {
+        status: 'loaded',
+        song: result,
+        highlightKeyword,
+        highlightedLyrics
       }
     } catch (err) {
-      error.value = err instanceof Error ? err.message : '載入歌曲失敗，請稍後再試'
-    } finally {
-      isLoading.value = false
+      console.error('[useSongDetail] load failed', err)
+      const message = err instanceof Error ? err.message : '載入歌曲失敗，請稍後再試'
+      state.value = { status: 'error', message }
     }
   }
 
   const goBack = () => {
-    router.back()
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back()
+    } else {
+      void router.push('/')
+    }
   }
 
   onMounted(() => {
@@ -57,10 +67,7 @@ export function useSongDetail() {
   })
 
   return {
-    song,
-    isLoading,
-    error,
-    highlightKeyword,
+    state: readonly(state),
     goBack,
     loadSong
   }

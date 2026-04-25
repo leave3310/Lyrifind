@@ -8,14 +8,14 @@
  */
 export interface Song {
   /** 歌曲唯一識別碼 */
-  id: string
+  readonly id: string
 
   /** 歌手名稱 */
-  artist: string
+  readonly artist: string
 
   /** 歌曲名稱 */
-  title: string
+  readonly title: string
 
   /** 完整歌詞內容（包含換行符號 \n） */
-  lyrics: string
+  readonly lyrics: string
 }

@@ -13,25 +13,15 @@ export interface HighlightParams {
 }
 
 /**
- * 歌曲詳細頁視圖狀態
- * 包含歌曲資料、高亮邏輯和頁面狀態
+ * 歌曲詳細頁視圖狀態（discriminated union）
+ * - loading：載入中
+ * - error：載入失敗或歌曲不存在
+ * - loaded：成功載入歌曲
  */
-export interface SongDetailView {
-  /** 當前顯示的歌曲（載入中或錯誤時為 null） */
-  song: Song | null
-
-  /** 從 URL 取得的高亮關鍵字（無高亮時為 null） */
-  highlightKeyword: string | null
-
-  /** 套用高亮標記後的歌詞 HTML 字串 */
-  highlightedLyrics: string
-
-  /** 是否正在載入歌曲資料 */
-  isLoading: boolean
-
-  /** 錯誤訊息（如歌曲不存在），無錯誤時為 null */
-  error: string | null
-}
+export type SongDetailView =
+  | { status: 'loading' }
+  | { status: 'error'; message: string }
+  | { status: 'loaded'; song: Song; highlightKeyword: string | null; highlightedLyrics: string }
 
 /**
  * Vue Router 路由參數型別

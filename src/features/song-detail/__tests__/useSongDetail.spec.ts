@@ -43,67 +43,150 @@ describe('useSongDetail', () => {
 
   it('應在初始化時開始載入', () => {
     mockGetSongById.mockResolvedValueOnce(mockSong)
-    const { isLoading } = useSongDetail()
-    expect(isLoading.value).toBe(true)
+    const { state } = useSongDetail()
+    expect(state.value.status).toBe('loading')
   })
 
-  it('應成功載入歌曲後設定 song', async () => {
+  it('應成功載入歌曲後設定 loaded 狀態', async () => {
     mockGetSongById.mockResolvedValueOnce(mockSong)
-    const { song, isLoading, loadSong } = useSongDetail()
+    const { state, loadSong } = useSongDetail()
 
     await loadSong()
 
-    expect(song.value).toEqual(mockSong)
-    expect(isLoading.value).toBe(false)
+    expect(state.value.status).toBe('loaded')
+    if (state.value.status === 'loaded') {
+      expect(state.value.song).toEqual(mockSong)
+    }
   })
 
-  it('應在歌曲不存在時設定 error', async () => {
+  it('應在歌曲不存在時設定 error 狀態', async () => {
     mockGetSongById.mockResolvedValueOnce(null)
-    const { song, error, isLoading, loadSong } = useSongDetail()
+    const { state, loadSong } = useSongDetail()
 
     await loadSong()
 
-    expect(song.value).toBeNull()
-    expect(error.value).toBeTruthy()
-    expect(isLoading.value).toBe(false)
+    expect(state.value.status).toBe('error')
+    if (state.value.status === 'error') {
+      expect(state.value.message).toBeTruthy()
+    }
   })
 
   it('應在 API 發生錯誤時設定 error 訊息', async () => {
     mockGetSongById.mockRejectedValueOnce(new Error('網路連線失敗'))
-    const { error, isLoading, loadSong } = useSongDetail()
+    const { state, loadSong } = useSongDetail()
 
     await loadSong()
 
-    expect(error.value).toContain('網路連線失敗')
-    expect(isLoading.value).toBe(false)
+    expect(state.value.status).toBe('error')
+    if (state.value.status === 'error') {
+      expect(state.value.message).toContain('網路連線失敗')
+    }
   })
 
   it('應從 URL query 讀取 highlight 關鍵字', async () => {
     mockRoute.query = { highlight: '簡單' }
     mockGetSongById.mockResolvedValueOnce(mockSong)
-    const { highlightKeyword } = useSongDetail()
+    const { state, loadSong } = useSongDetail()
 
+    await loadSong()
     await nextTick()
 
-    expect(highlightKeyword.value).toBe('簡單')
+    expect(state.value.status).toBe('loaded')
+    if (state.value.status === 'loaded') {
+      expect(state.value.highlightKeyword).toBe('簡單')
+    }
   })
 
-  it('應在 highlight query 為空時回傳 null', async () => {
+  it('應在 highlight query 為空時 highlightKeyword 為 null', async () => {
     mockRoute.query = { highlight: '' }
     mockGetSongById.mockResolvedValueOnce(mockSong)
-    const { highlightKeyword } = useSongDetail()
+    const { state, loadSong } = useSongDetail()
 
+    await loadSong()
     await nextTick()
 
-    expect(highlightKeyword.value).toBeNull()
+    expect(state.value.status).toBe('loaded')
+    if (state.value.status === 'loaded') {
+      expect(state.value.highlightKeyword).toBeNull()
+    }
   })
 
-  it('goBack 應呼叫 router.back()', async () => {
+  it('goBack 應在 history 長度大於 1 時呼叫 router.back()', async () => {
     mockGetSongById.mockResolvedValueOnce(mockSong)
-    const { goBack } = useSongDetail()
+    const originalLength = window.history.length
+    Object.defineProperty(window.history, 'length', {
+      configurable: true,
+      value: 5
+    })
 
+    const { goBack } = useSongDetail()
     goBack()
 
     expect(mockRouter.back).toHaveBeenCalled()
+
+    Object.defineProperty(window.history, 'length', {
+      configurable: true,
+      value: originalLength
+    })
+  })
+
+  it('應在 route.params.id 缺失時設定 error 狀態且不呼叫 service', async () => {
+    mockRoute.params = {} as Record<string, string>
+    const { state, loadSong } = useSongDetail()
+
+    await loadSong()
+
+    expect(state.value.status).toBe('error')
+    if (state.value.status === 'error') {
+      expect(state.value.message).toBe('無效的歌曲 ID')
+    }
+    expect(mockGetSongById).not.toHaveBeenCalled()
+  })
+
+  it('應在 route.params.id 為陣列時設定 error 狀態且不呼叫 service', async () => {
+    mockRoute.params = { id: ['a', 'b'] } as unknown as Record<string, string>
+    const { state, loadSong } = useSongDetail()
+
+    await loadSong()
+
+    expect(state.value.status).toBe('error')
+    if (state.value.status === 'error') {
+      expect(state.value.message).toBe('無效的歌曲 ID')
+    }
+    expect(mockGetSongById).not.toHaveBeenCalled()
+  })
+
+  it('應在 route.query.highlight 為陣列時 highlightKeyword 為 null', async () => {
+    mockRoute.query = { highlight: ['a', 'b'] } as unknown as Record<string, string>
+    mockGetSongById.mockResolvedValueOnce(mockSong)
+    const { state, loadSong } = useSongDetail()
+
+    await loadSong()
+    await nextTick()
+
+    expect(state.value.status).toBe('loaded')
+    if (state.value.status === 'loaded') {
+      expect(state.value.highlightKeyword).toBeNull()
+    }
+  })
+
+  it('goBack 應在 history 長度為 1 時呼叫 router.push("/") 而非 router.back()', async () => {
+    mockGetSongById.mockResolvedValueOnce(mockSong)
+    const originalLength = window.history.length
+    Object.defineProperty(window.history, 'length', {
+      configurable: true,
+      value: 1
+    })
+
+    const { goBack } = useSongDetail()
+    goBack()
+
+    expect(mockRouter.push).toHaveBeenCalledWith('/')
+    expect(mockRouter.back).not.toHaveBeenCalled()
+
+    Object.defineProperty(window.history, 'length', {
+      configurable: true,
+      value: originalLength
+    })
   })
 })
