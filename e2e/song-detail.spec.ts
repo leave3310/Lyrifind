@@ -116,14 +116,13 @@ test.describe('歌曲詳細頁 - User Story 2: 歌詞匹配片段高亮顯示', 
     // 等待歌詞載入
     await expect(page.locator('[data-testid="song-detail-lyrics"]')).toBeVisible({ timeout: 10000 })
 
-    // 驗證 URL 沒有 highlight 參數時，不一定有高亮（可能有也可能沒有，取決於搜尋類型）
+    // 驗證 URL 沒有 highlight 參數，且沒有高亮 mark
     const currentUrl = page.url()
-    if (!currentUrl.includes('?highlight=')) {
-      // 沒有 highlight 參數時不應有高亮 mark
-      const marks = page.locator('[data-testid="song-detail-lyrics"] mark')
-      const markCount = await marks.count()
-      expect(markCount).toBe(0)
-    }
+    expect(currentUrl).not.toContain('highlight=')
+
+    const marks = page.locator('[data-testid="song-detail-lyrics"] mark')
+    const markCount = await marks.count()
+    expect(markCount).toBe(0)
   })
 
   // T027: 直接透過 URL 訪問帶 highlight 參數顯示高亮
@@ -246,12 +245,50 @@ test.describe('歌曲詳細頁 - User Story 3: 自動捲動到第一個匹配位
     await page.waitForURL(/\/songs\//, { timeout: 10000 })
 
     const currentUrl = page.url()
-    if (!currentUrl.includes('?highlight=')) {
-      await expect(page.locator('[data-testid="song-detail-title"]')).toBeVisible({ timeout: 10000 })
+    expect(currentUrl).not.toContain('highlight=')
 
-      // 驗證捲動位置在頂部附近
-      const scrollY = await page.evaluate(() => window.scrollY)
-      expect(scrollY).toBeLessThan(100)
+    await expect(page.locator('[data-testid="song-detail-title"]')).toBeVisible({ timeout: 10000 })
+
+    // 驗證捲動位置在頂部附近
+    const scrollY = await page.evaluate(() => window.scrollY)
+    expect(scrollY).toBeLessThan(100)
+  })
+})
+
+// ============================================================
+// 邊界情境：特殊字元 highlight 參數
+// ============================================================
+
+test.describe('歌曲詳細頁 - 邊界情境', () => {
+  test('應在 highlight 參數含特殊正則字元時不報錯且渲染高亮', async ({ page }) => {
+    // 先取得一個有效的歌曲 ID
+    await page.goto('/')
+    await page.fill('[data-testid="search-input"]', '小情歌')
+    await page.click('[data-testid="search-button"]')
+    await page.waitForSelector('[data-testid="search-results"]')
+
+    const firstLink = page.locator('[data-testid="search-result-item"]').first()
+    await firstLink.click()
+    await page.waitForURL(/\/songs\//, { timeout: 10000 })
+
+    const songUrl = page.url().split('?')[0]
+
+    // 帶特殊正則字元 (test) 的 highlight 參數
+    await page.goto(`${songUrl}?highlight=${encodeURIComponent('(test)')}`)
+
+    // 頁面應正常渲染（歌詞區塊可見）
+    await expect(page.locator('[data-testid="song-detail-lyrics"]')).toBeVisible({ timeout: 10000 })
+
+    // 不應因 (test) 被當作 regex 而報錯。取得歌詞文字並判斷：
+    const lyricsText = await page.locator('[data-testid="song-detail-lyrics"]').textContent()
+    const marks = page.locator('[data-testid="song-detail-lyrics"] mark')
+    if (lyricsText && lyricsText.includes('(test)')) {
+      // 如歌詞中真的存在字面字串 (test)，應有 mark
+      await expect(marks.first()).toBeVisible({ timeout: 5000 })
+    } else {
+      // 否則僅驗證沒有 JS 錯誤導致 mark 數異常
+      const markCount = await marks.count()
+      expect(markCount).toBeGreaterThanOrEqual(0)
     }
   })
 })

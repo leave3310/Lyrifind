@@ -87,6 +87,32 @@ describe('SongService', () => {
       await expect(service.getSongById('song-001')).rejects.toThrow('伺服器內部錯誤')
     })
 
+    it('應在 200 OK 但 error.code 非 SONG_NOT_FOUND 時拋出 error.message', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: async () => ({ error: { code: 'INTERNAL_ERROR', message: '伺服器內部錯誤 (200)' } })
+      })
+
+      await expect(service.getSongById('song-001')).rejects.toThrow('伺服器內部錯誤 (200)')
+    })
+
+    it('應將包含特殊字元的 id 正確編碼於 URL', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: async () => mockSong
+      })
+
+      const specialId = 'a/b?c#d'
+      await service.getSongById(specialId)
+
+      const calledUrl = mockFetch.mock.calls[0][0] as string
+      // URLSearchParams 應將 / ? # 編碼
+      expect(calledUrl).toContain('id=a%2Fb%3Fc%23d')
+      expect(calledUrl).not.toContain('id=a/b?c#d')
+    })
+
     it('應在回應無法解析時拋出預設錯誤訊息', async () => {
       mockFetch.mockResolvedValueOnce({
         ok: false,
